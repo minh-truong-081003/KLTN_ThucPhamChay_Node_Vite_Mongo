@@ -3,6 +3,7 @@ import http from 'http';
 import { Server as SocketIo } from 'socket.io';
 import mongoose from 'mongoose';
 import User from './src/models/user.model.js';
+import { connectDb } from './src/configs/database.js';
 //
 import { json } from 'express';
 import session from 'express-session';
@@ -48,13 +49,7 @@ const Message = mongoose.model('Message', {
   timestamp: { type: Date, default: Date.now },
 });
 //
-mongoose.connect(
-  'mongodb+srv://hungdang02042003:jVp9aHU2eqE747nE@du-an-framework2-milk-t.ntg5d7s.mongodb.net/?retryWrites=true&w=majority',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+connectDb();
 
 app.get('/session', async (req, res) => {
   const cookies = cookie.parse(req.headers.cookie || '');

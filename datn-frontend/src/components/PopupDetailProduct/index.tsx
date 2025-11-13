@@ -9,6 +9,8 @@ import { formatCurrency } from '../../utils/formatCurrency'
 import styles from './PopupDetailProduct.module.scss'
 import { useCreateCartDBMutation } from '../../api/cartDB'
 import { v4 as uuidv4 } from 'uuid'
+import ProductReviews from '../ProductReviews'
+import { useGetReviewsByProductQuery } from '../../api/Review'
 
 type PopupDetailProductProps = {
   showPopup: boolean
@@ -32,8 +34,36 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
     _id?: string
   }>()
   const [checkedToppings, setCheckedToppings] = useState<{ name: string; price: number; _id: string }[]>([])
+  const [showReviews, setShowReviews] = useState(false)
 
   const { user } = useAppSelector((state) => state.persistedReducer.auth)
+
+  // Lấy tất cả reviews để tính rating chính xác
+  const { data: allReviewsData } = useGetReviewsByProductQuery({
+    productId: product._id,
+    page: 1,
+    limit: 1000,
+    rating: undefined,
+  })
+
+  // Tính lại averageRating từ reviews thực tế
+  const calculateRating = () => {
+    const allReviews = allReviewsData?.docs || []
+    if (allReviews.length === 0) {
+      return {
+        averageRating: product.averageRating || 0,
+        totalReviews: product.totalReviews || 0,
+      }
+    }
+    const totalRating = allReviews.reduce((sum, review) => sum + review.rating, 0)
+    const averageRating = parseFloat((totalRating / allReviews.length).toFixed(1))
+    return {
+      averageRating,
+      totalReviews: allReviews.length,
+    }
+  }
+
+  const { averageRating, totalReviews } = calculateRating()
   /* xử lý sự kiện check box phân topping */
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const toppingPrice = Number(event.target.value)
@@ -132,6 +162,30 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
               <div className='right md:flex-none flex-1 ml-4'>
                 <div className='title mr-4'>
                   <h4 className='line-clamp-2 text-lg font-semibold'>{product.name?.length > 35 ? product.name?.slice(0,35) +'...' :product.name }</h4>
+                </div>
+                {/* Rating display */}
+                <div className='rating flex items-center gap-2 mt-2'>
+                  <div className='flex items-center'>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg
+                        key={star}
+                        className={`w-4 h-4 ${star <= Math.round(averageRating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                        fill='currentColor'
+                        viewBox='0 0 20 20'
+                      >
+                        <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
+                      </svg>
+                    ))}
+                  </div>
+                  <span className='text-sm text-gray-600'>
+                    {averageRating.toFixed(1)} ({totalReviews} đánh giá)
+                  </span>
+                  <button
+                    onClick={() => setShowReviews(true)}
+                    className='text-sm text-blue-500 hover:text-blue-700 underline ml-2'
+                  >
+                    Xem đánh giá
+                  </button>
                 </div>
                 <div className='price flex items-end mt-4'>
                   {/*  <span className='new-price pr-[10px] text-[#8a733f] font-semibold text-sm'>
@@ -266,6 +320,27 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
         </div>
       </div>
       <div onClick={togglePopup} className={`${styles.overlay}`}></div>
+
+      {/* Reviews Modal */}
+      {showReviews && (
+        <div className='fixed inset-0 z-[20] flex items-center justify-center'>
+          <div className='absolute inset-0 bg-black bg-opacity-50' onClick={() => setShowReviews(false)}></div>
+          <div className='relative bg-white rounded-lg shadow-xl w-[90vw] max-w-4xl max-h-[90vh] overflow-hidden z-[21]'>
+            <div className='flex items-center justify-between p-4 border-b'>
+              <h3 className='text-xl font-semibold'>Đánh giá sản phẩm: {product.name}</h3>
+              <button
+                onClick={() => setShowReviews(false)}
+                className='text-gray-500 hover:text-gray-700 text-2xl'
+              >
+                <FaTimes />
+              </button>
+            </div>
+            <div className='overflow-y-auto max-h-[calc(90vh-80px)] p-6'>
+              <ProductReviews product={product} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

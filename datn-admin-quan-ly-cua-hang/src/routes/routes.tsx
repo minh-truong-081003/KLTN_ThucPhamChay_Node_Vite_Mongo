@@ -6,6 +6,7 @@ import {
   OrderPage,
   ProductPage,
   ProfilePage,
+  ReviewPage,
   SizePage,
   SliderPage,
   StaffPage,
@@ -52,7 +53,8 @@ const routers = createBrowserRouter([
           { path: 'orders', element: <OrderPage /> },
           { path: 'category-blog', element: <CategoryBlogPage /> },
           { path: 'blogs', element: <BlogPage /> },
-          { path: 'sliders', element: <SliderPage /> }
+          { path: 'sliders', element: <SliderPage /> },
+          { path: 'reviews', element: <ReviewPage /> }
         ]
       }
     ]

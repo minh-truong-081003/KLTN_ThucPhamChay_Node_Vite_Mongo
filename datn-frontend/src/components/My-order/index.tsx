@@ -208,6 +208,18 @@ const MyOrder = () => {
                 </div>
 
                 <div className='confirm-button flex gap-x-3 items-center'>
+                  {/* Nút Đánh giá - chỉ hiển thị khi đơn hàng hoàn thành */}
+                  {order.status === 'done' && (
+                    <Button 
+                      onClick={() => navigate(`/account-layout/my-order/${order._id}?review=true`)} 
+                      size='medium' 
+                      shape='round'
+                      style='bg-[#D8B979] text-white hover:bg-[#C7A868]'
+                    >
+                      🌟 Đánh giá
+                    </Button>
+                  )}
+                  
                   <Button onClick={() => navigate(`/account-layout/my-order/${order._id}`)} size='medium' shape='round'>
                     Chi tiết đơn hàng
                   </Button>

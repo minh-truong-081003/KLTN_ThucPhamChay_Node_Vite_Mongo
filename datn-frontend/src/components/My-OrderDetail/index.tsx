@@ -1,19 +1,114 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import { Steps } from 'antd'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { Steps, Button as AntButton, Modal, Rate, Input, Upload, message } from 'antd'
 import { useGetOrderByidQuery } from '../../store/slices/order'
+import { useCreateReviewMutation, useGetReviewsByOrderQuery } from '../../api/Review'
 import Loader from '../Loader'
 import { Divider } from 'antd'
 import { AiFillCreditCard, AiOutlineArrowLeft } from 'react-icons/ai'
 import { RiMoneyDollarCircleFill } from 'react-icons/ri'
+import { PlusOutlined } from '@ant-design/icons'
 import { formatCurrency } from '../../utils/formatCurrency'
 import './index.scss'
 import { ITopping } from '../../interfaces/topping.type'
 import formatDate from '../../utils/formatDate'
+import { useState, useEffect, useMemo } from 'react'
+import type { UploadFile } from 'antd/es/upload/interface'
 
 const MyOrderDetail = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const shouldShowReview = searchParams.get('review') === 'true'
   const { data: orderData, isError } = useGetOrderByidQuery(id as string)
+  const { data: reviewsData } = useGetReviewsByOrderQuery(id as string, {
+    skip: !id || orderData?.order?.status !== 'done'
+  })
+  const [createReview, { isLoading: isSubmitting }] = useCreateReviewMutation()
+  const [showReviewSection, setShowReviewSection] = useState(false)
+  
+  // Modal đánh giá
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<any>(null)
+  const [rating, setRating] = useState(5)
+  const [comment, setComment] = useState('')
+  const [fileList, setFileList] = useState<UploadFile[]>([])
+
+  // Tạo map các sản phẩm đã được đánh giá
+  const reviewedProductIds = useMemo(() => {
+    if (!reviewsData?.data) return new Set<string>()
+    return new Set(reviewsData.data.map(review => review.product._id || review.product))
+  }, [reviewsData])
+
+  useEffect(() => {
+    if (shouldShowReview && orderData?.order?.status === 'done') {
+      setShowReviewSection(true)
+      // Scroll to review section
+      setTimeout(() => {
+        const reviewSection = document.getElementById('review-section')
+        if (reviewSection) {
+          reviewSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 300)
+    }
+  }, [shouldShowReview, orderData])
+
+  const handleOpenReviewModal = (product: any) => {
+    setSelectedProduct(product)
+    setIsReviewModalOpen(true)
+    setRating(5)
+    setComment('')
+    setFileList([])
+  }
+
+  const handleCloseReviewModal = () => {
+    setIsReviewModalOpen(false)
+    setSelectedProduct(null)
+    setRating(5)
+    setComment('')
+    setFileList([])
+  }
+
+  const handleSubmitReview = async () => {
+    if (!selectedProduct || !rating) {
+      message.error('Vui lòng chọn số sao đánh giá!')
+      return
+    }
+
+    try {
+      const reviewData = {
+        product: selectedProduct.product._id,
+        order: id!,
+        rating,
+        comment: comment.trim(),
+        images: fileList.map(file => ({
+          url: file.url || file.thumbUrl || '',
+          publicId: file.uid,
+          filename: file.name
+        }))
+      }
+      
+      await createReview(reviewData).unwrap()
+      
+      message.success('Cảm ơn bạn đã đánh giá! Đánh giá của bạn rất có ý nghĩa với chúng tôi.')
+      handleCloseReviewModal()
+      
+    } catch (error: any) {
+      console.error('Error submitting review:', error)
+      const errorMessage = error?.data?.err || error?.data?.message || 'Có lỗi xảy ra khi gửi đánh giá!'
+      message.error(errorMessage)
+    }
+  }
+
+  const handleUploadChange = ({ fileList: newFileList }: any) => {
+    setFileList(newFileList)
+  }
+
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  )
 
   const totalPrice = orderData?.order?.items.reduce(
     (accumulator, item) =>
@@ -211,8 +306,153 @@ const MyOrderDetail = () => {
               {orderData?.order?.paymentMethodId === 'cod' ? 'Thanh toán khi nhận hàng' : 'Thanh toán qua VNPay'}
             </div>
           </div>
+
+          {/* Phần đánh giá sản phẩm - chỉ hiển thị khi đơn hàng đã hoàn thành */}
+          {orderData?.order?.status === 'done' && (
+            <div id='review-section' className='review-section mt-8 p-6 bg-[#fffcf5] rounded-lg border border-[#D8B979]'>
+              <div className='flex items-center justify-between mb-4'>
+                <h2 className='text-xl text-[#866312] font-semibold'>🌟 Đánh giá sản phẩm</h2>
+                {!showReviewSection && (
+                  <AntButton 
+                    type='primary' 
+                    size='large'
+                    style={{ background: '#D8B979' }}
+                    onClick={() => setShowReviewSection(!showReviewSection)}
+                  >
+                    {showReviewSection ? 'Ẩn' : 'Hiển thị sản phẩm cần đánh giá'}
+                  </AntButton>
+                )}
+              </div>
+              
+              {showReviewSection && (
+                <div className='space-y-4'>
+                  <p className='text-sm text-gray-600 mb-4'>
+                    Cảm ơn bạn đã sử dụng sản phẩm của chúng tôi! Hãy chia sẻ trải nghiệm của bạn để giúp chúng tôi phục vụ bạn tốt hơn.
+                  </p>
+                  {orderData?.order?.items?.map((item, index) => {
+                    const isReviewed = reviewedProductIds.has(item.product._id)
+                    
+                    return (
+                      <div key={index} className='review-item flex items-center justify-between p-4 bg-white rounded shadow-sm hover:shadow-md transition-shadow'>
+                        <div className='flex items-center gap-x-3 flex-1'>
+                          <img src={item?.image} alt='' className='w-[60px] h-[60px] object-cover rounded' />
+                          <div>
+                            <h4 className='text-sm font-medium text-[#333] line-clamp-2'>{item?.product.name}</h4>
+                            <span className='text-xs text-gray-500'>Số lượng: x{item?.quantity}</span>
+                            {isReviewed && (
+                              <span className='text-xs text-green-600 flex items-center gap-x-1 mt-1'>
+                                <span>✓</span> Đã đánh giá
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        {!isReviewed && (
+                          <AntButton 
+                            type='primary'
+                            size='middle'
+                            style={{ background: '#D8B979' }}
+                            onClick={() => handleOpenReviewModal(item)}
+                          >
+                            Đánh giá ngay
+                          </AntButton>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Modal đánh giá sản phẩm */}
+      <Modal
+        title={
+          <div className='flex items-center gap-x-2'>
+            <span className='text-lg font-semibold'>🌟 Đánh giá sản phẩm</span>
+          </div>
+        }
+        open={isReviewModalOpen}
+        onCancel={handleCloseReviewModal}
+        onOk={handleSubmitReview}
+        okText='Gửi đánh giá'
+        cancelText='Hủy'
+        width={600}
+        confirmLoading={isSubmitting}
+        okButtonProps={{ 
+          style: { background: '#D8B979', borderColor: '#D8B979' },
+          disabled: isSubmitting
+        }}
+      >
+        {selectedProduct && (
+          <div className='space-y-4 py-4'>
+            {/* Thông tin sản phẩm */}
+            <div className='flex items-center gap-x-3 p-3 bg-gray-50 rounded'>
+              <img 
+                src={selectedProduct?.image} 
+                alt='' 
+                className='w-[80px] h-[80px] object-cover rounded' 
+              />
+              <div>
+                <h4 className='font-medium text-[#333]'>{selectedProduct?.product.name}</h4>
+                <span className='text-sm text-gray-500'>Số lượng: x{selectedProduct?.quantity}</span>
+              </div>
+            </div>
+
+            {/* Đánh giá sao */}
+            <div className='space-y-2'>
+              <label className='block text-sm font-medium text-gray-700'>
+                Đánh giá của bạn <span className='text-red-500'>*</span>
+              </label>
+              <Rate 
+                value={rating} 
+                onChange={setRating}
+                style={{ fontSize: 32, color: '#D8B979' }}
+              />
+              <p className='text-xs text-gray-500'>
+                {rating === 1 && 'Rất không hài lòng'}
+                {rating === 2 && 'Không hài lòng'}
+                {rating === 3 && 'Bình thường'}
+                {rating === 4 && 'Hài lòng'}
+                {rating === 5 && 'Rất hài lòng'}
+              </p>
+            </div>
+
+            {/* Nhận xét */}
+            <div className='space-y-2'>
+              <label className='block text-sm font-medium text-gray-700'>
+                Nhận xét của bạn
+              </label>
+              <Input.TextArea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder='Chia sẻ trải nghiệm của bạn về sản phẩm...'
+                rows={4}
+                maxLength={500}
+                showCount
+              />
+            </div>
+
+            {/* Upload ảnh */}
+            <div className='space-y-2'>
+              <label className='block text-sm font-medium text-gray-700'>
+                Thêm hình ảnh (tùy chọn)
+              </label>
+              <Upload
+                listType='picture-card'
+                fileList={fileList}
+                onChange={handleUploadChange}
+                beforeUpload={() => false}
+                maxCount={5}
+              >
+                {fileList.length >= 5 ? null : uploadButton}
+              </Upload>
+              <p className='text-xs text-gray-500'>Tối đa 5 ảnh</p>
+            </div>
+          </div>
+        )}
+      </Modal>
     </>
   )
 }

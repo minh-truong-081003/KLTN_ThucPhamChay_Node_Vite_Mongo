@@ -21,6 +21,7 @@ import storage from 'redux-persist/lib/storage'
 import StripeApi from '../api/paymentstripe'
 import VnpayApi from '../api/paymentvnpay'
 import ApiNotifications from '../api/notifications'
+import { ApiReview } from '../api/Review'
 import { orderReducer } from './slices/order.slice'
 import { productReducer } from '.'
 
@@ -64,7 +65,8 @@ const middleware = [
   StripeApi.middleware,
   addressApi.middleware,
   VnpayApi.middleware,
-  ApiNotifications.middleware
+  ApiNotifications.middleware,
+  ApiReview.middleware
 ]
 
 export const store = configureStore({
@@ -86,7 +88,8 @@ export const store = configureStore({
     [NewBlogsApi.reducerPath]: NewBlogsApi.reducer,
     [addressApi.reducerPath]: addressApi.reducer,
     [VnpayApi.reducerPath]: VnpayApi.reducer,
-    [ApiNotifications.reducerPath]: ApiNotifications.reducer
+    [ApiNotifications.reducerPath]: ApiNotifications.reducer,
+    [ApiReview.reducerPath]: ApiReview.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

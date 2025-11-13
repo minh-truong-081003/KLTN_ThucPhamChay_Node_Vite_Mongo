@@ -210,7 +210,38 @@ export const ProductController = {
       if (!product) {
         return res.status(404).json({ message: 'fail', err: 'Not found Product' });
       }
-      return res.status(200).json({ message: 'success', data: product });
+      
+      // Đảm bảo averageRating và totalReviews luôn được tính lại từ reviews thực tế
+      // Tính lại rating từ reviews
+      const Review = (await import('../models/review.model.js')).default;
+      const reviews = await Review.find({
+        product: product._id,
+        is_deleted: false,
+        is_active: true,
+      });
+
+      let averageRating = 0;
+      let totalReviews = 0;
+      
+      if (reviews.length > 0) {
+        const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+        averageRating = parseFloat((totalRating / reviews.length).toFixed(1));
+        totalReviews = reviews.length;
+      }
+
+      await Product.findByIdAndUpdate(product._id, {
+        averageRating: averageRating,
+        totalReviews: totalReviews,
+      });
+      
+      // Lấy lại product sau khi cập nhật
+      const updatedProduct = await Product.findById(req.params.id).populate([
+        { path: 'category', select: 'name' },
+        { path: 'sizes', select: 'name price is_default' },
+        { path: 'toppings', select: '-products' },
+      ]);
+      
+      return res.status(200).json({ message: 'success', data: updatedProduct });
     } catch (error) {
       next(error);
     }

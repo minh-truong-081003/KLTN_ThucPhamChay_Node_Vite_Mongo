@@ -17,6 +17,7 @@ import voucherRoutes from './voucher.routes.js';
 import stripeRoutes from './stripe.routes.js';
 import notificationRoutes from './notification.routes.js';
 import vnpayRoutes from './vnpay.rotues.js';
+import reviewRoutes from './review.routes.js';
 
 const router = express.Router();
 
@@ -39,6 +40,7 @@ const rootRoutes = [
   stripeRoutes,
   notificationRoutes,
   vnpayRoutes,
+  reviewRoutes,
 ];
 
 rootRoutes.map((route) => {

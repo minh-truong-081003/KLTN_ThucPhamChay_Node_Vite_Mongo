@@ -8,6 +8,7 @@ import {
   notificationApi,
   orderApi,
   productApi,
+  reviewApi,
   sizeApi,
   sliderApi,
   toppingApi,
@@ -60,7 +61,8 @@ const middlewares = [
   sliderApi.middleware,
   categoryBlogApi.middleware,
   notificationApi.middleware,
-  analyticApi.middleware
+  analyticApi.middleware,
+  reviewApi.middleware
 ]
 
 export const store = configureStore({
@@ -79,6 +81,7 @@ export const store = configureStore({
     [categoryBlogApi.reducerPath]: categoryBlogApi.reducer,
     [notificationApi.reducerPath]: notificationApi.reducer,
     [analyticApi.reducerPath]: analyticApi.reducer,
+    [reviewApi.reducerPath]: reviewApi.reducer,
 
     /* redux toolkit */
     persistedReducer,

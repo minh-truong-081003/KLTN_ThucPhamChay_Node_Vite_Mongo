@@ -16,6 +16,8 @@ export interface IProduct {
   toppings: ITopping[]
   is_deleted?: boolean
   is_active?: boolean
+  averageRating?: number
+  totalReviews?: number
   createdAt?: string
   updatedAt?: string
 }

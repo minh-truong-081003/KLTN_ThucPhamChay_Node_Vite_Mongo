@@ -135,6 +135,7 @@ const FormProduct = () => {
       placement='right'
       width={800}
       destroyOnClose
+      classNames={{ wrapper: 'custom-drawer' }}
       onClose={() => {
         dispatch(setOpenDrawer(false))
         dispatch(setProductId(null))

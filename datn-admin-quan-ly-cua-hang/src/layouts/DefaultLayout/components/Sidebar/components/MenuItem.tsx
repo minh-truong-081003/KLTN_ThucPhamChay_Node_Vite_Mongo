@@ -1,4 +1,4 @@
-import { BarChartOutlined, ShoppingOutlined, UserOutlined } from '@ant-design/icons'
+import { BarChartOutlined, ShoppingOutlined, UserOutlined, CommentOutlined } from '@ant-design/icons'
 import { AiOutlineControl, AiOutlineFontSize } from 'react-icons/ai'
 import { BiCategoryAlt, BiSolidCategoryAlt } from 'react-icons/bi'
 import { FaClipboardList, FaImages, FaRegNewspaper, FaUserEdit, FaUserFriends } from 'react-icons/fa'
@@ -32,6 +32,9 @@ export const items: MenuProps['items'] = [
 
   // quản lý đơn hàng
   getItem(<NavLink to={`/manager/orders`}>Đơn hàng</NavLink>, 'orders', <FaClipboardList />),
+
+  // quản lý đánh giá
+  getItem(<NavLink to={`/manager/reviews`}>Đánh giá</NavLink>, 'reviews', <CommentOutlined />),
 
   // quản lý sản phẩm
   getItem('Quản lý', 'manager', <AiOutlineControl />, [

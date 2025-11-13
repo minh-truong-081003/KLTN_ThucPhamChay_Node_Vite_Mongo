@@ -14,6 +14,8 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const axios = require('axios');
 const fs = require('fs');
+const dotenv = require('dotenv');
+dotenv.config();
 app.use(
   cors({
     origin: 'http://localhost:5173', // or '*' for a less secure option that allows all origins
@@ -41,13 +43,10 @@ var manager = require('./langchain.js');
 // });
 
 //connect serrver
-mongoose.connect(
-  'mongodb+srv://hungdang02042003:jVp9aHU2eqE747nE@du-an-framework2-milk-t.ntg5d7s.mongodb.net/?retryWrites=true&w=majority',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose
+  .connect(process.env.MONGOOSE_URI || process.env.MONGOOSE_DB)
+  .then(() => console.log('Bot Database connected!'))
+  .catch((err) => console.log(err));
 //schema
 const products = mongoose.model(
   'products',
