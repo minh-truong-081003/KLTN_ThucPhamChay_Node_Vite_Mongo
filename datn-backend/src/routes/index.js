@@ -18,6 +18,7 @@ import stripeRoutes from './stripe.routes.js';
 import notificationRoutes from './notification.routes.js';
 import vnpayRoutes from './vnpay.rotues.js';
 import reviewRoutes from './review.routes.js';
+import messageRoutes from './message.routes.js';
 
 const router = express.Router();
 
@@ -41,10 +42,11 @@ const rootRoutes = [
   notificationRoutes,
   vnpayRoutes,
   reviewRoutes,
+  messageRoutes,
 ];
 
 rootRoutes.map((route) => {
   router.use(route);
 });
 
-export default rootRoutes;
+export default router;

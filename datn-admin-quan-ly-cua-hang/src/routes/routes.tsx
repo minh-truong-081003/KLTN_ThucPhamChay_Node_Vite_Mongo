@@ -21,6 +21,9 @@ import { GuardAccount } from '.'
 import SignIn from '~/pages/SignIn'
 import { createBrowserRouter } from 'react-router-dom'
 import ChangePassword from '~/pages/ChangePass'
+import ChatLayout from '~/pages/Chat/ChatLayout'
+import ChatRoom from '~/pages/Chat/ChatRoom'
+import ChatEmptyState from '~/pages/Chat/ChatEmptyState'
 
 const routers = createBrowserRouter([
   {
@@ -55,6 +58,23 @@ const routers = createBrowserRouter([
           { path: 'blogs', element: <BlogPage /> },
           { path: 'sliders', element: <SliderPage /> },
           { path: 'reviews', element: <ReviewPage /> }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/chat',
+    children: [
+      {
+        element: <GuardAccount JSX={DefaultLayout} />,
+        children: [
+          {
+            element: <ChatLayout />,
+            children: [
+              { index: true, element: <ChatEmptyState /> },
+              { path: ':conversationId', element: <ChatRoom /> }
+            ]
+          }
         ]
       }
     ]

@@ -1,7 +1,11 @@
 import { Socket, io } from 'socket.io-client'
 
 const socket: Socket = io('ws://localhost:8000', {
-  transports: ['websocket', 'pulling', 'flashsocket']
+  transports: ['websocket', 'polling'],
+  autoConnect: true,
+  reconnection: true,
+  reconnectionDelay: 1000,
+  reconnectionAttempts: 5
 })
 
 interface Options {
@@ -11,6 +15,9 @@ interface Options {
   endDate: string
   room: string
 }
+
+// Export socket instance for chat feature
+export { socket }
 
 export const ClientSocket = {
   JoinRoom: (id: string) => {

@@ -1,37 +1,100 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import Message from '../models/message.model.js';
+import Conversation from '../models/conversation.model.js';
+import User from '../models/user.model.js';
 
 dotenv.config();
 
-const Message = mongoose.model('Message', {
-  text: String,
-  username: String,
-});
-
 export default (io) => {
   io.on('connection', async (socket) => {
-    console.log('User connected');
-    // data có thể là username hoặc id user phụ thuộc vào trường hợp
+    console.log('User connected:', socket.id);
+    
+    // Join user to their own room (để nhận tin nhắn riêng)
     socket.on('join', (data) => {
       socket.username = data;
       socket.join(data);
-      // socket.broadcast.emit('somone one joined');
       console.log(`${data} joined`);
 
       // Gửi thông báo cho tất cả người dùng trong phòng
       io.emit('user joined', `${data} joined the chat`);
     });
 
+    // Join user to their room by userId
+    socket.on('user:join', async (userId) => {
+      socket.userId = userId;
+      socket.join(userId);
+      console.log(`User ${userId} joined their room`);
+
+      try {
+        // Nếu userId là 'admin-room' (string literal), chỉ join vào room đó
+        if (userId === 'admin-room') {
+          socket.join('admin-room');
+          console.log(`Joined admin-room for chat notifications`);
+          return;
+        }
+
+        // Nếu userId là valid ObjectId, check xem có phải admin/staff không
+        if (mongoose.Types.ObjectId.isValid(userId)) {
+          const user = await User.findById(userId);
+          if (user && (user.role === 'admin' || user.role === 'staff')) {
+            socket.join('admin-room');
+            console.log(`Admin/Staff ${userId} joined admin-room`);
+          }
+        }
+      } catch (error) {
+        console.error('Error joining rooms:', error);
+      }
+    });
+
+    // Join conversation room
+    socket.on('conversation:join', (conversationId) => {
+      socket.join(conversationId);
+      console.log(`Socket ${socket.id} joined conversation ${conversationId}`);
+    });
+
+    // Leave conversation room
+    socket.on('conversation:leave', (conversationId) => {
+      socket.leave(conversationId);
+      console.log(`Socket ${socket.id} left conversation ${conversationId}`);
+    });
+
+    // Conversation status changed - broadcast to all admin
+    socket.on('conversation:status-changed', (data) => {
+      console.log('🔄 Broadcasting status change:', data);
+      // Broadcast to admin-room
+      io.to('admin-room').emit('conversation:status-changed', data);
+      // Also emit to conversation room for any participants
+      io.to(data.conversationId).emit('conversation:status-changed', data);
+    });
+
+    // Real-time typing indicator
+    socket.on('typing:start', ({ conversationId, userId, username }) => {
+      socket.to(conversationId).emit('user-typing', { userId, username });
+    });
+
+    socket.on('typing:stop', ({ conversationId, userId }) => {
+      socket.to(conversationId).emit('user-stop-typing', { userId });
+    });
+
+    // Legacy chat message support (để tương thích với code cũ)
     socket.on('chat message', async (message) => {
       console.log('Message:', message);
 
-      // Lưu tin nhắn vào MongoDB
-      const newMessage = new Message({ text: message.text, username: socket.username });
-      await newMessage.save();
+      try {
+        // Xử lý theo cấu trúc cũ nếu cần
+        const newMessage = await Message.create({
+          text: message.text,
+          sender: socket.userId,
+          conversationId: message.conversationId || 'default',
+          status: 'sent',
+        });
 
-      // Gửi tin nhắn tới tất cả người dùng trong phòng
-      io.emit('chat message', { text: message.text, username: socket.username });
+        io.emit('chat message', { text: message.text, username: socket.username });
+      } catch (error) {
+        console.error('Error saving message:', error);
+      }
     });
 
     socket.on('client:sendNotificationToAdmin', async (data) => {

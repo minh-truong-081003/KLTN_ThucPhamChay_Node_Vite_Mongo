@@ -28,8 +28,10 @@ export const authMiddleware = {
 
         const user = await User.findById(decoded?.id);
         req.user = user;
+        console.log('✅ Token verified, user:', user?._id, user?.role);
         next();
       } catch (err) {
+        console.error('❌ Token verification error:', err.name, err.message);
         if (err.name === 'JsonWebTokenError') {
           return res.status(200).json({
             message: 'Token không hợp lệ',
@@ -52,6 +54,7 @@ export const authMiddleware = {
         });
       }
     } else {
+      console.error('❌ No token in request headers');
       // throw new Error({
       //   message: 'There is no token attached to header',
       // });
@@ -73,6 +76,12 @@ export const authMiddleware = {
   // Middleware cho Admin và Staff (nhân viên)
   verifyTokenAdminOrStaff: async (req, res, next) => {
     authMiddleware.verifyToken(req, res, () => {
+      if (!req.user) {
+        return res.status(401).json({
+          message: 'fail',
+          err: 'Người dùng không tồn tại'
+        });
+      }
       if (req.user.role === 'admin' || req.user.role === 'staff') {
         next();
       } else {

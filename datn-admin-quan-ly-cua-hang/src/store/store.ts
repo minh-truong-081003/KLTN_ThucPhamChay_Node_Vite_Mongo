@@ -14,6 +14,7 @@ import {
   toppingApi,
   userApi
 } from './services'
+import chatService from '../features/Chat/chat.service'
 import {
   authReducer,
   blogReducer,
