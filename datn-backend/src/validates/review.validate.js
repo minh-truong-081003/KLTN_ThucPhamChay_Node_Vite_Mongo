@@ -50,3 +50,22 @@ export const updateReviewValidate = joi.object({
     .optional(),
 });
 
+// Validate cho reply review (không có rating, order)
+export const replyReviewValidate = joi.object({
+  comment: joi.string().required({
+    'string.base': 'Comment must be a string',
+    'string.empty': 'Comment is required for reply',
+    'any.required': 'Comment is required for reply',
+  }),
+  images: joi
+    .array()
+    .items(
+      joi.object({
+        url: joi.string(),
+        publicId: joi.string(),
+        filename: joi.string(),
+      })
+    )
+    .optional(),
+});
+

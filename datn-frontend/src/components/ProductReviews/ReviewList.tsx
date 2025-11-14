@@ -70,14 +70,27 @@ const ReviewList = ({
     <div className='reviews-list space-y-4'>
       {reviews.map((review) => {
         // Kiểm tra xem user hiện tại có phải là chủ sở hữu của review này không
-        const isOwner = currentUserId && review.user?._id === currentUserId
+        const isOwner = currentUserId && review.user?._id && currentUserId === review.user._id
         const canManageThisReview = isOwner || canModerateReviews
 
         return (
           <div
             key={review._id}
-            className='review-item p-5 rounded-xl border border-gray-200 bg-white transition-all hover:shadow-md'
+            className={`review-item p-5 rounded-xl border transition-all hover:shadow-md ${
+              !review.is_active && isOwner
+                ? 'bg-gray-50 border-gray-300 opacity-60'
+                : 'border-gray-200 bg-white'
+            }`}
           >
+            {/* Thông báo nếu đánh giá bị ẩn */}
+            {!review.is_active && isOwner && (
+              <div className='mb-3 flex items-center gap-2 text-sm text-orange-600 bg-orange-50 px-3 py-2 rounded-lg border border-orange-200'>
+                <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
+                  <path fillRule='evenodd' d='M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z' clipRule='evenodd' />
+                </svg>
+                <span className='font-medium'>Đánh giá này đang ở trạng thái ẩn (chỉ bạn nhìn thấy)</span>
+              </div>
+            )}
             <div className='flex items-start justify-between mb-3'>
               <div className='flex items-start gap-4 flex-1'>
                 <div className='avatar w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center overflow-hidden shadow-md flex-shrink-0'>
@@ -105,18 +118,20 @@ const ReviewList = ({
                     )}
                   </div>
                   <div className='flex items-center gap-2 mb-2'>
-                    <div className='flex items-center gap-0.5'>
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <svg
-                          key={star}
-                          className={`w-5 h-5 ${star <= review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                          fill='currentColor'
-                          viewBox='0 0 20 20'
-                        >
-                          <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
-                        </svg>
-                      ))}
-                    </div>
+                    {review.rating && (
+                      <div className='flex items-center gap-0.5'>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <svg
+                            key={star}
+                            className={`w-5 h-5 ${star <= review.rating! ? 'text-yellow-400' : 'text-gray-300'}`}
+                            fill='currentColor'
+                            viewBox='0 0 20 20'
+                          >
+                            <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
+                          </svg>
+                        ))}
+                      </div>
+                    )}
                     <span className='text-xs text-gray-500'>{formatDate(review.createdAt)}</span>
                   </div>
                   {review.comment && (
@@ -197,6 +212,67 @@ const ReviewList = ({
                 </div>
               )}
             </div>
+
+            {/* Hiển thị replies như cây thư mục */}
+            {review.replies && review.replies.length > 0 && (
+              <div className='replies-container mt-4 ml-12 space-y-3 border-l-2 border-blue-200 pl-4'>
+                {review.replies.map((reply) => (
+                  <div
+                    key={reply._id}
+                    className='reply-item p-4 rounded-lg bg-blue-50 border border-blue-100'
+                  >
+                    <div className='flex items-start gap-3'>
+                      <div className='avatar w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center overflow-hidden shadow flex-shrink-0'>
+                        {reply.user?.avatar ? (
+                          <img
+                            src={reply.user.avatar}
+                            alt={reply.user.username || 'Admin'}
+                            className='w-full h-full object-cover'
+                          />
+                        ) : (
+                          <span className='text-white font-bold text-sm'>
+                            {(reply.user?.username || 'A').charAt(0).toUpperCase()}
+                          </span>
+                        )}
+                      </div>
+                      <div className='flex-1 min-w-0'>
+                        <div className='flex items-center gap-2 mb-1'>
+                          <p className='font-semibold text-gray-900 text-sm'>
+                            {reply.user?.username || 'Quản trị viên'}
+                          </p>
+                          <span className='px-2 py-0.5 bg-blue-600 text-white text-xs font-medium rounded'>
+                            {reply.user?.role === 'admin' ? 'Quản trị viên' : 'Nhân viên'}
+                          </span>
+                        </div>
+                        <span className='text-xs text-gray-500 block mb-2'>{formatDate(reply.createdAt)}</span>
+                        {reply.comment && (
+                          <p className='text-gray-700 text-sm leading-relaxed whitespace-pre-wrap'>
+                            {reply.comment}
+                          </p>
+                        )}
+                        {reply.images && reply.images.length > 0 && (
+                          <div className='reply-images flex gap-2 mt-3 flex-wrap'>
+                            {reply.images.map((image, index) => (
+                              <div
+                                key={index}
+                                className='relative group cursor-pointer'
+                                onClick={() => window.open(image.url, '_blank')}
+                              >
+                                <img
+                                  src={image.url}
+                                  alt={`Reply ${index + 1}`}
+                                  className='w-20 h-20 object-cover rounded-lg border border-blue-200 hover:scale-105 transition-transform shadow-sm'
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )
       })}

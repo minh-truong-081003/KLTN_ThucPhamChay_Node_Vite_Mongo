@@ -1,4 +1,4 @@
-import { Image, Popconfirm, Rate, Space, Table, Tag, Button as AntButton, Tooltip, Input } from 'antd'
+import { Image, Popconfirm, Rate, Space, Table, Tag, Button as AntButton, Tooltip, Input, Modal, Form } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { useState, useRef } from 'react'
 import { AiOutlineEyeInvisible, AiOutlineSearch } from 'react-icons/ai'
@@ -6,11 +6,12 @@ import { BsFillTrashFill } from 'react-icons/bs'
 import { MdOutlineMessage } from 'react-icons/md'
 import Loading from '~/components/Loading/Loading'
 import { NotFound } from '~/pages'
-import { useDeleteReviewMutation, useGetAllReviewsQuery, useToggleReviewVisibilityMutation } from '~/store/services'
+import { useDeleteReviewMutation, useGetAllReviewsQuery, useToggleReviewVisibilityMutation, useReplyReviewMutation } from '~/store/services'
 import { IReview } from '~/types'
 import { formatDate } from '~/utils/formatDate'
 import { messageAlert } from '~/utils/messageAlert'
 import { pause } from '~/utils/pause'
+import { useReviewSocket } from '~/hooks/useReviewSocket'
 
 export const ReviewListActive = () => {
   const [options, setOptions] = useState({
@@ -24,10 +25,28 @@ export const ReviewListActive = () => {
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef<any>(null)
+  const [replyModalOpen, setReplyModalOpen] = useState(false)
+  const [selectedReview, setSelectedReview] = useState<IReview | null>(null)
+  const [replyForm] = Form.useForm()
 
-  const { data: reviewsData, isLoading, isError } = useGetAllReviewsQuery(options)
+  const { data: reviewsData, isLoading, isError, refetch } = useGetAllReviewsQuery(options, {
+    // Refetch khi focus vào window (khi chuyển từ frontend sang admin)
+    refetchOnFocus: true,
+    // Refetch khi mount component hoặc args thay đổi
+    refetchOnMountOrArgChange: true,
+  })
   const [deleteReview] = useDeleteReviewMutation()
   const [toggleVisibility] = useToggleReviewVisibilityMutation()
+  const [replyReview, { isLoading: isReplying }] = useReplyReviewMutation()
+
+  // Socket realtime: Tự động refetch khi có thay đổi từ frontend
+  useReviewSocket({
+    onReviewCreated: () => refetch(),
+    onReviewUpdated: () => refetch(),
+    onReviewDeleted: () => refetch(),
+    onReviewToggled: () => refetch(),
+    onReviewRestored: () => refetch(),
+  })
 
   const handleSearch = (selectedKeys: string[], confirm: any, dataIndex: string) => {
     confirm()
@@ -103,6 +122,7 @@ export const ReviewListActive = () => {
       await Promise.all(selectedRowKeys.map((id) => toggleVisibility({ id: id as string }).unwrap()))
       messageAlert(`Đã ẩn ${selectedRowKeys.length} đánh giá`, 'success')
       setSelectedRowKeys([])
+      refetch()
     } catch (error) {
       messageAlert('Có lỗi xảy ra khi ẩn đánh giá!', 'error')
     } finally {
@@ -116,6 +136,7 @@ export const ReviewListActive = () => {
       await Promise.all(selectedRowKeys.map((id) => deleteReview({ id: id as string }).unwrap()))
       messageAlert(`Đã xóa ${selectedRowKeys.length} đánh giá`, 'success')
       setSelectedRowKeys([])
+      refetch()
     } catch (error) {
       messageAlert('Có lỗi xảy ra khi xóa đánh giá!', 'error')
     } finally {
@@ -129,6 +150,7 @@ export const ReviewListActive = () => {
       .unwrap()
       .then(() => {
         messageAlert('Xóa đánh giá thành công', 'success')
+        refetch()
       })
       .catch(() => messageAlert('Xóa đánh giá thất bại!', 'error'))
   }
@@ -139,8 +161,34 @@ export const ReviewListActive = () => {
       .unwrap()
       .then(() => {
         messageAlert('Đã ẩn đánh giá', 'success')
+        refetch()
       })
       .catch(() => messageAlert('Thao tác thất bại!', 'error'))
+  }
+
+  const handleOpenReply = (review: IReview) => {
+    setSelectedReview(review)
+    setReplyModalOpen(true)
+  }
+
+  const handleReplySubmit = async () => {
+    try {
+      const values = await replyForm.validateFields()
+      if (!selectedReview) return
+
+      await replyReview({
+        reviewId: selectedReview._id,
+        comment: values.comment
+      }).unwrap()
+
+      messageAlert('Trả lời đánh giá thành công!', 'success')
+      setReplyModalOpen(false)
+      replyForm.resetFields()
+      setSelectedReview(null)
+      refetch()
+    } catch (error: any) {
+      messageAlert(error?.data?.err || 'Trả lời thất bại!', 'error')
+    }
   }
 
   const columns: ColumnsType<IReview> = [
@@ -266,15 +314,16 @@ export const ReviewListActive = () => {
       align: 'center',
       render: (_, record) => (
         <Space size='small' style={{ display: 'flex', justifyContent: 'center' }}>
-          <Popconfirm title='Trả lời đánh giá' description='Tính năng đang phát triển' okText='OK' showCancel={false}>
+          <Tooltip title='Trả lời đánh giá'>
             <button
+              onClick={() => handleOpenReply(record)}
               style={{ backgroundColor: '#eab308', color: 'white', border: 'none' }}
               className='px-3 py-1.5 rounded hover:bg-yellow-600 flex items-center gap-1.5 transition-colors'
             >
               <MdOutlineMessage className='text-base' />
               <span>Rep</span>
             </button>
-          </Popconfirm>
+          </Tooltip>
           <Popconfirm
             title='Ẩn đánh giá'
             description='Bạn có chắc chắn muốn ẩn đánh giá này?'
@@ -364,6 +413,43 @@ export const ReviewListActive = () => {
           }
         }}
       />
+
+      <Modal
+        title='Trả lời đánh giá'
+        open={replyModalOpen}
+        onOk={handleReplySubmit}
+        onCancel={() => {
+          setReplyModalOpen(false)
+          replyForm.resetFields()
+          setSelectedReview(null)
+        }}
+        okText='Gửi trả lời'
+        cancelText='Hủy'
+        confirmLoading={isReplying}
+      >
+        {selectedReview && (
+          <div className='mb-4'>
+            <p className='mb-2'>
+              <strong>Khách hàng:</strong> {selectedReview.user?.username || 'Ẩn danh'}
+            </p>
+            <p className='mb-2'>
+              <strong>Đánh giá:</strong> <Rate disabled value={selectedReview.rating} />
+            </p>
+            <p className='mb-2'>
+              <strong>Nội dung:</strong> {selectedReview.comment}
+            </p>
+          </div>
+        )}
+        <Form form={replyForm} layout='vertical'>
+          <Form.Item
+            name='comment'
+            label='Nội dung trả lời'
+            rules={[{ required: true, message: 'Vui lòng nhập nội dung trả lời!' }]}
+          >
+            <Input.TextArea rows={4} placeholder='Nhập nội dung trả lời...' />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   )
 }

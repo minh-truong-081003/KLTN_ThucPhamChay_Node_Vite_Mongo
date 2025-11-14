@@ -5,18 +5,20 @@ export interface IReview {
   _id: string
   user: IUser
   product: IProduct | string
-  order: {
+  order?: {
     _id: string
     status: string
     createdAt: string
   }
-  rating: number
+  rating?: number
   comment: string
   images: Array<{
     url: string
     publicId: string
     filename: string
   }>
+  parent_review?: string | null
+  replies?: IReview[]
   is_active: boolean
   is_deleted: boolean
   createdAt: string

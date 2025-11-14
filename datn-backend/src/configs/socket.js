@@ -322,9 +322,25 @@ export default (io) => {
       }
     });
 
+    // ============ REVIEW EVENTS ============
+    // Join room theo productId để nhận updates của sản phẩm đó
+    socket.on('review:joinProduct', (productId) => {
+      socket.join(`product:${productId}`);
+      console.log(`Socket joined product room: ${productId}`);
+    });
+
+    // Leave product room
+    socket.on('review:leaveProduct', (productId) => {
+      socket.leave(`product:${productId}`);
+      console.log(`Socket left product room: ${productId}`);
+    });
+
     socket.on('disconnect', () => {
       // Gửi thông báo cho tất cả người dùng trong phòng
       io.emit('user left', `${socket.username} left the chat`);
     });
   });
+
+  // Export io instance để dùng trong controllers
+  global.io = io;
 };

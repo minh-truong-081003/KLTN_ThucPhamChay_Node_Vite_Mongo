@@ -5,7 +5,10 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 export const ApiReview = createApi({
   reducerPath: 'ApiReview',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['review'],
+  tagTypes: ['review', 'product'],
+  // Refetch on reconnect cho realtime tốt hơn
+  refetchOnReconnect: true,
+  refetchOnFocus: false, // Tắt vì socket đã xử lý realtime
   endpoints: (builder) => ({
     // Lấy tất cả đánh giá của một sản phẩm
     getReviewsByProduct: builder.query<IReviewDocs, { productId: string; page?: number; limit?: number; rating?: number }>({
@@ -24,6 +27,8 @@ export const ApiReview = createApi({
               { type: 'review', id: `product-${productId}` },
             ]
           : [{ type: 'review', id: `product-${productId}` }],
+      // Cache ngắn hơn cho dữ liệu realtime
+      keepUnusedDataFor: 10, // Cache 10s thay vì 30s
     }),
 
     // Kiểm tra user đã mua sản phẩm chưa
@@ -71,10 +76,20 @@ export const ApiReview = createApi({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: (result, error, { reviewId }) => [
-        { type: 'review', id: reviewId },
-        { type: 'review', id: 'List' },
-      ],
+      invalidatesTags: (result, error, { reviewId }) => {
+        if (result?.data) {
+          return [
+            { type: 'review', id: reviewId },
+            { type: 'review', id: 'List' },
+            { type: 'review', id: `product-${result.data.product}` },
+            { type: 'review', id: `user-product-${result.data.product}` },
+          ]
+        }
+        return [
+          { type: 'review', id: reviewId },
+          { type: 'review', id: 'List' },
+        ]
+      },
     }),
 
     // Xóa đánh giá
@@ -83,10 +98,20 @@ export const ApiReview = createApi({
         url: `/api/review/${reviewId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, reviewId) => [
-        { type: 'review', id: reviewId },
-        { type: 'review', id: 'List' },
-      ],
+      invalidatesTags: (result, error, reviewId) => {
+        if (result?.data) {
+          return [
+            { type: 'review', id: reviewId },
+            { type: 'review', id: 'List' },
+            { type: 'review', id: `product-${result.data.product}` },
+            { type: 'review', id: `user-product-${result.data.product}` },
+          ]
+        }
+        return [
+          { type: 'review', id: reviewId },
+          { type: 'review', id: 'List' },
+        ]
+      },
     }),
 
     // Ẩn/Hiện đánh giá (toggle visibility)
@@ -95,10 +120,20 @@ export const ApiReview = createApi({
         url: `/api/review/${reviewId}/toggle-visibility`,
         method: 'PATCH',
       }),
-      invalidatesTags: (result, error, reviewId) => [
-        { type: 'review', id: reviewId },
-        { type: 'review', id: 'List' },
-      ],
+      invalidatesTags: (result, error, reviewId) => {
+        if (result?.data) {
+          return [
+            { type: 'review', id: reviewId },
+            { type: 'review', id: 'List' },
+            { type: 'review', id: `product-${result.data.product}` },
+            { type: 'review', id: `user-product-${result.data.product}` },
+          ]
+        }
+        return [
+          { type: 'review', id: reviewId },
+          { type: 'review', id: 'List' },
+        ]
+      },
     }),
   }),
 })

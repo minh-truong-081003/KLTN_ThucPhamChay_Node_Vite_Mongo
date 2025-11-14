@@ -17,6 +17,9 @@ export const reviewApi = createApi({
     }
   }),
   tagTypes: ['Review'],
+  // Refetch on reconnect và refetch on focus cho realtime tốt hơn
+  refetchOnReconnect: true,
+  refetchOnFocus: false, // Tắt vì đã xử lý trong component
   endpoints: (builder) => ({
     // Lấy tất cả reviews (admin)
     getAllReviews: builder.query<
@@ -45,7 +48,9 @@ export const reviewApi = createApi({
           return final
         }
         return [{ type: 'Review', id: 'LIST' }]
-      }
+      },
+      // Cache ngắn hơn cho dữ liệu realtime
+      keepUnusedDataFor: 10, // Cache 10s thay vì 30s
     }),
 
     // Xóa review (soft delete)
@@ -83,6 +88,22 @@ export const reviewApi = createApi({
         method: 'DELETE'
       }),
       invalidatesTags: [{ type: 'Review', id: 'LIST' }]
+    }),
+
+    // Reply review (admin/staff)
+    replyReview: builder.mutation<{ message: string; data: any }, { reviewId: string; comment: string; images?: any[] }>({
+      query: ({ reviewId, comment, images }) => ({
+        url: `/review/${reviewId}/reply`,
+        method: 'POST',
+        body: { comment, images }
+      }),
+      invalidatesTags: [{ type: 'Review', id: 'LIST' }]
+    }),
+
+    // Lấy replies của một review
+    getRepliesByReview: builder.query<{ message: string; data: any[] }, string>({
+      query: (reviewId) => `/reviews/${reviewId}/replies`,
+      providesTags: (result, error, reviewId) => [{ type: 'Review', id: `REPLIES-${reviewId}` }]
     })
   })
 })
@@ -92,6 +113,8 @@ export const {
   useDeleteReviewMutation,
   useRestoreReviewMutation,
   useToggleReviewVisibilityMutation,
-  useForceDeleteReviewMutation
+  useForceDeleteReviewMutation,
+  useReplyReviewMutation,
+  useGetRepliesByReviewQuery
 } = reviewApi
 

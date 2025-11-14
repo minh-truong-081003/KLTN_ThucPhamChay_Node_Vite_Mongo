@@ -212,21 +212,26 @@ export const ProductController = {
       }
       
       // Đảm bảo averageRating và totalReviews luôn được tính lại từ reviews thực tế
-      // Tính lại rating từ reviews
+      // Tính lại rating từ reviews (CHỈ TÍNH REVIEW GỐC, KHÔNG TÍNH REPLIES)
       const Review = (await import('../models/review.model.js')).default;
       const reviews = await Review.find({
         product: product._id,
         is_deleted: false,
         is_active: true,
+        parent_review: null, // CHỈ LẤY REVIEW GỐC
       });
 
       let averageRating = 0;
       let totalReviews = 0;
       
       if (reviews.length > 0) {
-        const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-        averageRating = parseFloat((totalRating / reviews.length).toFixed(1));
-        totalReviews = reviews.length;
+        // Lọc các reviews có rating (chỉ review gốc mới có rating)
+        const validReviews = reviews.filter(review => review.rating != null);
+        if (validReviews.length > 0) {
+          const totalRating = validReviews.reduce((sum, review) => sum + review.rating, 0);
+          averageRating = parseFloat((totalRating / validReviews.length).toFixed(1));
+          totalReviews = validReviews.length;
+        }
       }
 
       await Product.findByIdAndUpdate(product._id, {

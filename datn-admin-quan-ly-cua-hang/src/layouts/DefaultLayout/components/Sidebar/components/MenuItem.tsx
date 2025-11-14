@@ -61,6 +61,9 @@ export const itemsStaff: MenuProps['items'] = [
   // quản lý đơn hàng
   getItem(<NavLink to={`/manager/orders`}>Đơn hàng</NavLink>, 'orders', <FaClipboardList />),
 
+  // quản lý đánh giá
+  getItem(<NavLink to={`/manager/reviews`}>Đánh giá</NavLink>, 'reviews', <CommentOutlined />),
+
   // quản lý sản phẩm
   getItem('Quản lý', 'manager', <AiOutlineControl />, [
     getItem(<NavLink to={`/manager/products`}>Sản phẩm</NavLink>, 'products', <ShoppingOutlined />),

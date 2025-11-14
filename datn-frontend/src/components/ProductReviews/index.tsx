@@ -9,6 +9,7 @@ import {
   useDeleteReviewMutation,
   useToggleReviewVisibilityMutation,
 } from '../../api/Review'
+import { useReviewSocket } from '../../hook/useReviewSocket'
 import { IProduct } from '../../interfaces/products.type'
 import { IImage } from '../../interfaces/image.type'
 import ReviewList from './ReviewList'
@@ -68,6 +69,30 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
   const isStaff = user?.role === 'staff'
   const canModerateReviews = isAdmin || isStaff
 
+  // Socket realtime updates
+  useReviewSocket(product._id, {
+    onReviewCreated: () => {
+      refetchReviews()
+      refetchUserReview()
+    },
+    onReviewUpdated: () => {
+      refetchReviews()
+      refetchUserReview()
+    },
+    onReviewDeleted: () => {
+      refetchReviews()
+      refetchUserReview()
+    },
+    onReviewToggled: () => {
+      refetchReviews()
+      refetchUserReview()
+    },
+    onReviewRestored: () => {
+      refetchReviews()
+      refetchUserReview()
+    },
+  })
+
 
   const handleCreateReview = async (data: { rating: number; comment: string; order: string; images?: IImage[] }) => {
     try {
@@ -104,10 +129,10 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
   }
 
   const handleDeleteReview = async (reviewId: string) => {
-    if (window.confirm('Bạn có chắc chắn muốn xóa đánh giá này?')) {
+    if (window.confirm('Bạn có chắc chắn muốn xóa đánh giá này? Đánh giá sẽ được gửi cho admin duyệt xóa.')) {
       try {
         await deleteReview(reviewId).unwrap()
-        toast.success('Đánh giá đã được xóa!')
+        toast.success('Đá gửi yêu cầu xóa đánh giá!')
         refetchReviews()
         refetchUserReview()
       } catch (error: any) {
@@ -127,7 +152,9 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
     }
   }
 
+  // Lấy danh sách reviews (backend đã tự động thêm đánh giá ẩn của user)
   const reviews = reviewsData?.docs || []
+  
   const totalReviews = allReviewsData?.totalDocs || 0
   
   // Tính lại averageRating từ tất cả reviews (không filter) để đảm bảo chính xác

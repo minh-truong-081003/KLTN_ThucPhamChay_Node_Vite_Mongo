@@ -2,6 +2,23 @@ import User from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
 
 export const authMiddleware = {
+  // Xác thực tùy chọn - lấy user nếu có token, nhưng không bắt buộc
+  optionalAuth: async (req, res, next) => {
+    let token;
+    if (req?.headers?.authorization?.startsWith('Bearer')) {
+      token = req.headers?.authorization?.split(' ')[1];
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded?.id);
+        req.user = user;
+      } catch (err) {
+        // Nếu token không hợp lệ, bỏ qua và tiếp tục
+        req.user = null;
+      }
+    }
+    next();
+  },
+
   verifyToken: async (req, res, next) => {
     let token;
     if (req?.headers?.authorization?.startsWith('Bearer')) {
@@ -49,6 +66,20 @@ export const authMiddleware = {
         next();
       } else {
         return res.status(403).json("You're not allowed to this task!!");
+      }
+    });
+  },
+
+  // Middleware cho Admin và Staff (nhân viên)
+  verifyTokenAdminOrStaff: async (req, res, next) => {
+    authMiddleware.verifyToken(req, res, () => {
+      if (req.user.role === 'admin' || req.user.role === 'staff') {
+        next();
+      } else {
+        return res.status(403).json({
+          message: 'fail',
+          err: 'Bạn không có quyền thực hiện thao tác này. Chỉ admin và staff mới được phép.'
+        });
       }
     });
   },

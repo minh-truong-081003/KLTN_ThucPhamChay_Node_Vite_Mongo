@@ -16,11 +16,11 @@ const reviewSchema = new mongoose.Schema(
     order: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Order',
-      required: true,
+      required: false, // Không bắt buộc cho reply
     },
     rating: {
       type: Number,
-      required: true,
+      required: false, // Không bắt buộc cho reply (chỉ review gốc có rating)
       min: 1,
       max: 5,
     },
@@ -35,6 +35,12 @@ const reviewSchema = new mongoose.Schema(
         filename: String,
       },
     ],
+    // Reply review: nếu có parent_review thì đây là reply
+    parent_review: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Review',
+      default: null,
+    },
     is_active: {
       type: Boolean,
       default: true,
@@ -48,7 +54,14 @@ const reviewSchema = new mongoose.Schema(
 );
 
 // Đảm bảo mỗi user chỉ đánh giá 1 lần cho mỗi sản phẩm trong 1 đơn hàng
-reviewSchema.index({ user: 1, product: 1, order: 1 }, { unique: true });
+// Chỉ áp dụng cho review gốc (parent_review = null), không áp dụng cho reply
+reviewSchema.index(
+  { user: 1, product: 1, order: 1 }, 
+  { 
+    unique: true,
+    partialFilterExpression: { parent_review: null }
+  }
+);
 
 reviewSchema.plugin(mongoosePaginate);
 

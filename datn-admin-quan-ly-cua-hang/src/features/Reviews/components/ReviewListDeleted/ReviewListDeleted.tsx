@@ -11,6 +11,7 @@ import { IReview } from '~/types'
 import { formatDate } from '~/utils/formatDate'
 import { messageAlert } from '~/utils/messageAlert'
 import { pause } from '~/utils/pause'
+import { useReviewSocket } from '~/hooks/useReviewSocket'
 
 export const ReviewListDeleted = () => {
   const [options, setOptions] = useState({
@@ -24,9 +25,19 @@ export const ReviewListDeleted = () => {
   const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef<any>(null)
 
-  const { data: reviewsData, isLoading, isError } = useGetAllReviewsQuery(options)
+  const { data: reviewsData, isLoading, isError, refetch } = useGetAllReviewsQuery(options, {
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  })
   const [forceDelete] = useForceDeleteReviewMutation()
   const [restoreReview] = useRestoreReviewMutation()
+
+  // Socket realtime: Tự động refetch khi có thay đổi từ frontend
+  useReviewSocket({
+    onReviewDeleted: () => refetch(),
+    onReviewRestored: () => refetch(),
+    onReviewForceDeleted: () => refetch(),
+  })
 
   const handleSearch = (selectedKeys: string[], confirm: any, dataIndex: string) => {
     confirm()
@@ -100,6 +111,7 @@ export const ReviewListDeleted = () => {
       await Promise.all(selectedRowKeys.map((id) => restoreReview({ id: id as string }).unwrap()))
       messageAlert(`Đã khôi phục ${selectedRowKeys.length} đánh giá`, 'success')
       setSelectedRowKeys([])
+      refetch()
     } catch (error) {
       messageAlert('Có lỗi xảy ra khi khôi phục đánh giá!', 'error')
     } finally {
@@ -113,6 +125,7 @@ export const ReviewListDeleted = () => {
       await Promise.all(selectedRowKeys.map((id) => forceDelete({ id: id as string }).unwrap()))
       messageAlert(`Đã xóa vĩnh viễn ${selectedRowKeys.length} đánh giá`, 'success')
       setSelectedRowKeys([])
+      refetch()
     } catch (error) {
       messageAlert('Có lỗi xảy ra khi xóa vĩnh viễn đánh giá!', 'error')
     } finally {
@@ -126,6 +139,7 @@ export const ReviewListDeleted = () => {
       .unwrap()
       .then(() => {
         messageAlert('Đã xóa vĩnh viễn đánh giá', 'success')
+        refetch()
       })
       .catch(() => messageAlert('Xóa đánh giá thất bại!', 'error'))
   }
@@ -136,6 +150,7 @@ export const ReviewListDeleted = () => {
       .unwrap()
       .then(() => {
         messageAlert('Khôi phục đánh giá thành công', 'success')
+        refetch()
       })
       .catch(() => messageAlert('Khôi phục đánh giá thất bại!', 'error'))
   }

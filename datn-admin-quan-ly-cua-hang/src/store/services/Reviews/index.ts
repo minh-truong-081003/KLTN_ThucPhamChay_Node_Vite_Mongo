@@ -4,6 +4,8 @@ export {
   useDeleteReviewMutation,
   useRestoreReviewMutation,
   useToggleReviewVisibilityMutation,
-  useForceDeleteReviewMutation
+  useForceDeleteReviewMutation,
+  useReplyReviewMutation,
+  useGetRepliesByReviewQuery
 } from './review.service'
 

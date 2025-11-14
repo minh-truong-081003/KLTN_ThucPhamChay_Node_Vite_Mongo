@@ -11,6 +11,7 @@ import { IReview } from '~/types'
 import { formatDate } from '~/utils/formatDate'
 import { messageAlert } from '~/utils/messageAlert'
 import { pause } from '~/utils/pause'
+import { useReviewSocket } from '~/hooks/useReviewSocket'
 
 export const ReviewListHidden = () => {
   const [options, setOptions] = useState({
@@ -25,9 +26,19 @@ export const ReviewListHidden = () => {
   const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef<any>(null)
 
-  const { data: reviewsData, isLoading, isError } = useGetAllReviewsQuery(options)
+  const { data: reviewsData, isLoading, isError, refetch } = useGetAllReviewsQuery(options, {
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  })
   const [deleteReview] = useDeleteReviewMutation()
   const [toggleVisibility] = useToggleReviewVisibilityMutation()
+
+  // Socket realtime
+  useReviewSocket({
+    onReviewToggled: () => refetch(),
+    onReviewDeleted: () => refetch(),
+    onReviewRestored: () => refetch(),
+  })
 
   const handleSearch = (selectedKeys: string[], confirm: any, dataIndex: string) => {
     confirm()
@@ -101,6 +112,7 @@ export const ReviewListHidden = () => {
       await Promise.all(selectedRowKeys.map((id) => toggleVisibility({ id: id as string }).unwrap()))
       messageAlert(`Đã khôi phục ${selectedRowKeys.length} đánh giá`, 'success')
       setSelectedRowKeys([])
+      refetch()
     } catch (error) {
       messageAlert('Có lỗi xảy ra khi khôi phục đánh giá!', 'error')
     } finally {
@@ -114,6 +126,7 @@ export const ReviewListHidden = () => {
       await Promise.all(selectedRowKeys.map((id) => deleteReview({ id: id as string }).unwrap()))
       messageAlert(`Đã xóa ${selectedRowKeys.length} đánh giá`, 'success')
       setSelectedRowKeys([])
+      refetch()
     } catch (error) {
       messageAlert('Có lỗi xảy ra khi xóa đánh giá!', 'error')
     } finally {
@@ -127,6 +140,7 @@ export const ReviewListHidden = () => {
       .unwrap()
       .then(() => {
         messageAlert('Xóa đánh giá thành công', 'success')
+        refetch()
       })
       .catch(() => messageAlert('Xóa đánh giá thất bại!', 'error'))
   }
@@ -137,6 +151,7 @@ export const ReviewListHidden = () => {
       .unwrap()
       .then(() => {
         messageAlert('Đã khôi phục hiển thị đánh giá', 'success')
+        refetch()
       })
       .catch(() => messageAlert('Thao tác thất bại!', 'error'))
   }
