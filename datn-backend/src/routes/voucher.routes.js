@@ -4,6 +4,7 @@ import { voucherController } from '../controllers/voucher.controller.js';
 const router = express.Router();
 
 router.post('/voucher', voucherController.create);
+router.get('/voucher/generate-code', voucherController.generateCode);
 router.get('/vouchers', voucherController.getAll);
 router.get('/vouchers/active', voucherController.getActiveVoucher);
 router.get('/voucher/:id', voucherController.getOne);

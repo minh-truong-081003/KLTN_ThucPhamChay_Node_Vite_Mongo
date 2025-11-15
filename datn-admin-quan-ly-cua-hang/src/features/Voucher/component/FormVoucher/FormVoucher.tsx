@@ -1,5 +1,6 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { Checkbox, Col, DatePicker, Drawer, Form, Input, InputNumber, Row } from 'antd'
+import { Space } from 'antd'
 import TextArea from 'antd/es/input/TextArea'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
@@ -22,6 +23,8 @@ const VoucherAdd = ({ open }: VoucherAddProps) => {
   const [updateVoucher] = useUpdateVoucherMutation()
   const { voucherData } = useAppSelector((state: RootState) => state.vouchers)
   const [checkedVoucher, setCheckedVoucher] = useState<boolean>()
+  const [generating, setGenerating] = useState(false)
+  
 
   useEffect(() => {
     voucherData._id &&
@@ -77,6 +80,75 @@ const VoucherAdd = ({ open }: VoucherAddProps) => {
     }
 
     return current && current < today
+  }
+
+  // Generate voucher code from title: normalize title then combine with random parts to produce 15 chars
+  const randomFrom = (chars: string, n: number) =>
+    Array.from({ length: n }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
+
+  const generateCode = (title = '') => {
+    const raw = String(title || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+
+    // extract amount like '100k' or '100' or '1.5k' and keep only the numeric part (remove trailing 'k')
+    const amountMatch = raw.match(/(\d+[.,]?\d*\s*[kK]?)/)
+    let amountToken = ''
+    let rawWithoutAmount = raw
+    if (amountMatch) {
+      const matched = amountMatch[0]
+      const a = matched.replace(/\s+/g, '').replace(/\./g, '')
+      const hasK = /k$/i.test(a)
+      const digits = a.replace(/k$/i, '')
+      amountToken = hasK ? `${digits}k` : digits
+      // remove the amount substring from raw so letters attached to amount (like 'k') are not included in alpha
+      rawWithoutAmount = raw.replace(matched, '')
+    }
+
+    const cleanAlpha = rawWithoutAmount.replace(/[^a-z]/g, '')
+    const alphaPart = cleanAlpha.slice(0, 8) || 'vouch'
+
+    // remaining length reserved for random suffix
+    const reserved = alphaPart.length + amountToken.length
+    const remaining = Math.max(0, 15 - reserved)
+
+    // ensure we include at least one uppercase and one digit in suffix
+    const upperPart = randomFrom('ABCDEFGHIJKLMNOPQRSTUVWXYZ', Math.max(1, Math.min(4, Math.floor(remaining / 2))))
+    const digitPart = randomFrom('0123456789', Math.max(1, remaining - upperPart.length))
+
+    let code = (alphaPart + amountToken + upperPart + digitPart).slice(0, 15)
+
+    if (!/[a-z]/.test(code)) code = 'a' + code.slice(1)
+    if (!/[A-Z]/.test(code)) code = code.slice(0, 14) + 'A'
+    if (!/\d/.test(code)) code = code.slice(0, 13) + '0' + code.slice(14)
+
+    return code
+  }
+
+  const handleGenerateCode = async () => {
+    const title = form.getFieldValue('title') || ''
+    const baseUrl = import.meta.env.VITE_API || ''
+    try {
+      setGenerating(true)
+      const res = await fetch(`${baseUrl}/voucher/generate-code?title=${encodeURIComponent(title)}`)
+      if (res.ok) {
+        const payload = await res.json()
+        const code = payload?.data?.code
+        if (code) {
+          form.setFieldsValue({ code })
+          return
+        }
+      }
+      // fallback to client-side generation
+      const fallback = generateCode(title)
+      form.setFieldsValue({ code: fallback })
+    } catch (e) {
+      const fallback = generateCode(title)
+      form.setFieldsValue({ code: fallback })
+    } finally {
+      setGenerating(false)
+    }
   }
 
   return (
@@ -137,8 +209,18 @@ const VoucherAdd = ({ open }: VoucherAddProps) => {
             }
           ]}
         >
-          <Input size='large' placeholder='Tên voucher' />
+          <Input
+            size='large'
+            placeholder='Mã voucher'
+            addonAfter={
+              <Button type='button' styleClass='!px-3 !py-1' onClick={handleGenerateCode} loading={generating}>
+                {generating ? 'Đang...' : 'Tạo mã'}
+              </Button>
+            }
+          />
         </Form.Item>
+        
+
         <Form.Item
           className='dark:text-white'
           label='Số lượng'

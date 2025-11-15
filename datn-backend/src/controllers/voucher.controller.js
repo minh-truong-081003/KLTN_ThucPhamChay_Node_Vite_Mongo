@@ -6,6 +6,14 @@ export const voucherController = {
   create: async (req, res) => {
     try {
       const body = req.body;
+      // if no code provided, generate one from title
+      if (!body.code) {
+        try {
+          body.code = await Voucher.generateCodeFromTitle(body.title || '');
+        } catch (e) {
+          // fallback: leave undefined and let validator handle required title
+        }
+      }
 
       /* validate */
       const { error } = voucherValidate.validate(body, { abortEarly: false });
@@ -116,4 +124,14 @@ export const voucherController = {
       return res.status(500).json({ message: error.message });
     }
   },
+  /* generate unique code from title */
+  generateCode: async (req, res) => {
+    try {
+      const { title = '' } = req.query;
+      const code = await Voucher.generateCodeFromTitle(title);
+      return res.status(200).json({ data: { code } });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
 };
