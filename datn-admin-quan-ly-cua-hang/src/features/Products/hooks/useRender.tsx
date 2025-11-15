@@ -218,44 +218,89 @@ export const useRender = (
       title: '#',
       dataIndex: 'index',
       key: 'index',
-      width: 50,
+      width: 60,
       sorter: (a: any, b: any) => a.index - b.index
     },
     {
       title: 'Tên sản phẩm',
       dataIndex: 'name',
       key: 'name',
-      width: 270,
+      width: 350,
       sorter: (a: any, b: any) => a.name.localeCompare(b.name),
       ...getColumnSearchProps('name' as unknown as IProduct)
     },
+    // {
+    //   title: 'Size',
+    //   dataIndex: 'sizes',
+    //   key: 'sizes',
+    //   width: 180,
+    //   render: (sizes: ISizeRefProduct[]) => (
+    //     <>
+    //       <div className='flex flex-col gap-1'>
+    //         {sizes?.slice(0, 2).map((size: ISizeRefProduct) => (
+    //           <div key={size._id} className='relative grid grid-cols-2'>
+    //             <p className='border-r-graydark w-full pr-3 uppercase border-r border-opacity-50'>{size.name}</p>
+    //             <p className='w-full pl-3'>{formatCurrency(size.price)}</p>
+    //           </div>
+    //         ))}
+    //       </div>
+    //       {sizes?.length > 2 && <p className='text-gray-400'>+{sizes.length - 2} size khác</p>}
+    //     </>
+    //   )
+    // },
+    // {
+    //   title: 'Giá thấp nhất',
+    //   dataIndex: 'sizes',
+    //   key: 'minPrice',
+    //   width: 140,
+    //   sorter: (a: any, b: any) => getMinPrice(a.sizes) - getMinPrice(b.sizes),
+    //   render: (sizes: ISizeRefProduct[]) => (
+    //     <span className='font-semibold text-green-600'>{formatCurrency(getMinPrice(sizes))}</span>
+    //   ),
+    //   filters: [
+    //     { text: 'Dưới 50.000đ', value: '0-50000' },
+    //     { text: '50.000đ - 100.000đ', value: '50000-100000' },
+    //     { text: '100.000đ - 200.000đ', value: '100000-200000' },
+    //     { text: 'Trên 200.000đ', value: '200000-999999999' }
+    //   ],
+    //   filterMode: 'menu',
+    //   onFilter: (value: any, record: any) => {
+    //     const minPrice = getMinPrice(record.sizes)
+    //     const [min, max] = value.split('-').map(Number)
+    //     return minPrice >= min && minPrice <= max
+    //   }
+    // },
+    // {
+    //   title: 'Topping',
+    //   dataIndex: 'toppings',
+    //   key: 'toppings',
+    //   width: 190,
+    //   render: (toppings: IToppingRefProduct[]) => (
+    //     <>
+    //       <div className='flex flex-col gap-1'>
+    //         {toppings?.slice(0, 2).map((topping: IToppingRefProduct) => (
+    //           <div key={topping._id} className='relative grid grid-cols-2'>
+    //             <p className='border-r-graydark w-full pr-3 uppercase border-r border-opacity-50'>{topping.name}</p>
+    //             <p className='w-full pl-3'>{formatCurrency(topping.price)}</p>
+    //           </div>
+    //         ))}
+    //       </div>
+    //       {toppings?.length > 2 && <p className='text-gray-400'>+{toppings.length - 2} topping khác</p>}
+    //     </>
+    //   )
+    // },
     {
-      title: 'Size',
-      dataIndex: 'sizes',
-      key: 'sizes',
-      width: 180,
-      render: (sizes: ISizeRefProduct[]) => (
-        <>
-          <div className='flex flex-col gap-1'>
-            {sizes?.slice(0, 2).map((size: ISizeRefProduct) => (
-              <div key={size._id} className='relative grid grid-cols-2'>
-                <p className='border-r-graydark w-full pr-3 uppercase border-r border-opacity-50'>{size.name}</p>
-                <p className='w-full pl-3'>{formatCurrency(size.price)}</p>
-              </div>
-            ))}
-          </div>
-          {sizes?.length > 2 && <p className='text-gray-400'>+{sizes.length - 2} size khác</p>}
-        </>
-      )
-    },
-    {
-      title: 'Giá thấp nhất',
-      dataIndex: 'sizes',
-      key: 'minPrice',
-      width: 140,
-      sorter: (a: any, b: any) => getMinPrice(a.sizes) - getMinPrice(b.sizes),
-      render: (sizes: ISizeRefProduct[]) => (
-        <span className='font-semibold text-green-600'>{formatCurrency(getMinPrice(sizes))}</span>
+      title: 'Giá',
+      dataIndex: 'sale',
+      key: 'sale',
+      width: 130,
+      sorter: (a: any, b: any) => a.sale - b.sale,
+      render: (sale: number) => (
+        sale > 0 ? (
+          <span className='font-semibold text-green-600'>{formatCurrency(sale)}</span>
+        ) : (
+          <span className='text-gray-400'>Chưa có giá</span>
+        )
       ),
       filters: [
         { text: 'Dưới 50.000đ', value: '0-50000' },
@@ -265,59 +310,15 @@ export const useRender = (
       ],
       filterMode: 'menu',
       onFilter: (value: any, record: any) => {
-        const minPrice = getMinPrice(record.sizes)
         const [min, max] = value.split('-').map(Number)
-        return minPrice >= min && minPrice <= max
-      }
-    },
-    {
-      title: 'Topping',
-      dataIndex: 'toppings',
-      key: 'toppings',
-      width: 190,
-      render: (toppings: IToppingRefProduct[]) => (
-        <>
-          <div className='flex flex-col gap-1'>
-            {toppings?.slice(0, 2).map((topping: IToppingRefProduct) => (
-              <div key={topping._id} className='relative grid grid-cols-2'>
-                <p className='border-r-graydark w-full pr-3 uppercase border-r border-opacity-50'>{topping.name}</p>
-                <p className='w-full pl-3'>{formatCurrency(topping.price)}</p>
-              </div>
-            ))}
-          </div>
-          {toppings?.length > 2 && <p className='text-gray-400'>+{toppings.length - 2} topping khác</p>}
-        </>
-      )
-    },
-    {
-      title: 'Giảm giá',
-      dataIndex: 'sale',
-      key: 'sale',
-      width: 120,
-      sorter: (a: any, b: any) => a.sale - b.sale,
-      render: (sale: number) => (
-        sale > 0 ? (
-          <span className='text-red-500 font-semibold'>{formatCurrency(sale)}</span>
-        ) : (
-          <span className='text-gray-400'>Không</span>
-        )
-      ),
-      filters: [
-        { text: 'Có giảm giá', value: 'has_sale' },
-        { text: 'Không giảm giá', value: 'no_sale' }
-      ],
-      filterMode: 'menu',
-      onFilter: (value: any, record: any) => {
-        if (value === 'has_sale') return record.sale > 0
-        if (value === 'no_sale') return record.sale === 0
-        return true
+        return record.sale >= min && record.sale <= max
       }
     },
     {
       title: 'Danh mục',
       dataIndex: 'category',
       key: 'category',
-      width: 140,
+      width: 180,
       render: (category: ICategoryRefProduct) => <p className='capitalize'>{category?.name || 'Không có thông tin'}</p>,
       filters: categories?.docs.map((category: any) => ({ text: category.name, value: category._id })),
       filterMode: 'tree',
@@ -329,7 +330,7 @@ export const useRender = (
       title: 'Ngày tạo',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      width: 140,
+      width: 120,
       sorter: (a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       render: (date: string) => new Date(date).toLocaleDateString('vi-VN')
     }
@@ -472,5 +473,5 @@ export const useRender = (
     }
   ]
 
-  return user && user.role === IRoleUser.ADMIN ? columnsAdmin : columnsStaff
+  return user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) ? columnsAdmin : columnsStaff
 }

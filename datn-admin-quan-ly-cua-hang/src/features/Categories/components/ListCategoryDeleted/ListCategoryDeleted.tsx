@@ -60,7 +60,7 @@ const ListCategoryDeleted = () => {
 
   return (
     <>
-      {user && user.role === IRoleUser.ADMIN && hasSelected && (
+      {user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) && hasSelected && (
         <Space className='mb-4'>
           <Popconfirm
             title='Bạn thực sự muốn khôi phục những danh mục này?'
@@ -110,7 +110,7 @@ const ListCategoryDeleted = () => {
           }}
           scroll={{ y: '50vh', x: 650 }}
           bordered
-          rowSelection={user.role === IRoleUser.ADMIN ? rowSelection : undefined}
+          rowSelection={user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) ? rowSelection : undefined}
         />
       </div>
     </>

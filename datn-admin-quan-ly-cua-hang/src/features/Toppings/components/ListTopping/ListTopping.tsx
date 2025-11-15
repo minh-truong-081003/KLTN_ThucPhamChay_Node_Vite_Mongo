@@ -46,7 +46,7 @@ const ToppingList = () => {
   return (
     <div>
       <Space>
-        {user && user.role === IRoleUser.ADMIN && hasSelected && (
+        {user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) && hasSelected && (
           <Popconfirm
             title='Bạn thực sự muốn xóa những topping này?'
             description='Hành động này sẽ xóa những topping đang được chọn!'
@@ -89,7 +89,7 @@ const ToppingList = () => {
           pageSizeOptions: ['5', '10', '15', '20'],
           showQuickJumper: true
         }}
-        rowSelection={user.role === IRoleUser.ADMIN ? rowSelection : undefined}
+        rowSelection={user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) ? rowSelection : undefined}
         bordered
       />
     </div>

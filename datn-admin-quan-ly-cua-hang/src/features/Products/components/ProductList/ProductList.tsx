@@ -82,7 +82,7 @@ const ProductList = () => {
         </ButtonAntd> */}
       </div>
       <Table
-        rowSelection={user.role === IRoleUser.ADMIN ? rowSelection : undefined}
+        rowSelection={user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) ? rowSelection : undefined}
         columns={columns}
         dataSource={products}
         scroll={{ x: 1300 }}

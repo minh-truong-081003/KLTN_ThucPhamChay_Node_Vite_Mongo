@@ -269,9 +269,9 @@ const ListDoneOrders = () => {
           expandedRowRender: TableChildrend
         }}
         pagination={{
-          pageSize: doneOrder && doneOrder.limit,
+          pageSize: 5,
           showSizeChanger: true,
-          pageSizeOptions: ['10', '15', '20', '25'],
+          pageSizeOptions: ['5'],
           total: doneOrder && doneOrder?.totalDocs,
           onChange(page, pageSize) {
             // callbackOptions(page, pageSize)

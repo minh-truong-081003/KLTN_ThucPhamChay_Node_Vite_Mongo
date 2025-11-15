@@ -54,7 +54,7 @@ const ListBlog = () => {
   if (isError) return <NotFound />
   return (
     <div>
-      {user && user.role === IRoleUser.ADMIN && hasSelected && (
+      {user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) && hasSelected && (
         <Space>
           <Popconfirm
             title='Bạn thực sự muốn xóa những danh mục này?'
@@ -80,7 +80,7 @@ const ListBlog = () => {
             setCurrentPage(page)
           }
         }}
-        rowSelection={user.role === IRoleUser.ADMIN ? rowSelection : undefined}
+        rowSelection={user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) ? rowSelection : undefined}
         scroll={{ y: '60vh', x: 1000 }}
         bordered
       />

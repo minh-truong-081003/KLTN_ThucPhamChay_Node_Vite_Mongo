@@ -51,7 +51,7 @@ const ListCategoryBlog = () => {
 
   return (
     <>
-      {user && user.role === IRoleUser.ADMIN && (
+      {user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) && (
         <Space>
           <Popconfirm
             title='Bạn thực sự muốn xóa những danh mục này?'
@@ -98,7 +98,7 @@ const ListCategoryBlog = () => {
               setOption((prev) => ({ ...prev, _page: page }))
             }
           }}
-          rowSelection={user.role === IRoleUser.ADMIN ? rowSelection : undefined}
+          rowSelection={user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) ? rowSelection : undefined}
         ></Table>
       </div>
     </>

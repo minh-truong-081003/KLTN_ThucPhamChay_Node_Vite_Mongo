@@ -54,7 +54,7 @@ const ListVoucher = () => {
 
   return (
     <div>
-      {user && user.role === IRoleUser.ADMIN && hasSelected && (
+      {user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) && hasSelected && (
         <Space>
           <Popconfirm
             title='Bạn thực sự muốn xóa những mã này?'
@@ -91,7 +91,7 @@ const ListVoucher = () => {
           //   defaultPageSize: 10,
           //   showSizeChanger: true
         }}
-        rowSelection={user.role === IRoleUser.ADMIN ? rowSelection : undefined}
+        rowSelection={user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) ? rowSelection : undefined}
         // scroll={{ y: '60vh' }}
         bordered
       />

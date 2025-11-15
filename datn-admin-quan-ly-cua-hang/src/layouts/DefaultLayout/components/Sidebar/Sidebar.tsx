@@ -3,6 +3,7 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import { items, itemsStaff } from './components'
 import { useEffect, useRef, useState } from 'react'
+import { Badge } from 'antd'
 
 import { BarsIcon } from '~/components'
 import { Menu } from 'antd'
@@ -56,6 +57,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     }
   }, [sidebarExpanded])
 
+  const newOrdersCount = 5
+  const newReviewsCount = 3
+  const newMessagesCount = 2
+
+  // prepare menu items with badges for counts
+
+
   return (
     <aside
       ref={sidebar}
@@ -92,7 +100,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               defaultSelectedKeys={[`${currentPath}`]}
               defaultOpenKeys={['manager']}
               mode='inline'
-              items={user && user.role === 'admin' ? items : itemsStaff}
+              items={
+                user && user.role === 'admin' ? items : itemsStaff
+              }
             />
           </div>
         </nav>

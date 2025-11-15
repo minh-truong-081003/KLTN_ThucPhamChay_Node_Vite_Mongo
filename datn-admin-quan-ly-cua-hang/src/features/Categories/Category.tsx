@@ -14,18 +14,18 @@ const Category = () => {
   const { openDrawer } = useAppSelector((state) => state.drawer)
   const { user } = useAppSelector((state: RootState) => state.persistedReducer.auth)
 
-  const isAdmin = user && user.role === IRoleUser.ADMIN
+  const isPrivileged = user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF)
 
   return (
     <div>
       <Breadcrumb pageName='Danh mục'>
-        {isAdmin && (
+        {isPrivileged && (
           <Button icon={<PlusIcon />} onClick={() => dispatch(setOpenDrawer(true))}>
             Thêm
           </Button>
         )}
       </Breadcrumb>
-      {isAdmin ? (
+      {isPrivileged ? (
         <>
           <Tabs defaultActiveKey='1' items={items} className='text-white' />
           <FormCategory open={openDrawer} />

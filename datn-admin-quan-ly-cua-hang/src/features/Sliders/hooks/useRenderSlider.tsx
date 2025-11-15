@@ -126,5 +126,5 @@ export const useRenderSlider = (sliders: ISLider[]) => {
       )
     }
   ]
-  return user && user.role === IRoleUser.ADMIN ? columnsAdmin : columnsStaff
+  return user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF) ? columnsAdmin : columnsStaff
 }

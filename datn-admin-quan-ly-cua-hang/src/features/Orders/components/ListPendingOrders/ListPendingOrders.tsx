@@ -386,9 +386,9 @@ const ListPendingOrders = () => {
           }}
           dataSource={ordersData}
           pagination={{
-            pageSize: pendingOrder && pendingOrder.limit,
+            pageSize: 5,
             showSizeChanger: true,
-            pageSizeOptions: ['10', '15', '20', '25'],
+            pageSizeOptions: ['5'],
             total: pendingOrder && pendingOrder?.totalDocs,
             onChange(page, pageSize) {
               setoptions((prev) => ({ ...prev, page, limit: pageSize }))

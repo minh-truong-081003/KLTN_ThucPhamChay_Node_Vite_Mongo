@@ -22,19 +22,19 @@ const FeatureProducts = ({ data }: FeatureProductsProps) => {
     dispatch(setProductsList(data))
   }, [dispatch, data])
 
-  const isAdmin = user && user.role === IRoleUser.ADMIN
+  const isPrivileged = user && (user.role === IRoleUser.ADMIN || user.role === IRoleUser.STAFF)
 
   return (
     <div>
       <Breadcrumb pageName='Sản phẩm'>
-        {isAdmin && (
+        {isPrivileged && (
           <Button icon={<PlusIcon />} onClick={() => dispatch(setOpenDrawer(true))}>
             Thêm
           </Button>
         )}
       </Breadcrumb>
 
-      {isAdmin ? (
+      {isPrivileged ? (
         <>
           <Tabs defaultActiveKey='1' items={items} />
           <FormProduct />

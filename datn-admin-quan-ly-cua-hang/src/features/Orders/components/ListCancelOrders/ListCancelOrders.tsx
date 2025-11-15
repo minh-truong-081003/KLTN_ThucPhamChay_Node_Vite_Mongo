@@ -268,9 +268,9 @@ const ListCancelOrders = () => {
           expandedRowRender: TableChildrend
         }}
         pagination={{
-          pageSize: cancelOrder && cancelOrder.limit,
+          pageSize: 5,
           showSizeChanger: true,
-          pageSizeOptions: ['10', '15', '20', '25'],
+          pageSizeOptions: ['5'],
           total: cancelOrder && cancelOrder?.totalDocs,
           onChange(page, pageSize) {
             setoptions((prev) => ({ ...prev, page, limit: pageSize }))

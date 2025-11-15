@@ -281,9 +281,9 @@ const ListOrders = () => {
         columns={columns}
         dataSource={ordersData}
         pagination={{
-          pageSize: orders && orders.limit,
+          pageSize: 5,
           showSizeChanger: true,
-          pageSizeOptions: ['10', '15', '20', '25'],
+          pageSizeOptions: ['5'],
           total: orders && orders?.totalDocs,
           onChange(page, pageSize) {
             setoptions((prev) => ({ ...prev, page, limit: pageSize }))
