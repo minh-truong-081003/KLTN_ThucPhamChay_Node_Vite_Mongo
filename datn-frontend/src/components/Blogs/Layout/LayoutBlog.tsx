@@ -4,10 +4,15 @@ import FooterHomePage from '../../Footer-HomePage'
 import { Outlet, useLocation } from 'react-router-dom'
 import SiderbarBlog from '../Sidebar'
 import Loader from '../../Loader'
-// import { useEffect, useState } from 'react'
+import ButtonDelivery from '../../Button-Delivery'
+import { useEffect } from 'react'
 
 const LayoutBlog = () => {
   const location = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
 
   const getContentByUrl = () => {
     if (location.pathname.includes('tin-tuc-khuyen-mai')) {
@@ -34,6 +39,7 @@ const LayoutBlog = () => {
           <Outlet />
         </div>
       </div>
+      <ButtonDelivery />
       <FooterHomePage />
     </>
   )

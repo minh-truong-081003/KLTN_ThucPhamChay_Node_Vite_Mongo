@@ -2,7 +2,7 @@ import { FaBars, FaSearch, FaTimes } from 'react-icons/fa'
 import { useEffect, useRef, useState } from 'react'
 
 import { Auth } from '../../api/Auth'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { RootState } from '../../store/store'
 import styles from './HeaderHomePage.module.scss'
@@ -16,6 +16,18 @@ const HeaderHomePage = () => {
   const [fetchUser] = Auth.endpoints.fetchUser.useLazyQuery()
   const { user } = useSelector((state: RootState) => state.persistedReducer.auth)
   const { data: blogCategories } = useGetAllBlogCategoryQuery()
+  const location = useLocation()
+  
+  // Kiểm tra xem có phải trang chủ không
+  const isHomePage = location.pathname === '/'
+  
+  // Hàm kiểm tra menu có active không
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return location.pathname === '/'
+    }
+    return location.pathname.startsWith(path)
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,7 +60,9 @@ const HeaderHomePage = () => {
   return (
     <header
       className={`w-full z-[99] py-3 px-5 md:px-10 lg:px-0  top-0 transition-all ${
-        isHeaderFixed ? `fixed bg-[#282828] ${styles.animation_slide_down}` : 'absolute bg-transparent'
+        isHomePage
+          ? (isHeaderFixed ? `fixed bg-[#282828] ${styles.animation_slide_down}` : 'absolute bg-transparent')
+          : 'fixed bg-[#282828]'
       } `}
     >
       <div className='container my-0 mx-auto flex items-center justify-between '>
@@ -68,7 +82,15 @@ const HeaderHomePage = () => {
             </div>
             <ul className='flex flex-col mx-10 lg:mx-0 lg:flex-row justify-center  gap-x-5 uppercase'>
               <li className='font-[700] py-2 text-sm '>
-                <Link to='/' onClick={toggleMenu}>
+                <Link 
+                  to='/' 
+                  onClick={toggleMenu}
+                  className={`transition-colors ${
+                    isActive('/') 
+                      ? 'text-[#d3b673] border-b-2 border-[#d3b673] pb-1' 
+                      : 'hover:text-[#d3b673]'
+                  }`}
+                >
                   Trang chủ
                 </Link>
               </li>
@@ -94,15 +116,34 @@ const HeaderHomePage = () => {
               </li> */}
 
               <li className='font-[700] py-2 text-sm '>
-                <Link to='/products' onClick={toggleMenu}>
+                <Link 
+                  to='/products' 
+                  onClick={toggleMenu}
+                  className={`transition-colors ${
+                    isActive('/products') 
+                      ? 'text-[#d3b673] border-b-2 border-[#d3b673] pb-1' 
+                      : 'hover:text-[#d3b673]'
+                  }`}
+                >
                   Sản phẩm
                 </Link>
               </li>
 
               <li className='font-[700] py-2 text-sm '>
                 <div className='menu_item relative group'>
-                  <div onClick={toggleMenu} className='flex cursor-default'>
-                    <p className='mr-1 hover:underline'>Tin tức</p>
+                  <div 
+                    onClick={toggleMenu} 
+                    className={`flex cursor-default transition-colors ${
+                      isActive('/blogs') 
+                        ? 'text-[#d3b673]' 
+                        : ''
+                    }`}
+                  >
+                    <p className={`mr-1 hover:underline ${
+                      isActive('/blogs') 
+                        ? 'border-b-2 border-[#d3b673] pb-1' 
+                        : ''
+                    }`}>Tin tức</p>
                     <MdKeyboardArrowDown className='text-[20px]' />
                   </div>
                   <ul className='sub-menu absolute w-0 hidden bg-gray-800 text-white py-2 px-4 transition duration-300 group-hover:block group-hover:w-[200px] '>

@@ -1,0 +1,5001 @@
+{
+  "settings": {
+    "languages": [
+      "vi"
+    ],
+    "tag": "nlp",
+    "threshold": 0.5,
+    "autoLoad": true,
+    "autoSave": true,
+    "modelFileName": "model.nlp",
+    "executeActionsBeforeAnswers": false,
+    "calculateSentiment": true
+  },
+  "nluManager": {
+    "settings": {
+      "tag": "nlu-manager"
+    },
+    "locales": [
+      "vi"
+    ],
+    "languageNames": {},
+    "domainManagers": {
+      "vi": {
+        "settings": {
+          "locale": "vi",
+          "trainByDomain": false,
+          "tag": "domain-manager-vi",
+          "nluByDomain": {
+            "default": {
+              "className": "NeuralNlu",
+              "settings": {}
+            }
+          },
+          "useStemDict": true
+        },
+        "stemDict": {},
+        "intentDict": {},
+        "sentences": [
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để tạo một đơn hàng trà sữa cơ bản?",
+            "intent": "AFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có thể tạo một đơn hàng trà sữa như thế nào?",
+            "intent": "AFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để mua trà sữa?",
+            "intent": "AFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để đặt một ly trà sữa không?",
+            "intent": "AFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để đặt một đơn hàng trà sữa?",
+            "intent": "AFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có thể đặt một ly trà sữa như thế nào?",
+            "intent": "AFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cách để mua trà sữa?",
+            "intent": "AFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có thể đặt một ly trà sữa như thế nào?",
+            "intent": "AFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để tạo một đơn hàng trà sữa đơn giản không?",
+            "intent": "AFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có bao nhiêu loại trà sữa phổ biến mà tôi có thể chọn?",
+            "intent": "BFFSS2k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể chọn từ mấy loại trà sữa phổ biến?",
+            "intent": "BFFSS2k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có những loại trà sữa nào được coi là phổ biến và tôi có thể chọn?",
+            "intent": "BFFSS2k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi muốn biết về các loại trà sữa phổ biến mà tôi có thể chọn, có thể giúp tôi không?",
+            "intent": "BFFSS2k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Trà sữa có những loại nào là phổ biến và tôi có thể chọn?",
+            "intent": "BFFSS2k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để tôi thêm một loại trà sữa vào đơn hàng?",
+            "intent": "CSSSS3K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi cần làm gì để thêm một loại trà sữa vào đơn hàng của mình?",
+            "intent": "CSSSS3K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để tôi có thể thêm một loại trà sữa vào đơn hàng tôi đang tạo?",
+            "intent": "CSSSS3K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để tôi thêm một loại trà sữa vào đơn hàng không?",
+            "intent": "CSSSS3K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi cần phải làm gì để thêm một loại trà sữa vào đơn hàng tôi đang đặt?",
+            "intent": "CSSSS3K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có thể cho tôi biết cách để thêm một loại trà sữa vào đơn hàng tôi đang tạo không?",
+            "intent": "CSSSS3K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để thêm topping vào đơn hàng trà sữa?",
+            "intent": "DFSSS3k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để tôi có thể thêm topping vào đơn hàng trà sữa không?",
+            "intent": "DFSSS3k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để tôi có thể bổ sung topping vào đơn hàng trà sữa?",
+            "intent": "DFSSS3k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi muốn thêm topping vào đơn hàng trà sữa, có cách nào để làm điều đó không?",
+            "intent": "DFSSS3k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phương pháp nào để tôi có thể đặt thêm topping vào đơn hàng trà sữa không?",
+            "intent": "DFSSS3k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để tôi có thể yêu cầu thêm topping vào đơn hàng trà sữa?",
+            "intent": "DFSSS3k"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phí vận chuyển cho đơn hàng không? Nếu có, làm thế nào để tính phí vận chuyển?",
+            "intent": "FFSS4F"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cho đơn hàng có tính phí vận chuyển không? Nếu có, làm thế nào để tính phí vận chuyển?",
+            "intent": "FFSS4F"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn hàng có phải trả phí vận chuyển không? Nếu có, cách tính phí vận chuyển như thế nào?",
+            "intent": "FFSS4F"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có mất phí vận chuyển cho đơn hàng không? Nếu có, làm sao để tính phí vận chuyển?",
+            "intent": "FFSS4F"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn hàng có chi phí vận chuyển không? Nếu có, làm thế nào để tính toán phí vận chuyển?",
+            "intent": "FFSS4F"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phải trả phí vận chuyển cho đơn hàng không? Nếu có, cách tính phí vận chuyển ra sao?",
+            "intent": "FFSS4F"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để chỉnh sửa một đơn hàng đã được đặt?",
+            "intent": "HFFSS4K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để xóa một sản phẩm khỏi đơn hàng?",
+            "intent": "IFFSS5K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để loại bỏ một sản phẩm khỏi đơn hàng không?",
+            "intent": "IFFSS5K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để xoá đi một sản phẩm trong đơn hàng?",
+            "intent": "IFFSS5K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có thể xóa một sản phẩm khỏi đơn hàng như thế nào?",
+            "intent": "IFFSS5K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để bỏ đi một sản phẩm trong đơn hàng?",
+            "intent": "IFFSS5K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để xoá bỏ một sản phẩm trong đơn hàng không?",
+            "intent": "IFFSS5K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để xác nhận đơn hàng và thực hiện thanh toán?",
+            "intent": "JHFSS6K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để xác nhận đơn hàng và thanh toán?",
+            "intent": "JHFSS6K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để xác nhận và thanh toán đơn hàng không?",
+            "intent": "JHFSS6K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để xác nhận và tiến hành thanh toán cho đơn hàng?",
+            "intent": "JHFSS6K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phương pháp nào để xác nhận và thanh toán đơn hàng không?",
+            "intent": "JHFSS6K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để xác nhận và thực hiện thanh toán cho đơn hàng của tôi?",
+            "intent": "JHFSS6K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để theo dõi tình trạng giao hàng của một đơn hàng?",
+            "intent": "KFFSS7O_"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để kiểm tra tình trạng giao hàng của một đơn hàng?",
+            "intent": "KFFSS7O_"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để theo dõi tình trạng giao hàng của một đơn hàng không?",
+            "intent": "KFFSS7O_"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để biết được tình trạng giao hàng của một đơn hàng?",
+            "intent": "KFFSS7O_"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phương pháp nào để xem tình trạng giao hàng của một đơn hàng không?",
+            "intent": "KFFSS7O_"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để tra cứu tình trạng giao hàng của một đơn hàng?",
+            "intent": "KFFSS7O_"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để kiểm tra tồn kho các loại trà sữa và topping?",
+            "intent": "LFFSS8K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có hệ thống ưu đãi hoặc phiếu giảm giá không? Làm thế nào để áp dụng chúng cho đơn hàng?",
+            "intent": "MFFSS9K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có chương trình ưu đãi hoặc phiếu giảm giá không? Làm thế nào để sử dụng chúng cho đơn hàng?",
+            "intent": "MFFSS9K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có khuyến mãi hoặc phiếu giảm giá không? Làm sao để áp dụng chúng cho đơn hàng?",
+            "intent": "MFFSS9K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có ưu đãi đặc biệt hoặc phiếu giảm giá không? Làm thế nào để áp dụng chúng cho đơn hàng?",
+            "intent": "MFFSS9K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có chính sách ưu đãi hoặc phiếu giảm giá không? Làm cách nào để sử dụng chúng cho đơn hàng?",
+            "intent": "MFFSS9K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có chương trình khuyến mãi hoặc phiếu giảm giá không? Làm thế nào để áp dụng chúng cho đơn hàng?",
+            "intent": "MFFSS9K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để đặt hàng nhanh cho các sản phẩm trà sữa phổ biến mà khách hàng thường chọn?",
+            "intent": "NFFSS10K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cách nhanh nhất để đặt hàng các sản phẩm trà sữa phổ biến mà khách hàng thường chọn là gì?",
+            "intent": "NFFSS10K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có thể chỉ cho tôi các phương pháp đặt hàng nhanh cho các sản phẩm trà sữa phổ biến mà khách hàng thường chọn không?",
+            "intent": "NFFSS10K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để đặt hàng nhanh các sản phẩm trà sữa phổ biến mà khách hàng thường chọn?",
+            "intent": "NFFSS10K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có những cách nào để đặt hàng nhanh cho các loại trà sữa phổ biến mà khách hàng thường chọn không?",
+            "intent": "NFFSS10K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có thể cho tôi biết cách đặt hàng nhanh cho các sản phẩm trà sữa phổ biến mà khách hàng thường chọn được không?",
+            "intent": "NFFSS10K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có thể tạo danh sách ưa thích của khách hàng để đặt hàng nhanh hơn không?",
+            "intent": "OFFSS11K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để tính toán tổng giá trị của đơn hàng với tất cả các món đã chọn?",
+            "intent": "PFFSS12K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để thực hiện theo dõi lịch sử đặt hàng của một khách hàng?",
+            "intent": "UFSS13K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để theo dõi lịch sử đặt hàng của một khách hàng không?",
+            "intent": "UFSS13K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để kiểm tra lịch sử đặt hàng của một khách hàng?",
+            "intent": "UFSS13K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phương pháp nào để xem thông tin về các đơn hàng trước đây của một khách hàng không?",
+            "intent": "UFSS13K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để tra cứu lịch sử đặt hàng của một khách hàng?",
+            "intent": "UFSS13K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có thể chỉ cho tôi cách xem lịch sử đặt hàng của một khách hàng được không?",
+            "intent": "UFSS13K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để xử lý việc trả lại hoặc hoàn tiền cho một đơn hàng?",
+            "intent": "SRHSS14K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phương pháp nào để xử lý việc trả lại hoặc hoàn tiền cho một đơn hàng không?",
+            "intent": "SRHSS14K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để giải quyết việc trả lại hoặc hoàn tiền cho một đơn hàng?",
+            "intent": "SRHSS14K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để xử lý việc trả lại hoặc nhận hoàn tiền cho một đơn hàng không?",
+            "intent": "SRHSS14K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có thể chỉ cho tôi cách xử lý việc trả lại hoặc hoàn tiền cho một đơn hàng được không?",
+            "intent": "SRHSS14K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để xử lý việc trả lại hoặc yêu cầu hoàn tiền cho một đơn hàng?",
+            "intent": "SRHSS14K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để gửi xác nhận đặt hàng và thông tin liên lạc đến khách hàng qua email hoặc tin nhắn văn bản?",
+            "intent": "RFHSS15K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn cung cấp dịch vụ giao hàng tận nơi không? Làm thế nào để xác định thời gian giao hàng dự kiến?",
+            "intent": "TRHSS16K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cung cấp dịch vụ giao hàng tận nơi không? Làm sao để biết thời gian giao hàng dự kiến?",
+            "intent": "TRHSS16K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có dịch vụ giao hàng tận nơi không? Làm thế nào để xác định thời gian giao hàng dự kiến?",
+            "intent": "TRHSS16K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Dịch vụ giao hàng tận nơi có được cung cấp không? Làm cách nào để xác định thời gian giao hàng dự kiến?",
+            "intent": "TRHSS16K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có hỗ trợ giao hàng tận nơi không? Làm thế nào để biết thời gian giao hàng dự kiến?",
+            "intent": "TRHSS16K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có dịch vụ giao hàng đến tận nơi không? Làm sao để xác định thời gian giao hàng dự kiến?",
+            "intent": "TRHSS16K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để quản lý các đơn hàng đang chờ xử lý và đơn hàng đã hoàn thành trong hệ thống?",
+            "intent": "URHSS17K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để chọn các loại trà sữa và topping?",
+            "intent": "URHSH18K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để biết được loại trà sữa và topping nào là phổ biến và được ưa chuộng nhất?",
+            "intent": "URHSH18K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có thể cho tôi biết thêm về quy trình chọn trà sữa và topping ở cửa hàng của bạn không?",
+            "intent": "URHSH18K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có những nguyên tắc nào cần tuân thủ khi chọn trà sữa và topping?",
+            "intent": "URHSH18K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có gợi ý nào để chọn trà sữa và topping phù hợp với sở thích của mình không?",
+            "intent": "URHSH18K"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để thay đổi kích cỡ và đường của trà sữa?",
+            "intent": "URHSH19G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có những cách nào để điều chỉnh kích cỡ và đường của trà sữa không?",
+            "intent": "URHSH19G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để tùy chỉnh kích cỡ và đường của trà sữa?",
+            "intent": "URHSH19G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có những phương pháp nào để điều chỉnh kích cỡ và đường của trà sữa?",
+            "intent": "URHSH19G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có thể giúp tôi biết cách thay đổi kích cỡ và đường của trà sữa không?",
+            "intent": "URHSH19G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm cách nào để xem giỏ hàng của tôi trước khi thanh toán?",
+            "intent": "URHSH20G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để kiểm tra giỏ hàng trước khi thanh toán?",
+            "intent": "URHSH20G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để xem lại giỏ hàng trước khi tiến hành thanh toán không?",
+            "intent": "URHSH20G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để xem các sản phẩm đã chọn trong giỏ hàng trước khi thanh toán?",
+            "intent": "URHSH20G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phương pháp nào để kiểm tra lại các mặt hàng trong giỏ hàng trước khi hoàn tất thanh toán không?",
+            "intent": "URHSH20G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể thêm ghi chú  cho đơn hàng của mình không?",
+            "intent": "URHSH21G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể thêm ghi chú cho đơn hàng của mình không?",
+            "intent": "URHSH21G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để đặt ghi chú cho đơn hàng của tôi không?",
+            "intent": "URHSH21G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để ghi chú cho đơn hàng của tôi?",
+            "intent": "URHSH21G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể điền thông tin ghi chú vào đơn hàng của mình không?",
+            "intent": "URHSH21G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phương pháp nào để thêm ghi chú cho đơn hàng trước khi thanh toán không?",
+            "intent": "URHSH21G"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để thanh toán trực tuyến?",
+            "intent": "URHSH22J"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để thanh toán qua mạng không?",
+            "intent": "URHSH22J"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để thực hiện thanh toán online?",
+            "intent": "URHSH22J"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phương pháp nào để thanh toán trực tuyến không?",
+            "intent": "URHSH22J"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể thanh toán qua internet như thế nào?",
+            "intent": "URHSH22J"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi sẽ nhận được xác nhận đơn hàng sau khi hoàn tất thanh toán không?",
+            "intent": "URHSH23D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Sau khi tôi hoàn tất thanh toán, liệu tôi có nhận được xác nhận đơn hàng không?",
+            "intent": "URHSH23D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Nếu tôi đã thanh toán thành công, tôi có được xác nhận đơn hàng không?",
+            "intent": "URHSH23D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Sau khi tôi thanh toán, liệu tôi sẽ nhận được xác nhận đơn hàng không?",
+            "intent": "URHSH23D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi đã hoàn tất thanh toán, vậy tôi có nhận được xác nhận đơn hàng không?",
+            "intent": "URHSH23D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Sau khi tôi thanh toán, liệu tôi sẽ nhận được thông báo xác nhận đơn hàng không?",
+            "intent": "URHSH23D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi sẽ nhận được xác nhận đơn hàng sau khi hoàn tất thanh toán không?",
+            "intent": "URHSH24D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể kiểm tra tình trạng giao hàng của đơn hàng của mình như thế nào?",
+            "intent": "URHSH24D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để xem tình trạng giao hàng của đơn hàng của tôi?",
+            "intent": "URHSH24D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để biết được tình trạng giao hàng của đơn hàng của tôi không?",
+            "intent": "URHSH24D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể tra cứu tình trạng giao hàng của đơn hàng của mình như thế nào?",
+            "intent": "URHSH24D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm thế nào để kiểm tra xem đơn hàng của tôi đã được giao hay chưa?",
+            "intent": "URHSH24D"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể hủy đơn hàng sau khi đã đặt mua không?",
+            "intent": "FHSH25FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể hủy đơn hàng sau khi đã đặt mua được không?",
+            "intent": "FHSH25FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có thể hủy đơn hàng sau khi đã đặt mua không?",
+            "intent": "FHSH25FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Sau khi đã đặt mua, tôi có thể hủy đơn hàng không?",
+            "intent": "FHSH25FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hủy đơn hàng có được chấp nhận sau khi đã đặt mua không?",
+            "intent": "FHSH25FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Sau khi đã đặt mua, có thể tôi hủy đơn hàng không?",
+            "intent": "FHSH25FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể đặt mua trà sữa hàng ngày thông qua trang web không?",
+            "intent": "FHSH26FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Trang web có cho phép đặt mua trà sữa hàng ngày không?",
+            "intent": "FHSH26FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có thể mua trà sữa hàng ngày qua trang web được không?",
+            "intent": "FHSH26FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Trang web có dịch vụ đặt mua trà sữa hàng ngày không?",
+            "intent": "FHSH26FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để đặt mua trà sữa hàng ngày qua trang web không?",
+            "intent": "FHSH26FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể đặt mua trà sữa hàng ngày trên trang web được không?",
+            "intent": "FHSH26FB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể sử dụng thẻ giảm giá khi đặt mua trà sữa trực tuyến không?",
+            "intent": "FHSH27CB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể áp dụng thẻ giảm giá khi đặt mua trà sữa trực tuyến không?",
+            "intent": "FHSH27CB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có chấp nhận thẻ giảm giá khi đặt mua trà sữa trực tuyến không?",
+            "intent": "FHSH27CB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thẻ giảm giá có được áp dụng khi đặt mua trà sữa trực tuyến không?",
+            "intent": "FHSH27CB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có thể sử dụng thẻ giảm giá để mua trà sữa trực tuyến không?",
+            "intent": "FHSH27CB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể sử dụng thẻ giảm giá khi đặt mua trà sữa qua mạng không?",
+            "intent": "FHSH27CB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi cần phải trả phí giao hàng khi đặt mua trà sữa trực tuyến không?",
+            "intent": "BHSH28DB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có phải trả phí vận chuyển khi đặt mua trà sữa trực tuyến không?",
+            "intent": "BHSH28DB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có mất phí giao hàng khi tôi mua trà sữa trực tuyến không?",
+            "intent": "BHSH28DB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi cần phải trả phí vận chuyển khi đặt mua trà sữa qua mạng không?",
+            "intent": "BHSH28DB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Phải trả phí giao hàng khi mua trà sữa online không?",
+            "intent": "BHSH28DB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phải trả phí vận chuyển khi đặt mua trà sữa qua internet không?",
+            "intent": "BHSH28DB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm cách nào để tôi biết về thời gian mở cửa của cửa hàng trà sữa trực tuyến?",
+            "intent": "BHSH29LB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bạn có thể tìm hiểu về thời gian mở cửa của cửa hàng trà sữa trực tuyến bằng cách xem thông tin trên trang web hoặc ứng dụng của cửa hàng đó.",
+            "intent": "BHSH29LB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thông tin về thời gian mở cửa của cửa hàng trà sữa trực tuyến thường được hiển thị trên trang chủ hoặc trang liên hệ của cửa hàng.",
+            "intent": "BHSH29LB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Để biết về thời gian mở cửa của cửa hàng trà sữa trực tuyến, bạn có thể kiểm tra trên trang mạng xã hội hoặc gọi điện thoại trực tiếp đến cửa hàng để được tư vấn.",
+            "intent": "BHSH29LB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thông tin về thời gian mở cửa của cửa hàng trà sữa trực tuyến thường được cập nhật trên trang Facebook hoặc trang web chính thức của cửa hàng.",
+            "intent": "BHSH29LB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Để biết thời gian mở cửa của cửa hàng trà sữa trực tuyến, bạn có thể tham khảo các đánh giá hoặc bình luận từ khách hàng trước đó trên trang web hoặc ứng dụng của cửa hàng.",
+            "intent": "BHSH29LB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể thay đổi phương thức thanh toán sau khi đã đặt hàng không?",
+            "intent": "BHSH30SB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Sau khi đã đặt hàng, tôi có thể thay đổi phương thức thanh toán được không?",
+            "intent": "BHSH30SB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cách nào để tôi thay đổi phương thức thanh toán sau khi đã hoàn tất đơn hàng không?",
+            "intent": "BHSH30SB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi muốn thay đổi phương thức thanh toán sau khi đã đặt hàng, làm thế nào để làm điều này?",
+            "intent": "BHSH30SB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Nếu tôi muốn thay đổi phương thức thanh toán sau khi đã đặt mua, có phải tôi cần liên hệ với cửa hàng không?",
+            "intent": "BHSH30SB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có cho phép thay đổi phương thức thanh toán sau khi đã đặt hàng không? Nếu có, làm thế nào để thực hiện điều này?",
+            "intent": "BHSH30SB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi có thể đặt hàng trà sữa trong mục thời gian cố định không?",
+            "intent": "BHSH31HB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có giới hạn thời gian để đặt hàng trà sữa không?",
+            "intent": "BHSH31HB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi cần biết liệu có thời gian cụ thể để đặt hàng trà sữa không?",
+            "intent": "BHSH31HB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Trong khoảng thời gian nào tôi có thể đặt hàng trà sữa?",
+            "intent": "BHSH31HB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có quy định về thời gian đặt hàng trà sữa không?",
+            "intent": "BHSH31HB"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi muốn biết liệu có giới hạn thời gian nào để đặt hàng trà sữa hay không?",
+            "intent": "BHSH31HB"
+          },
+          {
+            "domain": "default",
+            "utterance": "số lượng hàng tôi đã mua",
+            "intent": "bought_num"
+          },
+          {
+            "domain": "default",
+            "utterance": "tôi đã mua bao nhiêu món đồ",
+            "intent": "bought_num"
+          },
+          {
+            "domain": "default",
+            "utterance": "tôi đã đặt tổng cộng bao nhiêu đơn hàng",
+            "intent": "bought_num"
+          },
+          {
+            "domain": "default",
+            "utterance": "số đơn hàng tôi đã đặt",
+            "intent": "bought_num"
+          },
+          {
+            "domain": "default",
+            "utterance": "Lần gần nhất tôi mua hàng",
+            "intent": "lastest_buy"
+          },
+          {
+            "domain": "default",
+            "utterance": "Lần cuối tôi mua hàng ở đây là khi nào thế",
+            "intent": "lastest_buy"
+          },
+          {
+            "domain": "default",
+            "utterance": "Lần gần nhất tôi không mua là lúc nào",
+            "intent": "lastest_buy"
+          },
+          {
+            "domain": "default",
+            "utterance": "Chào shop",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Chào cửa hàng",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Chào em",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hello shop",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hi shop",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Xin chào",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Chào bạn",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hey",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Alo shop",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop ơi",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có ai không",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hú hú",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Chào nhà hàng chay",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Chào quán chay",
+            "intent": "greeting"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thực phẩm chay là gì",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ chay là gì vậy",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop bán đồ chay phải không",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ ăn ở đây có phải là chay không",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thực phẩm chay có lành mạnh không",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay có tốt cho sức khỏe không",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop này chuyên về món chay à",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Chay là gì",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tại sao nên ăn chay",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Lợi ích của thực phẩm chay",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop toàn đồ chay hả",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có bán đồ mặn không",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ ăn ở đây healthy không",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay có béo không",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ chay có ngon không",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món chay có đủ chất không",
+            "intent": "about_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop có những loại thực phẩm chay nào",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món chay nào ngon nhất",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop bán đồ chay gì",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có những loại đồ chay nào",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Menu chay có gì",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop bán món gì",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có món nào ngon",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Muốn xem menu",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cho tui xem các món",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món ăn có gì",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop có bán cơm không",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phở chay không",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có bún chay không",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món nào bestseller",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món nào bán chạy nhất",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Nên gọi món gì",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Gợi ý món ngon",
+            "intent": "vegetarian_types"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop có ship không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có giao hàng không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giao hàng tận nơi không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop có ship tận nhà không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có ship không shop",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giao đồ tận nơi không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Mình đặt ship được không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ship bao lâu",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bao lâu thì giao",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bao giờ giao hàng",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giao hàng mất bao lâu",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Phí ship bao nhiêu",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tiền ship là bao nhiêu",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có tính phí giao hàng không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ship xa có được không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ship ngoại thành được không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Khu vực nào thì ship",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop có giao đồ ăn chay tận nhà không",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Phí ship thực phẩm chay bao nhiêu",
+            "intent": "AboutShip"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay có đủ dinh dưỡng không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thực phẩm chay có đủ protein không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món chay có tốt cho người giảm cân không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay có thiếu chất gì không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ chay có đủ vitamin không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay có bị thiếu máu không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ chay có đủ sắt không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay giảm cân được không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thực phẩm chay có béo không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay có tốt cho da không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ chay có làm sáng da không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay có tốt cho người tiểu đường không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món chay có cholesterol không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ chay có nhiều calo không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay có đủ năng lượng không",
+            "intent": "nutrition"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giá thực phẩm chay bao nhiêu",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ chay có đắt không",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món chay giá cả thế nào",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay có rẻ hơn không",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giá món chay",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bao nhiêu tiền một suất",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giá cả như thế nào",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món chay đắt không",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay tốn bao nhiêu",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giá thực đơn",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Phở chay giá bao nhiêu",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cơm chay giá bao nhiêu",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bún chay bao nhiêu tiền",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món rẻ nhất",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có món nào dưới 50k",
+            "intent": "price_range"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop có khuyến mãi không",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có voucher giảm giá không",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Mã giảm giá thực phẩm chay",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có giảm giá không",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ưu đãi gì không",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Sale không shop",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có mã giảm giá",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Voucher gì",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hôm nay có khuyến mãi gì",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Miễn ship không",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Free ship đơn bao nhiêu",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giảm giá khi nào",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có chương trình ưu đãi",
+            "intent": "promotion"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có ai online không",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có ai không",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi cần giúp đỡ",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tư vấn giúp em món chay nào ngon",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop tư vấn món chay cho người mới ăn chay",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Help me",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cần tư vấn",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop tư vấn giúp em",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Muốn hỏi vài thứ",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Không biết nên chọn món nào",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món nào ngon cho người mới",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tư vấn món ăn chay",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giúp tôi chọn món",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Nên ăn gì",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Gợi ý món đi",
+            "intent": "NeedHelp"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cảm ơn shop",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "E cảm ơn shop ạ",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thanks shop nhé",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tks shop",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cảm ơn nhiều",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thank you",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thanks nhiều nha",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cảm ơn đã tư vấn",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cảm ơn shop nhiều",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop tuyệt vời",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ok cảm ơn",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Oke thanks",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Được rồi cảm ơn",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thế là được",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tạm biệt",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bye bye",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hẹn gặp lại",
+            "intent": "thanks"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hiện tại shop bán sản phẩm chay gì thế",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop còn món chay gì thế",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop có bán món ăn chay gì thế",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Kể tên toàn bộ sản phẩm chay",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Menu thực phẩm chay có gì",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cho xem danh sách món",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Liệt kê tất cả món chay",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Xem tất cả sản phẩm",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có bao nhiêu món",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Show menu",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Xem menu đầy đủ",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Danh sách món ăn",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tất cả các món",
+            "intent": "Products"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn hàng của tôi đâu",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Kiểm tra đơn hàng",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Xem đơn hàng của mình",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn của tôi đến đâu rồi",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tình trạng đơn hàng thế nào",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn hàng đang ở đâu",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Check đơn hàng",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Xem lịch sử đơn hàng",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi đặt hàng hồi nãy",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn tôi order lúc nãy",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bao giờ giao đơn hàng",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn hàng bao lâu nữa đến",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn mới nhất của tôi",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Kiểm tra order",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tìm đơn hàng của tôi",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn hàng tôi đặt",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn tôi mua",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Trạng thái đơn hàng",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shipper đến chưa",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đơn hàng đã duyệt chưa",
+            "intent": "check_my_orders"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đặt hàng như thế nào",
+            "intent": "how_to_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cách đặt đồ chay",
+            "intent": "how_to_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để order",
+            "intent": "how_to_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Mua hàng thế nào",
+            "intent": "how_to_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Quy trình đặt hàng",
+            "intent": "how_to_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Order món chay",
+            "intent": "how_to_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đặt món ăn chay online",
+            "intent": "how_to_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hủy đơn hàng được không",
+            "intent": "cancel_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Làm sao để hủy đơn",
+            "intent": "cancel_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi muốn hủy đơn",
+            "intent": "cancel_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đổi ý không mua nữa",
+            "intent": "cancel_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hoàn tiền như thế nào",
+            "intent": "cancel_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có được đổi trả không",
+            "intent": "cancel_order"
+          },
+          {
+            "domain": "default",
+            "utterance": "món chay hot nhất tháng này là gì",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "tháng này bán được nhiều nhất món chay nào",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "đồ ăn chay bán được top nhiều nhất trong tháng",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "món chay bán chạy tháng này",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "thực phẩm chay nào được yêu thích nhất",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Top bán chạy",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bestseller là gì",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món nào hot nhất",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món gì nhiều người mua",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thống kê bán hàng",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món nào được yêu thích",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Người ta hay order món gì",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Top 5 món bán chạy",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Xem thống kê",
+            "intent": "dtt"
+          },
+          {
+            "domain": "default",
+            "utterance": "Nguyên liệu thực phẩm chay từ đâu",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ chay có organic không",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Rau củ có sạch không",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop lấy hàng ở đâu",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thực phẩm chay có đảm bảo an toàn không",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Nguồn gốc rõ ràng không",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có phải đồ organic không",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Rau có thuốc trừ sâu không",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đảm bảo vệ sinh an toàn",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có giấy chứng nhận không",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Nhập từ đâu",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Rau Đà Lạt không",
+            "intent": "origin_quality"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ngày rằm ăn gì",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Mùng 1 có món chay nào đặc biệt không",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay ngày lễ",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Menu rằm tháng 7",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Rằm này ăn gì",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Mùng 1 có gì đặc biệt",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Combo rằm",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Set ăn mùng 1",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ngày Phật đản có gì",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Lễ Vu Lan ăn chay",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay ngày vía",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thứ 2 có giảm giá không",
+            "intent": "vegetarian_day"
+          },
+          {
+            "domain": "default",
+            "utterance": "Mới bắt đầu ăn chay nên ăn gì",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tôi chưa quen ăn chay",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tư vấn món chay cho người mới",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn chay lần đầu nên chọn món nào",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Người mới ăn món gì",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Lần đầu ăn chay",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Chưa bao giờ ăn chay",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Sợ không quen miệng",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món nào dễ ăn nhất",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giới thiệu món cho newbie",
+            "intent": "beginner_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop mở cửa lúc mấy giờ",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Giờ hoạt động của shop",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bao giờ shop mở cửa",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop đóng cửa lúc nào",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Mấy giờ mở cửa",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Mấy giờ đóng cửa",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Thời gian làm việc",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Sáng sớm có bán không",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Tối muộn có bán không",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Chủ nhật có mở không",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cuối tuần có bán không",
+            "intent": "opening_hours"
+          },
+          {
+            "domain": "default",
+            "utterance": "Địa chỉ shop ở đâu",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop có chi nhánh nào không",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Liên hệ shop như thế nào",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Số điện thoại shop",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Địa chỉ cụ thể",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Hotline là gì",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Gọi điện thoại",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Fanpage Facebook",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Email shop",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cách liên lạc",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có bao nhiêu chi nhánh",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Shop gần nhà tôi",
+            "intent": "address_contact"
+          },
+          {
+            "domain": "default",
+            "utterance": "Trẻ em ăn chay được không",
+            "intent": "kids_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Món chay cho bé",
+            "intent": "kids_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Trẻ con ăn được không",
+            "intent": "kids_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Bé ăn chay có đủ chất không",
+            "intent": "kids_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Menu cho trẻ em",
+            "intent": "kids_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Đồ ăn cho bé",
+            "intent": "kids_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Cháo chay cho bé",
+            "intent": "kids_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Súp chay trẻ em",
+            "intent": "kids_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có món chay cho trẻ nhỏ không",
+            "intent": "kids_vegetarian"
+          },
+          {
+            "domain": "default",
+            "utterance": "Có combo thực phẩm chay không",
+            "intent": "combo_set"
+          },
+          {
+            "domain": "default",
+            "utterance": "Set meal món chay",
+            "intent": "combo_set"
+          },
+          {
+            "domain": "default",
+            "utterance": "Gói ăn chay trọn gói",
+            "intent": "combo_set"
+          },
+          {
+            "domain": "default",
+            "utterance": "Combo 2 người",
+            "intent": "combo_set"
+          },
+          {
+            "domain": "default",
+            "utterance": "Set gia đình",
+            "intent": "combo_set"
+          },
+          {
+            "domain": "default",
+            "utterance": "Gói cặp đôi",
+            "intent": "combo_set"
+          },
+          {
+            "domain": "default",
+            "utterance": "Combo cho nhóm",
+            "intent": "combo_set"
+          },
+          {
+            "domain": "default",
+            "utterance": "Set tiết kiệm",
+            "intent": "combo_set"
+          },
+          {
+            "domain": "default",
+            "utterance": "Ăn theo set",
+            "intent": "combo_set"
+          }
+        ],
+        "domains": {
+          "master_domain": {
+            "settings": {
+              "locale": "vi",
+              "tag": "nlu-vi",
+              "keepStopwords": true,
+              "nonefeatureValue": 1,
+              "nonedeltaMultiplier": 1.2,
+              "spellCheck": false,
+              "spellCheckDistance": 1,
+              "filterZeros": true,
+              "log": true
+            }
+          }
+        }
+      }
+    },
+    "intentDomains": {},
+    "extraSentences": [
+      [
+        "vi",
+        "Làm thế nào để tạo một đơn hàng trà sữa cơ bản?"
+      ],
+      [
+        "vi",
+        "Có thể tạo một đơn hàng trà sữa như thế nào?"
+      ],
+      [
+        "vi",
+        "Làm sao để mua trà sữa?"
+      ],
+      [
+        "vi",
+        "Có cách nào để đặt một ly trà sữa không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để đặt một đơn hàng trà sữa?"
+      ],
+      [
+        "vi",
+        "Có thể đặt một ly trà sữa như thế nào?"
+      ],
+      [
+        "vi",
+        "Cách để mua trà sữa?"
+      ],
+      [
+        "vi",
+        "Có thể đặt một ly trà sữa như thế nào?"
+      ],
+      [
+        "vi",
+        "Có cách nào để tạo một đơn hàng trà sữa đơn giản không?"
+      ],
+      [
+        "vi",
+        "Có bao nhiêu loại trà sữa phổ biến mà tôi có thể chọn?"
+      ],
+      [
+        "vi",
+        "Tôi có thể chọn từ mấy loại trà sữa phổ biến?"
+      ],
+      [
+        "vi",
+        "Có những loại trà sữa nào được coi là phổ biến và tôi có thể chọn?"
+      ],
+      [
+        "vi",
+        "Tôi muốn biết về các loại trà sữa phổ biến mà tôi có thể chọn, có thể giúp tôi không?"
+      ],
+      [
+        "vi",
+        "Trà sữa có những loại nào là phổ biến và tôi có thể chọn?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để tôi thêm một loại trà sữa vào đơn hàng?"
+      ],
+      [
+        "vi",
+        "Tôi cần làm gì để thêm một loại trà sữa vào đơn hàng của mình?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để tôi có thể thêm một loại trà sữa vào đơn hàng tôi đang tạo?"
+      ],
+      [
+        "vi",
+        "Có cách nào để tôi thêm một loại trà sữa vào đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Tôi cần phải làm gì để thêm một loại trà sữa vào đơn hàng tôi đang đặt?"
+      ],
+      [
+        "vi",
+        "Bạn có thể cho tôi biết cách để thêm một loại trà sữa vào đơn hàng tôi đang tạo không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để thêm topping vào đơn hàng trà sữa?"
+      ],
+      [
+        "vi",
+        "Có cách nào để tôi có thể thêm topping vào đơn hàng trà sữa không?"
+      ],
+      [
+        "vi",
+        "Làm sao để tôi có thể bổ sung topping vào đơn hàng trà sữa?"
+      ],
+      [
+        "vi",
+        "Tôi muốn thêm topping vào đơn hàng trà sữa, có cách nào để làm điều đó không?"
+      ],
+      [
+        "vi",
+        "Có phương pháp nào để tôi có thể đặt thêm topping vào đơn hàng trà sữa không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để tôi có thể yêu cầu thêm topping vào đơn hàng trà sữa?"
+      ],
+      [
+        "vi",
+        "Có phí vận chuyển cho đơn hàng không? Nếu có, làm thế nào để tính phí vận chuyển?"
+      ],
+      [
+        "vi",
+        "Cho đơn hàng có tính phí vận chuyển không? Nếu có, làm thế nào để tính phí vận chuyển?"
+      ],
+      [
+        "vi",
+        "Đơn hàng có phải trả phí vận chuyển không? Nếu có, cách tính phí vận chuyển như thế nào?"
+      ],
+      [
+        "vi",
+        "Có mất phí vận chuyển cho đơn hàng không? Nếu có, làm sao để tính phí vận chuyển?"
+      ],
+      [
+        "vi",
+        "Đơn hàng có chi phí vận chuyển không? Nếu có, làm thế nào để tính toán phí vận chuyển?"
+      ],
+      [
+        "vi",
+        "Có phải trả phí vận chuyển cho đơn hàng không? Nếu có, cách tính phí vận chuyển ra sao?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để chỉnh sửa một đơn hàng đã được đặt?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để xóa một sản phẩm khỏi đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có cách nào để loại bỏ một sản phẩm khỏi đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Làm sao để xoá đi một sản phẩm trong đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có thể xóa một sản phẩm khỏi đơn hàng như thế nào?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để bỏ đi một sản phẩm trong đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có cách nào để xoá bỏ một sản phẩm trong đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để xác nhận đơn hàng và thực hiện thanh toán?"
+      ],
+      [
+        "vi",
+        "Làm sao để xác nhận đơn hàng và thanh toán?"
+      ],
+      [
+        "vi",
+        "Có cách nào để xác nhận và thanh toán đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để xác nhận và tiến hành thanh toán cho đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có phương pháp nào để xác nhận và thanh toán đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để xác nhận và thực hiện thanh toán cho đơn hàng của tôi?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để theo dõi tình trạng giao hàng của một đơn hàng?"
+      ],
+      [
+        "vi",
+        "Làm sao để kiểm tra tình trạng giao hàng của một đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có cách nào để theo dõi tình trạng giao hàng của một đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để biết được tình trạng giao hàng của một đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có phương pháp nào để xem tình trạng giao hàng của một đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để tra cứu tình trạng giao hàng của một đơn hàng?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để kiểm tra tồn kho các loại trà sữa và topping?"
+      ],
+      [
+        "vi",
+        "Bạn có hệ thống ưu đãi hoặc phiếu giảm giá không? Làm thế nào để áp dụng chúng cho đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có chương trình ưu đãi hoặc phiếu giảm giá không? Làm thế nào để sử dụng chúng cho đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có khuyến mãi hoặc phiếu giảm giá không? Làm sao để áp dụng chúng cho đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có ưu đãi đặc biệt hoặc phiếu giảm giá không? Làm thế nào để áp dụng chúng cho đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có chính sách ưu đãi hoặc phiếu giảm giá không? Làm cách nào để sử dụng chúng cho đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có chương trình khuyến mãi hoặc phiếu giảm giá không? Làm thế nào để áp dụng chúng cho đơn hàng?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để đặt hàng nhanh cho các sản phẩm trà sữa phổ biến mà khách hàng thường chọn?"
+      ],
+      [
+        "vi",
+        "Cách nhanh nhất để đặt hàng các sản phẩm trà sữa phổ biến mà khách hàng thường chọn là gì?"
+      ],
+      [
+        "vi",
+        "Bạn có thể chỉ cho tôi các phương pháp đặt hàng nhanh cho các sản phẩm trà sữa phổ biến mà khách hàng thường chọn không?"
+      ],
+      [
+        "vi",
+        "Làm sao để đặt hàng nhanh các sản phẩm trà sữa phổ biến mà khách hàng thường chọn?"
+      ],
+      [
+        "vi",
+        "Có những cách nào để đặt hàng nhanh cho các loại trà sữa phổ biến mà khách hàng thường chọn không?"
+      ],
+      [
+        "vi",
+        "Bạn có thể cho tôi biết cách đặt hàng nhanh cho các sản phẩm trà sữa phổ biến mà khách hàng thường chọn được không?"
+      ],
+      [
+        "vi",
+        "Có thể tạo danh sách ưa thích của khách hàng để đặt hàng nhanh hơn không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để tính toán tổng giá trị của đơn hàng với tất cả các món đã chọn?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để thực hiện theo dõi lịch sử đặt hàng của một khách hàng?"
+      ],
+      [
+        "vi",
+        "Có cách nào để theo dõi lịch sử đặt hàng của một khách hàng không?"
+      ],
+      [
+        "vi",
+        "Làm sao để kiểm tra lịch sử đặt hàng của một khách hàng?"
+      ],
+      [
+        "vi",
+        "Có phương pháp nào để xem thông tin về các đơn hàng trước đây của một khách hàng không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để tra cứu lịch sử đặt hàng của một khách hàng?"
+      ],
+      [
+        "vi",
+        "Bạn có thể chỉ cho tôi cách xem lịch sử đặt hàng của một khách hàng được không?"
+      ],
+      [
+        "vi",
+        "Có cách nào để xử lý việc trả lại hoặc hoàn tiền cho một đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có phương pháp nào để xử lý việc trả lại hoặc hoàn tiền cho một đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để giải quyết việc trả lại hoặc hoàn tiền cho một đơn hàng?"
+      ],
+      [
+        "vi",
+        "Có cách nào để xử lý việc trả lại hoặc nhận hoàn tiền cho một đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Bạn có thể chỉ cho tôi cách xử lý việc trả lại hoặc hoàn tiền cho một đơn hàng được không?"
+      ],
+      [
+        "vi",
+        "Làm sao để xử lý việc trả lại hoặc yêu cầu hoàn tiền cho một đơn hàng?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để gửi xác nhận đặt hàng và thông tin liên lạc đến khách hàng qua email hoặc tin nhắn văn bản?"
+      ],
+      [
+        "vi",
+        "Bạn cung cấp dịch vụ giao hàng tận nơi không? Làm thế nào để xác định thời gian giao hàng dự kiến?"
+      ],
+      [
+        "vi",
+        "Có cung cấp dịch vụ giao hàng tận nơi không? Làm sao để biết thời gian giao hàng dự kiến?"
+      ],
+      [
+        "vi",
+        "Bạn có dịch vụ giao hàng tận nơi không? Làm thế nào để xác định thời gian giao hàng dự kiến?"
+      ],
+      [
+        "vi",
+        "Dịch vụ giao hàng tận nơi có được cung cấp không? Làm cách nào để xác định thời gian giao hàng dự kiến?"
+      ],
+      [
+        "vi",
+        "Có hỗ trợ giao hàng tận nơi không? Làm thế nào để biết thời gian giao hàng dự kiến?"
+      ],
+      [
+        "vi",
+        "Bạn có dịch vụ giao hàng đến tận nơi không? Làm sao để xác định thời gian giao hàng dự kiến?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để quản lý các đơn hàng đang chờ xử lý và đơn hàng đã hoàn thành trong hệ thống?"
+      ],
+      [
+        "vi",
+        "Làm sao để chọn các loại trà sữa và topping?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để biết được loại trà sữa và topping nào là phổ biến và được ưa chuộng nhất?"
+      ],
+      [
+        "vi",
+        "Bạn có thể cho tôi biết thêm về quy trình chọn trà sữa và topping ở cửa hàng của bạn không?"
+      ],
+      [
+        "vi",
+        "Có những nguyên tắc nào cần tuân thủ khi chọn trà sữa và topping?"
+      ],
+      [
+        "vi",
+        "Bạn có gợi ý nào để chọn trà sữa và topping phù hợp với sở thích của mình không?"
+      ],
+      [
+        "vi",
+        "Làm sao để thay đổi kích cỡ và đường của trà sữa?"
+      ],
+      [
+        "vi",
+        "Có những cách nào để điều chỉnh kích cỡ và đường của trà sữa không?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để tùy chỉnh kích cỡ và đường của trà sữa?"
+      ],
+      [
+        "vi",
+        "Có những phương pháp nào để điều chỉnh kích cỡ và đường của trà sữa?"
+      ],
+      [
+        "vi",
+        "Bạn có thể giúp tôi biết cách thay đổi kích cỡ và đường của trà sữa không?"
+      ],
+      [
+        "vi",
+        "Làm cách nào để xem giỏ hàng của tôi trước khi thanh toán?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để kiểm tra giỏ hàng trước khi thanh toán?"
+      ],
+      [
+        "vi",
+        "Có cách nào để xem lại giỏ hàng trước khi tiến hành thanh toán không?"
+      ],
+      [
+        "vi",
+        "Làm sao để xem các sản phẩm đã chọn trong giỏ hàng trước khi thanh toán?"
+      ],
+      [
+        "vi",
+        "Có phương pháp nào để kiểm tra lại các mặt hàng trong giỏ hàng trước khi hoàn tất thanh toán không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể thêm ghi chú  cho đơn hàng của mình không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể thêm ghi chú cho đơn hàng của mình không?"
+      ],
+      [
+        "vi",
+        "Có cách nào để đặt ghi chú cho đơn hàng của tôi không?"
+      ],
+      [
+        "vi",
+        "Làm sao để ghi chú cho đơn hàng của tôi?"
+      ],
+      [
+        "vi",
+        "Tôi có thể điền thông tin ghi chú vào đơn hàng của mình không?"
+      ],
+      [
+        "vi",
+        "Có phương pháp nào để thêm ghi chú cho đơn hàng trước khi thanh toán không?"
+      ],
+      [
+        "vi",
+        "Làm sao để thanh toán trực tuyến?"
+      ],
+      [
+        "vi",
+        "Có cách nào để thanh toán qua mạng không?"
+      ],
+      [
+        "vi",
+        "Làm sao để thực hiện thanh toán online?"
+      ],
+      [
+        "vi",
+        "Có phương pháp nào để thanh toán trực tuyến không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể thanh toán qua internet như thế nào?"
+      ],
+      [
+        "vi",
+        "Tôi sẽ nhận được xác nhận đơn hàng sau khi hoàn tất thanh toán không?"
+      ],
+      [
+        "vi",
+        "Sau khi tôi hoàn tất thanh toán, liệu tôi có nhận được xác nhận đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Nếu tôi đã thanh toán thành công, tôi có được xác nhận đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Sau khi tôi thanh toán, liệu tôi sẽ nhận được xác nhận đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Tôi đã hoàn tất thanh toán, vậy tôi có nhận được xác nhận đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Sau khi tôi thanh toán, liệu tôi sẽ nhận được thông báo xác nhận đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Tôi sẽ nhận được xác nhận đơn hàng sau khi hoàn tất thanh toán không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể kiểm tra tình trạng giao hàng của đơn hàng của mình như thế nào?"
+      ],
+      [
+        "vi",
+        "Làm sao để xem tình trạng giao hàng của đơn hàng của tôi?"
+      ],
+      [
+        "vi",
+        "Có cách nào để biết được tình trạng giao hàng của đơn hàng của tôi không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể tra cứu tình trạng giao hàng của đơn hàng của mình như thế nào?"
+      ],
+      [
+        "vi",
+        "Làm thế nào để kiểm tra xem đơn hàng của tôi đã được giao hay chưa?"
+      ],
+      [
+        "vi",
+        "Tôi có thể hủy đơn hàng sau khi đã đặt mua không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể hủy đơn hàng sau khi đã đặt mua được không?"
+      ],
+      [
+        "vi",
+        "Có thể hủy đơn hàng sau khi đã đặt mua không?"
+      ],
+      [
+        "vi",
+        "Sau khi đã đặt mua, tôi có thể hủy đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Hủy đơn hàng có được chấp nhận sau khi đã đặt mua không?"
+      ],
+      [
+        "vi",
+        "Sau khi đã đặt mua, có thể tôi hủy đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể đặt mua trà sữa hàng ngày thông qua trang web không?"
+      ],
+      [
+        "vi",
+        "Trang web có cho phép đặt mua trà sữa hàng ngày không?"
+      ],
+      [
+        "vi",
+        "Có thể mua trà sữa hàng ngày qua trang web được không?"
+      ],
+      [
+        "vi",
+        "Trang web có dịch vụ đặt mua trà sữa hàng ngày không?"
+      ],
+      [
+        "vi",
+        "Có cách nào để đặt mua trà sữa hàng ngày qua trang web không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể đặt mua trà sữa hàng ngày trên trang web được không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể sử dụng thẻ giảm giá khi đặt mua trà sữa trực tuyến không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể áp dụng thẻ giảm giá khi đặt mua trà sữa trực tuyến không?"
+      ],
+      [
+        "vi",
+        "Có chấp nhận thẻ giảm giá khi đặt mua trà sữa trực tuyến không?"
+      ],
+      [
+        "vi",
+        "Thẻ giảm giá có được áp dụng khi đặt mua trà sữa trực tuyến không?"
+      ],
+      [
+        "vi",
+        "Có thể sử dụng thẻ giảm giá để mua trà sữa trực tuyến không?"
+      ],
+      [
+        "vi",
+        "Tôi có thể sử dụng thẻ giảm giá khi đặt mua trà sữa qua mạng không?"
+      ],
+      [
+        "vi",
+        "Tôi cần phải trả phí giao hàng khi đặt mua trà sữa trực tuyến không?"
+      ],
+      [
+        "vi",
+        "Tôi có phải trả phí vận chuyển khi đặt mua trà sữa trực tuyến không?"
+      ],
+      [
+        "vi",
+        "Có mất phí giao hàng khi tôi mua trà sữa trực tuyến không?"
+      ],
+      [
+        "vi",
+        "Tôi cần phải trả phí vận chuyển khi đặt mua trà sữa qua mạng không?"
+      ],
+      [
+        "vi",
+        "Phải trả phí giao hàng khi mua trà sữa online không?"
+      ],
+      [
+        "vi",
+        "Có phải trả phí vận chuyển khi đặt mua trà sữa qua internet không?"
+      ],
+      [
+        "vi",
+        "Làm cách nào để tôi biết về thời gian mở cửa của cửa hàng trà sữa trực tuyến?"
+      ],
+      [
+        "vi",
+        "Bạn có thể tìm hiểu về thời gian mở cửa của cửa hàng trà sữa trực tuyến bằng cách xem thông tin trên trang web hoặc ứng dụng của cửa hàng đó."
+      ],
+      [
+        "vi",
+        "Thông tin về thời gian mở cửa của cửa hàng trà sữa trực tuyến thường được hiển thị trên trang chủ hoặc trang liên hệ của cửa hàng."
+      ],
+      [
+        "vi",
+        "Để biết về thời gian mở cửa của cửa hàng trà sữa trực tuyến, bạn có thể kiểm tra trên trang mạng xã hội hoặc gọi điện thoại trực tiếp đến cửa hàng để được tư vấn."
+      ],
+      [
+        "vi",
+        "Thông tin về thời gian mở cửa của cửa hàng trà sữa trực tuyến thường được cập nhật trên trang Facebook hoặc trang web chính thức của cửa hàng."
+      ],
+      [
+        "vi",
+        "Để biết thời gian mở cửa của cửa hàng trà sữa trực tuyến, bạn có thể tham khảo các đánh giá hoặc bình luận từ khách hàng trước đó trên trang web hoặc ứng dụng của cửa hàng."
+      ],
+      [
+        "vi",
+        "Tôi có thể thay đổi phương thức thanh toán sau khi đã đặt hàng không?"
+      ],
+      [
+        "vi",
+        "Sau khi đã đặt hàng, tôi có thể thay đổi phương thức thanh toán được không?"
+      ],
+      [
+        "vi",
+        "Có cách nào để tôi thay đổi phương thức thanh toán sau khi đã hoàn tất đơn hàng không?"
+      ],
+      [
+        "vi",
+        "Tôi muốn thay đổi phương thức thanh toán sau khi đã đặt hàng, làm thế nào để làm điều này?"
+      ],
+      [
+        "vi",
+        "Nếu tôi muốn thay đổi phương thức thanh toán sau khi đã đặt mua, có phải tôi cần liên hệ với cửa hàng không?"
+      ],
+      [
+        "vi",
+        "Có cho phép thay đổi phương thức thanh toán sau khi đã đặt hàng không? Nếu có, làm thế nào để thực hiện điều này?"
+      ],
+      [
+        "vi",
+        "Tôi có thể đặt hàng trà sữa trong mục thời gian cố định không?"
+      ],
+      [
+        "vi",
+        "Có giới hạn thời gian để đặt hàng trà sữa không?"
+      ],
+      [
+        "vi",
+        "Tôi cần biết liệu có thời gian cụ thể để đặt hàng trà sữa không?"
+      ],
+      [
+        "vi",
+        "Trong khoảng thời gian nào tôi có thể đặt hàng trà sữa?"
+      ],
+      [
+        "vi",
+        "Có quy định về thời gian đặt hàng trà sữa không?"
+      ],
+      [
+        "vi",
+        "Tôi muốn biết liệu có giới hạn thời gian nào để đặt hàng trà sữa hay không?"
+      ],
+      [
+        "vi",
+        "số lượng hàng tôi đã mua"
+      ],
+      [
+        "vi",
+        "tôi đã mua bao nhiêu món đồ"
+      ],
+      [
+        "vi",
+        "tôi đã đặt tổng cộng bao nhiêu đơn hàng"
+      ],
+      [
+        "vi",
+        "số đơn hàng tôi đã đặt"
+      ],
+      [
+        "vi",
+        "Lần gần nhất tôi mua hàng"
+      ],
+      [
+        "vi",
+        "Lần cuối tôi mua hàng ở đây là khi nào thế"
+      ],
+      [
+        "vi",
+        "Lần gần nhất tôi không mua là lúc nào"
+      ],
+      [
+        "vi",
+        "Chào shop"
+      ],
+      [
+        "vi",
+        "Chào cửa hàng"
+      ],
+      [
+        "vi",
+        "Chào em"
+      ],
+      [
+        "vi",
+        "Hello shop"
+      ],
+      [
+        "vi",
+        "Hi shop"
+      ],
+      [
+        "vi",
+        "Xin chào"
+      ],
+      [
+        "vi",
+        "Chào bạn"
+      ],
+      [
+        "vi",
+        "Hey"
+      ],
+      [
+        "vi",
+        "Alo shop"
+      ],
+      [
+        "vi",
+        "Shop ơi"
+      ],
+      [
+        "vi",
+        "Có ai không"
+      ],
+      [
+        "vi",
+        "Hú hú"
+      ],
+      [
+        "vi",
+        "Chào nhà hàng chay"
+      ],
+      [
+        "vi",
+        "Chào quán chay"
+      ],
+      [
+        "vi",
+        "Thực phẩm chay là gì"
+      ],
+      [
+        "vi",
+        "Đồ chay là gì vậy"
+      ],
+      [
+        "vi",
+        "Shop bán đồ chay phải không"
+      ],
+      [
+        "vi",
+        "Đồ ăn ở đây có phải là chay không"
+      ],
+      [
+        "vi",
+        "Thực phẩm chay có lành mạnh không"
+      ],
+      [
+        "vi",
+        "Ăn chay có tốt cho sức khỏe không"
+      ],
+      [
+        "vi",
+        "Shop này chuyên về món chay à"
+      ],
+      [
+        "vi",
+        "Chay là gì"
+      ],
+      [
+        "vi",
+        "Tại sao nên ăn chay"
+      ],
+      [
+        "vi",
+        "Lợi ích của thực phẩm chay"
+      ],
+      [
+        "vi",
+        "Shop toàn đồ chay hả"
+      ],
+      [
+        "vi",
+        "Có bán đồ mặn không"
+      ],
+      [
+        "vi",
+        "Đồ ăn ở đây healthy không"
+      ],
+      [
+        "vi",
+        "Ăn chay có béo không"
+      ],
+      [
+        "vi",
+        "Đồ chay có ngon không"
+      ],
+      [
+        "vi",
+        "Món chay có đủ chất không"
+      ],
+      [
+        "vi",
+        "Shop có những loại thực phẩm chay nào"
+      ],
+      [
+        "vi",
+        "Món chay nào ngon nhất"
+      ],
+      [
+        "vi",
+        "Shop bán đồ chay gì"
+      ],
+      [
+        "vi",
+        "Có những loại đồ chay nào"
+      ],
+      [
+        "vi",
+        "Menu chay có gì"
+      ],
+      [
+        "vi",
+        "Shop bán món gì"
+      ],
+      [
+        "vi",
+        "Có món nào ngon"
+      ],
+      [
+        "vi",
+        "Muốn xem menu"
+      ],
+      [
+        "vi",
+        "Cho tui xem các món"
+      ],
+      [
+        "vi",
+        "Món ăn có gì"
+      ],
+      [
+        "vi",
+        "Shop có bán cơm không"
+      ],
+      [
+        "vi",
+        "Có phở chay không"
+      ],
+      [
+        "vi",
+        "Có bún chay không"
+      ],
+      [
+        "vi",
+        "Món nào bestseller"
+      ],
+      [
+        "vi",
+        "Món nào bán chạy nhất"
+      ],
+      [
+        "vi",
+        "Nên gọi món gì"
+      ],
+      [
+        "vi",
+        "Gợi ý món ngon"
+      ],
+      [
+        "vi",
+        "Shop có ship không"
+      ],
+      [
+        "vi",
+        "Có giao hàng không"
+      ],
+      [
+        "vi",
+        "Giao hàng tận nơi không"
+      ],
+      [
+        "vi",
+        "Shop có ship tận nhà không"
+      ],
+      [
+        "vi",
+        "Có ship không shop"
+      ],
+      [
+        "vi",
+        "Giao đồ tận nơi không"
+      ],
+      [
+        "vi",
+        "Mình đặt ship được không"
+      ],
+      [
+        "vi",
+        "Ship bao lâu"
+      ],
+      [
+        "vi",
+        "Bao lâu thì giao"
+      ],
+      [
+        "vi",
+        "Bao giờ giao hàng"
+      ],
+      [
+        "vi",
+        "Giao hàng mất bao lâu"
+      ],
+      [
+        "vi",
+        "Phí ship bao nhiêu"
+      ],
+      [
+        "vi",
+        "Tiền ship là bao nhiêu"
+      ],
+      [
+        "vi",
+        "Có tính phí giao hàng không"
+      ],
+      [
+        "vi",
+        "Ship xa có được không"
+      ],
+      [
+        "vi",
+        "Ship ngoại thành được không"
+      ],
+      [
+        "vi",
+        "Khu vực nào thì ship"
+      ],
+      [
+        "vi",
+        "Shop có giao đồ ăn chay tận nhà không"
+      ],
+      [
+        "vi",
+        "Phí ship thực phẩm chay bao nhiêu"
+      ],
+      [
+        "vi",
+        "Ăn chay có đủ dinh dưỡng không"
+      ],
+      [
+        "vi",
+        "Thực phẩm chay có đủ protein không"
+      ],
+      [
+        "vi",
+        "Món chay có tốt cho người giảm cân không"
+      ],
+      [
+        "vi",
+        "Ăn chay có thiếu chất gì không"
+      ],
+      [
+        "vi",
+        "Đồ chay có đủ vitamin không"
+      ],
+      [
+        "vi",
+        "Ăn chay có bị thiếu máu không"
+      ],
+      [
+        "vi",
+        "Đồ chay có đủ sắt không"
+      ],
+      [
+        "vi",
+        "Ăn chay giảm cân được không"
+      ],
+      [
+        "vi",
+        "Thực phẩm chay có béo không"
+      ],
+      [
+        "vi",
+        "Ăn chay có tốt cho da không"
+      ],
+      [
+        "vi",
+        "Đồ chay có làm sáng da không"
+      ],
+      [
+        "vi",
+        "Ăn chay có tốt cho người tiểu đường không"
+      ],
+      [
+        "vi",
+        "Món chay có cholesterol không"
+      ],
+      [
+        "vi",
+        "Đồ chay có nhiều calo không"
+      ],
+      [
+        "vi",
+        "Ăn chay có đủ năng lượng không"
+      ],
+      [
+        "vi",
+        "Giá thực phẩm chay bao nhiêu"
+      ],
+      [
+        "vi",
+        "Đồ chay có đắt không"
+      ],
+      [
+        "vi",
+        "Món chay giá cả thế nào"
+      ],
+      [
+        "vi",
+        "Ăn chay có rẻ hơn không"
+      ],
+      [
+        "vi",
+        "Giá món chay"
+      ],
+      [
+        "vi",
+        "Bao nhiêu tiền một suất"
+      ],
+      [
+        "vi",
+        "Giá cả như thế nào"
+      ],
+      [
+        "vi",
+        "Món chay đắt không"
+      ],
+      [
+        "vi",
+        "Ăn chay tốn bao nhiêu"
+      ],
+      [
+        "vi",
+        "Giá thực đơn"
+      ],
+      [
+        "vi",
+        "Phở chay giá bao nhiêu"
+      ],
+      [
+        "vi",
+        "Cơm chay giá bao nhiêu"
+      ],
+      [
+        "vi",
+        "Bún chay bao nhiêu tiền"
+      ],
+      [
+        "vi",
+        "Món rẻ nhất"
+      ],
+      [
+        "vi",
+        "Có món nào dưới 50k"
+      ],
+      [
+        "vi",
+        "Shop có khuyến mãi không"
+      ],
+      [
+        "vi",
+        "Có voucher giảm giá không"
+      ],
+      [
+        "vi",
+        "Mã giảm giá thực phẩm chay"
+      ],
+      [
+        "vi",
+        "Có giảm giá không"
+      ],
+      [
+        "vi",
+        "Ưu đãi gì không"
+      ],
+      [
+        "vi",
+        "Sale không shop"
+      ],
+      [
+        "vi",
+        "Có mã giảm giá"
+      ],
+      [
+        "vi",
+        "Voucher gì"
+      ],
+      [
+        "vi",
+        "Hôm nay có khuyến mãi gì"
+      ],
+      [
+        "vi",
+        "Miễn ship không"
+      ],
+      [
+        "vi",
+        "Free ship đơn bao nhiêu"
+      ],
+      [
+        "vi",
+        "Giảm giá khi nào"
+      ],
+      [
+        "vi",
+        "Có chương trình ưu đãi"
+      ],
+      [
+        "vi",
+        "Có ai online không"
+      ],
+      [
+        "vi",
+        "Có ai không"
+      ],
+      [
+        "vi",
+        "Tôi cần giúp đỡ"
+      ],
+      [
+        "vi",
+        "Tư vấn giúp em món chay nào ngon"
+      ],
+      [
+        "vi",
+        "Shop tư vấn món chay cho người mới ăn chay"
+      ],
+      [
+        "vi",
+        "Help me"
+      ],
+      [
+        "vi",
+        "Cần tư vấn"
+      ],
+      [
+        "vi",
+        "Shop tư vấn giúp em"
+      ],
+      [
+        "vi",
+        "Muốn hỏi vài thứ"
+      ],
+      [
+        "vi",
+        "Không biết nên chọn món nào"
+      ],
+      [
+        "vi",
+        "Món nào ngon cho người mới"
+      ],
+      [
+        "vi",
+        "Tư vấn món ăn chay"
+      ],
+      [
+        "vi",
+        "Giúp tôi chọn món"
+      ],
+      [
+        "vi",
+        "Nên ăn gì"
+      ],
+      [
+        "vi",
+        "Gợi ý món đi"
+      ],
+      [
+        "vi",
+        "Cảm ơn shop"
+      ],
+      [
+        "vi",
+        "E cảm ơn shop ạ"
+      ],
+      [
+        "vi",
+        "Thanks shop nhé"
+      ],
+      [
+        "vi",
+        "Tks shop"
+      ],
+      [
+        "vi",
+        "Cảm ơn nhiều"
+      ],
+      [
+        "vi",
+        "Thank you"
+      ],
+      [
+        "vi",
+        "Thanks nhiều nha"
+      ],
+      [
+        "vi",
+        "Cảm ơn đã tư vấn"
+      ],
+      [
+        "vi",
+        "Cảm ơn shop nhiều"
+      ],
+      [
+        "vi",
+        "Shop tuyệt vời"
+      ],
+      [
+        "vi",
+        "Ok cảm ơn"
+      ],
+      [
+        "vi",
+        "Oke thanks"
+      ],
+      [
+        "vi",
+        "Được rồi cảm ơn"
+      ],
+      [
+        "vi",
+        "Thế là được"
+      ],
+      [
+        "vi",
+        "Tạm biệt"
+      ],
+      [
+        "vi",
+        "Bye bye"
+      ],
+      [
+        "vi",
+        "Hẹn gặp lại"
+      ],
+      [
+        "vi",
+        "Hiện tại shop bán sản phẩm chay gì thế"
+      ],
+      [
+        "vi",
+        "Shop còn món chay gì thế"
+      ],
+      [
+        "vi",
+        "Shop có bán món ăn chay gì thế"
+      ],
+      [
+        "vi",
+        "Kể tên toàn bộ sản phẩm chay"
+      ],
+      [
+        "vi",
+        "Menu thực phẩm chay có gì"
+      ],
+      [
+        "vi",
+        "Cho xem danh sách món"
+      ],
+      [
+        "vi",
+        "Liệt kê tất cả món chay"
+      ],
+      [
+        "vi",
+        "Xem tất cả sản phẩm"
+      ],
+      [
+        "vi",
+        "Có bao nhiêu món"
+      ],
+      [
+        "vi",
+        "Show menu"
+      ],
+      [
+        "vi",
+        "Xem menu đầy đủ"
+      ],
+      [
+        "vi",
+        "Danh sách món ăn"
+      ],
+      [
+        "vi",
+        "Tất cả các món"
+      ],
+      [
+        "vi",
+        "Đơn hàng của tôi đâu"
+      ],
+      [
+        "vi",
+        "Kiểm tra đơn hàng"
+      ],
+      [
+        "vi",
+        "Xem đơn hàng của mình"
+      ],
+      [
+        "vi",
+        "Đơn của tôi đến đâu rồi"
+      ],
+      [
+        "vi",
+        "Tình trạng đơn hàng thế nào"
+      ],
+      [
+        "vi",
+        "Đơn hàng đang ở đâu"
+      ],
+      [
+        "vi",
+        "Check đơn hàng"
+      ],
+      [
+        "vi",
+        "Xem lịch sử đơn hàng"
+      ],
+      [
+        "vi",
+        "Tôi đặt hàng hồi nãy"
+      ],
+      [
+        "vi",
+        "Đơn tôi order lúc nãy"
+      ],
+      [
+        "vi",
+        "Bao giờ giao đơn hàng"
+      ],
+      [
+        "vi",
+        "Đơn hàng bao lâu nữa đến"
+      ],
+      [
+        "vi",
+        "Đơn mới nhất của tôi"
+      ],
+      [
+        "vi",
+        "Kiểm tra order"
+      ],
+      [
+        "vi",
+        "Tìm đơn hàng của tôi"
+      ],
+      [
+        "vi",
+        "Đơn hàng tôi đặt"
+      ],
+      [
+        "vi",
+        "Đơn tôi mua"
+      ],
+      [
+        "vi",
+        "Trạng thái đơn hàng"
+      ],
+      [
+        "vi",
+        "Shipper đến chưa"
+      ],
+      [
+        "vi",
+        "Đơn hàng đã duyệt chưa"
+      ],
+      [
+        "vi",
+        "Đặt hàng như thế nào"
+      ],
+      [
+        "vi",
+        "Cách đặt đồ chay"
+      ],
+      [
+        "vi",
+        "Làm sao để order"
+      ],
+      [
+        "vi",
+        "Mua hàng thế nào"
+      ],
+      [
+        "vi",
+        "Quy trình đặt hàng"
+      ],
+      [
+        "vi",
+        "Order món chay"
+      ],
+      [
+        "vi",
+        "Đặt món ăn chay online"
+      ],
+      [
+        "vi",
+        "Hủy đơn hàng được không"
+      ],
+      [
+        "vi",
+        "Làm sao để hủy đơn"
+      ],
+      [
+        "vi",
+        "Tôi muốn hủy đơn"
+      ],
+      [
+        "vi",
+        "Đổi ý không mua nữa"
+      ],
+      [
+        "vi",
+        "Hoàn tiền như thế nào"
+      ],
+      [
+        "vi",
+        "Có được đổi trả không"
+      ],
+      [
+        "vi",
+        "món chay hot nhất tháng này là gì"
+      ],
+      [
+        "vi",
+        "tháng này bán được nhiều nhất món chay nào"
+      ],
+      [
+        "vi",
+        "đồ ăn chay bán được top nhiều nhất trong tháng"
+      ],
+      [
+        "vi",
+        "món chay bán chạy tháng này"
+      ],
+      [
+        "vi",
+        "thực phẩm chay nào được yêu thích nhất"
+      ],
+      [
+        "vi",
+        "Top bán chạy"
+      ],
+      [
+        "vi",
+        "Bestseller là gì"
+      ],
+      [
+        "vi",
+        "Món nào hot nhất"
+      ],
+      [
+        "vi",
+        "Món gì nhiều người mua"
+      ],
+      [
+        "vi",
+        "Thống kê bán hàng"
+      ],
+      [
+        "vi",
+        "Món nào được yêu thích"
+      ],
+      [
+        "vi",
+        "Người ta hay order món gì"
+      ],
+      [
+        "vi",
+        "Top 5 món bán chạy"
+      ],
+      [
+        "vi",
+        "Xem thống kê"
+      ],
+      [
+        "vi",
+        "Nguyên liệu thực phẩm chay từ đâu"
+      ],
+      [
+        "vi",
+        "Đồ chay có organic không"
+      ],
+      [
+        "vi",
+        "Rau củ có sạch không"
+      ],
+      [
+        "vi",
+        "Shop lấy hàng ở đâu"
+      ],
+      [
+        "vi",
+        "Thực phẩm chay có đảm bảo an toàn không"
+      ],
+      [
+        "vi",
+        "Nguồn gốc rõ ràng không"
+      ],
+      [
+        "vi",
+        "Có phải đồ organic không"
+      ],
+      [
+        "vi",
+        "Rau có thuốc trừ sâu không"
+      ],
+      [
+        "vi",
+        "Đảm bảo vệ sinh an toàn"
+      ],
+      [
+        "vi",
+        "Có giấy chứng nhận không"
+      ],
+      [
+        "vi",
+        "Nhập từ đâu"
+      ],
+      [
+        "vi",
+        "Rau Đà Lạt không"
+      ],
+      [
+        "vi",
+        "Ngày rằm ăn gì"
+      ],
+      [
+        "vi",
+        "Mùng 1 có món chay nào đặc biệt không"
+      ],
+      [
+        "vi",
+        "Ăn chay ngày lễ"
+      ],
+      [
+        "vi",
+        "Menu rằm tháng 7"
+      ],
+      [
+        "vi",
+        "Rằm này ăn gì"
+      ],
+      [
+        "vi",
+        "Mùng 1 có gì đặc biệt"
+      ],
+      [
+        "vi",
+        "Combo rằm"
+      ],
+      [
+        "vi",
+        "Set ăn mùng 1"
+      ],
+      [
+        "vi",
+        "Ngày Phật đản có gì"
+      ],
+      [
+        "vi",
+        "Lễ Vu Lan ăn chay"
+      ],
+      [
+        "vi",
+        "Ăn chay ngày vía"
+      ],
+      [
+        "vi",
+        "Thứ 2 có giảm giá không"
+      ],
+      [
+        "vi",
+        "Mới bắt đầu ăn chay nên ăn gì"
+      ],
+      [
+        "vi",
+        "Tôi chưa quen ăn chay"
+      ],
+      [
+        "vi",
+        "Tư vấn món chay cho người mới"
+      ],
+      [
+        "vi",
+        "Ăn chay lần đầu nên chọn món nào"
+      ],
+      [
+        "vi",
+        "Người mới ăn món gì"
+      ],
+      [
+        "vi",
+        "Lần đầu ăn chay"
+      ],
+      [
+        "vi",
+        "Chưa bao giờ ăn chay"
+      ],
+      [
+        "vi",
+        "Sợ không quen miệng"
+      ],
+      [
+        "vi",
+        "Món nào dễ ăn nhất"
+      ],
+      [
+        "vi",
+        "Giới thiệu món cho newbie"
+      ],
+      [
+        "vi",
+        "Shop mở cửa lúc mấy giờ"
+      ],
+      [
+        "vi",
+        "Giờ hoạt động của shop"
+      ],
+      [
+        "vi",
+        "Bao giờ shop mở cửa"
+      ],
+      [
+        "vi",
+        "Shop đóng cửa lúc nào"
+      ],
+      [
+        "vi",
+        "Mấy giờ mở cửa"
+      ],
+      [
+        "vi",
+        "Mấy giờ đóng cửa"
+      ],
+      [
+        "vi",
+        "Thời gian làm việc"
+      ],
+      [
+        "vi",
+        "Sáng sớm có bán không"
+      ],
+      [
+        "vi",
+        "Tối muộn có bán không"
+      ],
+      [
+        "vi",
+        "Chủ nhật có mở không"
+      ],
+      [
+        "vi",
+        "Cuối tuần có bán không"
+      ],
+      [
+        "vi",
+        "Địa chỉ shop ở đâu"
+      ],
+      [
+        "vi",
+        "Shop có chi nhánh nào không"
+      ],
+      [
+        "vi",
+        "Liên hệ shop như thế nào"
+      ],
+      [
+        "vi",
+        "Số điện thoại shop"
+      ],
+      [
+        "vi",
+        "Địa chỉ cụ thể"
+      ],
+      [
+        "vi",
+        "Hotline là gì"
+      ],
+      [
+        "vi",
+        "Gọi điện thoại"
+      ],
+      [
+        "vi",
+        "Fanpage Facebook"
+      ],
+      [
+        "vi",
+        "Email shop"
+      ],
+      [
+        "vi",
+        "Cách liên lạc"
+      ],
+      [
+        "vi",
+        "Có bao nhiêu chi nhánh"
+      ],
+      [
+        "vi",
+        "Shop gần nhà tôi"
+      ],
+      [
+        "vi",
+        "Trẻ em ăn chay được không"
+      ],
+      [
+        "vi",
+        "Món chay cho bé"
+      ],
+      [
+        "vi",
+        "Trẻ con ăn được không"
+      ],
+      [
+        "vi",
+        "Bé ăn chay có đủ chất không"
+      ],
+      [
+        "vi",
+        "Menu cho trẻ em"
+      ],
+      [
+        "vi",
+        "Đồ ăn cho bé"
+      ],
+      [
+        "vi",
+        "Cháo chay cho bé"
+      ],
+      [
+        "vi",
+        "Súp chay trẻ em"
+      ],
+      [
+        "vi",
+        "Có món chay cho trẻ nhỏ không"
+      ],
+      [
+        "vi",
+        "Có combo thực phẩm chay không"
+      ],
+      [
+        "vi",
+        "Set meal món chay"
+      ],
+      [
+        "vi",
+        "Gói ăn chay trọn gói"
+      ],
+      [
+        "vi",
+        "Combo 2 người"
+      ],
+      [
+        "vi",
+        "Set gia đình"
+      ],
+      [
+        "vi",
+        "Gói cặp đôi"
+      ],
+      [
+        "vi",
+        "Combo cho nhóm"
+      ],
+      [
+        "vi",
+        "Set tiết kiệm"
+      ],
+      [
+        "vi",
+        "Ăn theo set"
+      ]
+    ]
+  },
+  "ner": {
+    "settings": {
+      "tag": "ner",
+      "entityPreffix": "%",
+      "entitySuffix": "%"
+    },
+    "rules": {}
+  },
+  "nlgManager": {
+    "settings": {
+      "tag": "nlg-manager"
+    },
+    "responses": {
+      "vi": {
+        "AFFSS11K": [
+          {
+            "answer": "Bạn có thể sử dụng tài khoản đăng nhập của mình để tạo đơn hàng trà sữa."
+          },
+          {
+            "answer": "Điền thông tin đầy đủ, bao gồm số điện thoại và địa chỉ, vào biểu mẫu để tạo đơn hàng trà sữa một cách nhanh chóng."
+          },
+          {
+            "answer": "Sử dụng tính năng đăng nhập để tạo đơn hàng trà sữa một cách thuận tiện."
+          },
+          {
+            "answer": "Điền đầy đủ thông tin cá nhân, bao gồm số điện thoại và địa chỉ, để tạo đơn hàng trà sữa một cách nhanh nhất."
+          },
+          {
+            "answer": "Bạn có thể đăng nhập vào tài khoản của mình và sử dụng tính năng tạo đơn hàng để đặt trà sữa."
+          },
+          {
+            "answer": "Điền thông tin cá nhân, bao gồm số điện thoại và địa chỉ, vào biểu mẫu để tạo đơn hàng trà sữa một cách tiện lợi."
+          },
+          {
+            "answer": "Sử dụng chức năng đăng nhập và điền đầy đủ thông tin cá nhân để tạo đơn hàng trà sữa."
+          },
+          {
+            "answer": "Đăng nhập vào tài khoản của bạn và thực hiện việc tạo đơn hàng trà sữa bằng cách điền đầy đủ thông tin cá nhân."
+          },
+          {
+            "answer": "Bạn có thể đăng nhập vào tài khoản của mình và sử dụng tính năng tạo đơn hàng để đặt trà sữa một cách dễ dàng."
+          },
+          {
+            "answer": "Điền đầy đủ thông tin cá nhân, bao gồm số điện thoại và địa chỉ, để tạo đơn hàng trà sữa một cách nhanh chóng và thuận tiện nhất."
+          }
+        ],
+        "CSSSS3K": [
+          {
+            "answer": "Bạn có thể đăng nhập vào tài khoản và tạo đơn hàng hoặc điền đầy đủ thông tin bao gồm số điện thoại và địa chỉ để tạo nhanh chóng nhất."
+          },
+          {
+            "answer": "Để tạo đơn hàng nhanh nhất, bạn có thể đăng nhập hoặc điền đầy đủ thông tin cá nhân, bao gồm số điện thoại và địa chỉ."
+          },
+          {
+            "answer": "Để tạo đơn hàng một cách nhanh chóng, bạn có thể lựa chọn đăng nhập hoặc điền đầy đủ thông tin bao gồm số điện thoại và địa chỉ"
+          },
+          {
+            "answer": "Để tạo đơn hàng một cách thuận tiện và nhanh nhất, bạn có thể đăng nhập vào tài khoản hoặc điền đầy đủ thông tin cá nhân, bao gồm số điện thoại và địa chỉ."
+          },
+          {
+            "answer": "Để tạo đơn hàng một cách hiệu quả và nhanh chóng, bạn có thể lựa chọn đăng nhập hoặc điền đầy đủ thông tin bao gồm số điện thoại và địa chỉ"
+          }
+        ],
+        "DFSSS3K": [
+          {
+            "answer": "Toping bạn có thể tuỳ chọn bằng cách xem qua gian hàng của shop và lựa chọn loại phù hợp theo sở thích và giá tiền"
+          },
+          {
+            "answer": "Bạn có thể tùy chọn topping bằng cách xem qua danh sách sản phẩm của shop và chọn loại phù hợp với khẩu vị và giá cả"
+          },
+          {
+            "answer": "Để chọn topping, bạn có thể tham khảo danh sách sản phẩm của shop và lựa chọn loại phù hợp với sở thích và ngân sách của bạn."
+          },
+          {
+            "answer": "Topping có thể được lựa chọn bằng cách xem qua các mục hàng của shop và chọn loại phù hợp với sở thích cá nhân và giá cả."
+          },
+          {
+            "answer": "Bạn có thể tùy chọn topping bằng cách xem qua gian hàng của shop và chọn loại phù hợp với sở thích và ngân sách của bạn."
+          },
+          {
+            "answer": "Để thêm topping, bạn có thể xem qua danh sách sản phẩm của shop và lựa chọn loại phù hợp với khẩu vị và giá tiền."
+          }
+        ],
+        "FFSS4F": [
+          {
+            "answer": "Dạ có phí vận chuyển nhé , phí sẽ tuỳ do thời gian đặt hàng , thời tiết và các yếu tố bên ship , phí sẽ dựa trên số Kilomet của quá trình vận chuyển."
+          },
+          {
+            "answer": "Có phí vận chuyển, phụ thuộc vào thời gian đặt hàng, thời tiết và các yếu tố khác từ bên giao hàng, phí sẽ dựa trên số km di chuyển."
+          },
+          {
+            "answer": "Vận chuyển có phí, phụ thuộc vào thời gian đặt hàng, thời tiết và các yếu tố từ bên vận chuyển, phí tính theo số km di chuyển."
+          },
+          {
+            "answer": "Có phí vận chuyển, phụ thuộc vào thời gian đặt hàng, thời tiết và các yếu tố từ bên giao hàng, phí sẽ được tính dựa trên quãng đường vận chuyển."
+          },
+          {
+            "answer": "Trong quá trình vận chuyển sẽ có phí, phụ thuộc vào thời gian đặt hàng, thời tiết và các yếu tố từ bên ship, phí sẽ được tính dựa trên số km di chuyển."
+          },
+          {
+            "answer": "Có phí vận chuyển, phụ thuộc vào thời gian đặt hàng, thời tiết và các yếu tố từ bên ship, phí sẽ được tính dựa trên quãng đường vận chuyển."
+          }
+        ],
+        "HFFSS4K": [
+          {
+            "answer": "Rất tiếc hệ thống sẽ không cho chỉnh sửa đơn hàng"
+          },
+          {
+            "answer": "Hiện tại hệ thống sẽ không cho phép chỉnh sửa đơn hàng sau khi bạn đã đặt hàng ! Trân Trọng ."
+          }
+        ],
+        "IFFSS5K": [
+          {
+            "answer": "bạn có thể xoá bằng cách vào đơn hàng của tôi và chọn xoá"
+          },
+          {
+            "answer": "Bạn có thể xoá sản phẩm bằng cách truy cập vào đơn hàng của bạn và chọn tùy chọn xoá."
+          },
+          {
+            "answer": "Để xoá một sản phẩm, bạn có thể vào đơn hàng của mình và chọn lựa chọn xoá."
+          },
+          {
+            "answer": "Việc xoá một sản phẩm khỏi đơn hàng có thể được thực hiện bằng cách vào đơn hàng và chọn xoá."
+          },
+          {
+            "answer": "Để xoá một sản phẩm, hãy truy cập vào đơn hàng của bạn và lựa chọn xoá."
+          },
+          {
+            "answer": "Bạn có thể xoá một sản phẩm bằng cách vào đơn hàng của bạn và chọn tùy chọn xoá đi."
+          }
+        ],
+        "JHFSS6K": [
+          {
+            "answer": "Bạn có thể xác nhận đơn hàng ."
+          },
+          {
+            "answer": "Bạn có thể thực hiện việc xác nhận đơn hàng."
+          },
+          {
+            "answer": "Việc xác nhận đơn hàng có sẽ bao gồm thực hiện thanh toán."
+          }
+        ],
+        "KFFSS7O_": [
+          {
+            "answer": "Bạn có thể vào đơn hàng của tôi để xem tình trạng và chi tiết đơn hàng hoặc điền ID đơn hàng tại đây Chatbot sẽ đưa ra thông tin đơn hàng chính xác"
+          },
+          {
+            "answer": "Bạn có thể truy cập vào đơn hàng của bạn để kiểm tra tình trạng và chi tiết đơn hàng. Hoặc có thể nhập ID đơn hàng tại đây và Chatbot sẽ cung cấp thông tin đơn hàng chính xác."
+          },
+          {
+            "answer": "Vào đơn hàng của bạn để xem tình trạng và chi tiết đơn hàng. Hoặc nhập ID đơn hàng tại đây và Chatbot sẽ cung cấp thông tin đơn hàng chính xác."
+          },
+          {
+            "answer": "Để xem tình trạng và chi tiết đơn hàng, hãy truy cập vào đơn hàng của bạn hoặc điền ID đơn hàng tại đây. Chatbot sẽ cung cấp thông tin đơn hàng chính xác."
+          },
+          {
+            "answer": "Điều bạn cần làm là vào đơn hàng của bạn để kiểm tra tình trạng và chi tiết đơn hàng. Hoặc nhập ID đơn hàng tại đây và Chatbot sẽ đưa ra thông tin đơn hàng chính xác."
+          },
+          {
+            "answer": "Để xem tình trạng và chi tiết đơn hàng, hãy vào đơn hàng của bạn hoặc điền ID đơn hàng tại đây. Chatbot sẽ cung cấp thông tin đơn hàng chính xác."
+          }
+        ],
+        "LFFSS8K": [
+          {
+            "answer": "[Null]"
+          }
+        ],
+        "MFFSS9K": [
+          {
+            "answer": "shop có rất nhiều ưu đãi và vouche khác nhau , sẽ phát rất nhiều vào các dịp lễ và tri ân khách hàng"
+          },
+          {
+            "answer": "Có, chúng tôi có rất nhiều ưu đãi và voucher khác nhau trong cửa hàng. Chúng tôi thường phát hành chúng vào các dịp lễ và để tri ân khách hàng."
+          },
+          {
+            "answer": "Chúng tôi có một loạt các ưu đãi và voucher khác nhau trong cửa hàng. Chúng tôi thường cung cấp chúng vào các dịp lễ và để tri ân khách hàng."
+          },
+          {
+            "answer": "Cửa hàng của chúng tôi có nhiều ưu đãi và voucher khác nhau. Chúng tôi thường phát hành chúng vào các dịp lễ và để tri ân khách hàng."
+          },
+          {
+            "answer": "Chúng tôi cung cấp rất nhiều ưu đãi và voucher khác nhau trong cửa hàng. Chúng tôi thường phát hành chúng vào các dịp lễ và để tri ân khách hàng."
+          },
+          {
+            "answer": "Cửa hàng của chúng tôi có rất nhiều ưu đãi và voucher khác nhau. Chúng tôi thường phát hành chúng vào các dịp lễ và để tri ân khách hàng."
+          }
+        ],
+        "NFFSS10K": [
+          {
+            "answer": "sản phẩm nổi bật và sản phẩm phổ biến sẽ được hiển thị ở ngay trang chính"
+          }
+        ],
+        "OFFSS11K": [
+          {
+            "answer": "[Null]"
+          }
+        ],
+        "PFFSS12K": [
+          {
+            "answer": "[Null]"
+          }
+        ],
+        "UFSS13K": [
+          {
+            "answer": "bạn có thể vào phần lịch sử đơn hàng để theo dõi nha"
+          },
+          {
+            "answer": "Bạn có thể kiểm tra lịch sử đơn hàng để theo dõi đấy."
+          },
+          {
+            "answer": "Vào phần lịch sử đơn hàng để xem thông tin chi tiết về các đơn hàng trước đây."
+          },
+          {
+            "answer": "Để theo dõi, bạn có thể truy cập vào phần lịch sử đơn hàng."
+          },
+          {
+            "answer": "Để biết thêm, bạn có thể xem lịch sử đơn hàng để theo dõi."
+          },
+          {
+            "answer": "Hãy vào phần lịch sử đơn hàng để xem thông tin về các đơn hàng đã được đặt."
+          }
+        ],
+        "SRHSS14K": [
+          {
+            "answer": "nếu như gặp sự cố liên quan đến đơn hàng , bạn hãy tạo ticket chat để được các nhân viên hỗ trợ nhanh nhất nhé"
+          },
+          {
+            "answer": "fffNếu bạn gặp bất kỳ vấn đề nào liên quan đến đơn hàng, hãy tạo một ticket chat để được hỗ trợ từ các nhân viên ngay lập tức.fff"
+          },
+          {
+            "answer": "Để giải quyết các vấn đề liên quan đến đơn hàng, bạn có thể tạo một ticket chat để được hỗ trợ từ đội ngũ nhân viên chuyên nghiệp."
+          },
+          {
+            "answer": "Trong trường hợp xảy ra sự cố với đơn hàng, hãy tạo một ticket chat để được hỗ trợ nhanh chóng từ các nhân viên."
+          },
+          {
+            "answer": "Nếu bạn gặp vấn đề với đơn hàng, hãy tạo một ticket chat để được các nhân viên hỗ trợ ngay lập tức."
+          },
+          {
+            "answer": "Để xử lý các vấn đề liên quan đến đơn hàng, bạn có thể tạo một ticket chat để nhận được sự hỗ trợ nhanh nhất từ đội ngũ nhân viên."
+          }
+        ],
+        "RFHSS15K": [
+          {
+            "answer": "[Null]"
+          }
+        ],
+        "TRHSS16K": [
+          {
+            "answer": "shop có dịch vụ giao hàng tận nơi , và thời gian giao hàng phụ thuộc nhiều yếu tố bao gồm quãng đường , thời tiết ......"
+          },
+          {
+            "answer": "Chúng tôi có cung cấp dịch vụ giao hàng tận nơi. Để xác định thời gian giao hàng dự kiến, bạn có thể làm như sau: Kiểm tra thông tin về thời gian giao hàng dự kiến trên trang web của chúng tôi. Liên hệ với chúng tôi qua số điện thoại hoặc chat trực tuyến để được tư vấn về thời gian giao hàng dự kiến."
+          },
+          {
+            "answer": "húng tôi đảm bảo dịch vụ giao hàng tận nơi. Để biết thời gian giao hàng dự kiến, bạn có thể thực hiện các bước sau: Truy cập vào trang web của chúng tôi và tìm thông tin về thời gian giao hàng dự kiến. Liên hệ với chúng tôi qua số điện thoại hoặc email để được hỗ trợ và xác định thời gian giao hàng dự kiến."
+          },
+          {
+            "answer": "Chúng tôi có dịch vụ giao hàng tận nơi. Để xác định thời gian giao hàng dự kiến, bạn có thể tham khảo các phương pháp sau: Kiểm tra thông tin về thời gian giao hàng dự kiến trên trang web hoặc ứng dụng của chúng tôi. Liên hệ với chúng tôi qua số điện thoại hoặc chat trực tuyến để được tư vấn về thời gian giao hàng dự kiến."
+          },
+          {
+            "answer": "Chúng tôi cung cấp dịch vụ giao hàng tận nơi. Để biết thời gian giao hàng dự kiến, bạn có thể làm như sau: Truy cập vào trang web hoặc ứng dụng của chúng tôi để tìm thông tin về thời gian giao hàng dự kiến. Liên hệ với chúng tôi qua số điện thoại hoặc email để được hỗ trợ và xác định thời gian giao hàng dự kiến."
+          },
+          {
+            "answer": "Chúng tôi sẵn lòng cung cấp dịch vụ giao hàng tận nơi. Để xác định thời gian giao hàng dự kiến, bạn có thể thực hiện các bước sau: Kiểm tra thông tin về thời gian giao hàng dự kiến trên trang web hoặc ứng dụng của chúng tôi. Liên hệ với chúng tôi qua số điện thoại hoặc chat trực tuyến để được tư vấn về thời gian giao hàng dự kiến."
+          }
+        ],
+        "URHSS17K": [
+          {
+            "answer": "hiện tại tại của hàng<br>1. đối với đơn hàng đang chờ xử lý: mỗi khi khách hàng đặt hàng, đơn hàng mới sẽ tự động xuất hiện trong danh sách đang chờ và nhân viên của chúng <br>tôi kiểm tra danh sách này định kỳ và xử lý từng đơn hàng theo thứ tự đặt hàng.<br>2. đối với đơn đã hoàn thành: chúng tôi cập nhật trạng thái của đơn hàng đó trong hệ thống của chúng tôi từ \"Đang xử lý\" sang \"Đã hoàn thành\" <br>đảm bảo rằng chúng tôi sẽ không giao cùng một đơn hàng cho khách hàng hai lần."
+          }
+        ],
+        "URHSH18K": [
+          {
+            "answer": "Trên trang web, bạn thường sẽ thấy menu hiển thị các loại trà sữa và topping. <br>Bạn có thể chọn các tùy chọn yêu thích của mình và thêm chúng vào giỏ hàng."
+          },
+          {
+            "answer": "Trên trang web, bạn sẽ thấy danh sách các loại trà sữa và topping để bạn lựa chọn. Bạn có thể chọn những loại mà bạn thích và thêm vào giỏ hàng."
+          },
+          {
+            "answer": "Khi bạn truy cập vào trang web, bạn sẽ thấy danh sách các loại trà sữa và topping. Bạn chỉ cần chọn những loại mà bạn muốn và thêm vào giỏ hàng."
+          },
+          {
+            "answer": "Trên trang web, có menu hiển thị các loại trà sữa và topping. Bạn có thể lựa chọn những loại mà bạn thích và thêm vào giỏ hàng của mình."
+          },
+          {
+            "answer": "Nếu bạn vào trang web, bạn sẽ thấy danh sách các loại trà sữa và topping. Bạn chỉ cần chọn những loại mà bạn muốn và thêm vào giỏ hàng để đặt hàng."
+          },
+          {
+            "answer": "Khi bạn truy cập vào trang web, bạn sẽ thấy danh sách các loại trà sữa và topping. Bạn có thể lựa chọn những loại mà bạn thích và thêm vào giỏ hàng để mua hàng."
+          }
+        ],
+        "URHSH19G": [
+          {
+            "answer": "Thông thường, bạn có thể chọn kích cỡ và lượng đường trong quá trình đặt hàng trực tuyến. Sẽ có tùy chọn để tùy chỉnh đặc điểm này."
+          },
+          {
+            "answer": "Thông thường, khi bạn đặt hàng trực tuyến, bạn có thể lựa chọn kích cỡ và lượng đường theo ý muốn của mình."
+          },
+          {
+            "answer": "Khi mua trà sữa trực tuyến, bạn sẽ có thể tuỳ chỉnh kích cỡ và đường cho đúng với sở thích của mình."
+          },
+          {
+            "answer": "Trong quá trình đặt hàng trực tuyến, bạn có thể tùy chỉnh kích cỡ và đường của trà sữa theo mong muốn của mình."
+          },
+          {
+            "answer": "Khi đặt mua trà sữa trực tuyến, bạn sẽ có tùy chọn để điều chỉnh kích cỡ và đường theo ý muốn cá nhân."
+          },
+          {
+            "answer": "Thông thường, khi mua trà sữa qua mạng, bạn có thể thay đổi kích cỡ và đường để phù hợp với sở thích của mình."
+          }
+        ],
+        "URHSH20G": [
+          {
+            "answer": "Trên trang web, Khi bạn đã chọn được trà sữa yêu thích của mình và nhấn nút \"Thêm  giỏ hàng\",  ngay lập tức các sản phẩm bạn chọn sẽ xuất hiện ở giỏ hàng phía bên phải màn hình .Bạn có thể nhấp vào đó để xem các sản phẩm đã chọn và điều chỉnh chúng trước khi thanh toán."
+          },
+          {
+            "answer": "Sau khi bạn thêm trà sữa yêu thích vào giỏ hàng, các sản phẩm sẽ tự động hiển thị trong giỏ hàng phía bên phải màn hình. Bạn có thể nhấp vào giỏ hàng để xem và chỉnh sửa các sản phẩm trước khi tiến hành thanh toán."
+          },
+          {
+            "answer": "Khi bạn nhấn nút \"Thêm giỏ hàng\" sau khi chọn trà sữa yêu thích, các sản phẩm sẽ ngay lập tức xuất hiện trong giỏ hàng ở phía bên phải màn hình. Bạn có thể xem và điều chỉnh các sản phẩm trong giỏ hàng trước khi tiến hành thanh toán."
+          },
+          {
+            "answer": "Ngay sau khi bạn chọn trà sữa yêu thích và nhấn nút \"Thêm giỏ hàng\", các sản phẩm sẽ hiển thị trong giỏ hàng phía bên phải màn hình. Bạn có thể nhấp vào giỏ hàng để kiểm tra và điều chỉnh các sản phẩm trước khi thanh toán."
+          },
+          {
+            "answer": "Khi bạn thêm trà sữa yêu thích vào giỏ hàng bằng cách nhấn nút \"Thêm giỏ hàng\", các sản phẩm sẽ tức thì xuất hiện trong giỏ hàng phía bên phải màn hình. Bạn có thể xem và chỉnh sửa các sản phẩm trong giỏ hàng trước khi tiến hành thanh toán."
+          },
+          {
+            "answer": "Sau khi bạn chọn trà sữa yêu thích và nhấn nút \"Thêm giỏ hàng\", các sản phẩm sẽ ngay lập tức xuất hiện trong giỏ hàng phía bên phải màn hình. Bạn có thể nhấp vào giỏ hàng để xem và điều chỉnh các sản phẩm trước khi tiến hành thanh toán."
+          }
+        ],
+        "URHSH21G": [
+          {
+            "answer": "Thường, bạn có thể thêm ghi chú cho đơn hàng trong quá trình đặt mua. Cung cấp thông tin chi tiết giúp cửa hàng làm đúng theo yêu cầu của bạn"
+          },
+          {
+            "answer": "Thường thì bạn có thể thêm ghi chú cho đơn hàng trong quá trình đặt mua. Hãy cung cấp thông tin chi tiết để cửa hàng có thể đáp ứng yêu cầu của bạn."
+          },
+          {
+            "answer": "Trong quá trình đặt mua, bạn có thể thêm ghi chú cho đơn hàng của mình. Hãy cung cấp thông tin chi tiết để cửa hàng có thể hiểu rõ yêu cầu của bạn."
+          },
+          {
+            "answer": "Thường thì bạn có thể gửi ghi chú cho đơn hàng trong quá trình đặt mua. Hãy cung cấp thông tin chi tiết để cửa hàng có thể tuân thủ yêu cầu của bạn."
+          },
+          {
+            "answer": "Trong quá trình đặt mua, bạn có thể đính kèm ghi chú cho đơn hàng của mình. Hãy cung cấp thông tin chi tiết để cửa hàng có thể thực hiện đúng theo yêu cầu của bạn."
+          },
+          {
+            "answer": "Thường thì bạn có thể yêu cầu thêm ghi chú cho đơn hàng trong quá trình đặt mua. Hãy cung cấp thông tin chi tiết để cửa hàng có thể làm đúng theo yêu cầu của bạn."
+          }
+        ],
+        "URHSH22J": [
+          {
+            "answer": "Trang web hiện tại chấp nhận thanh toán qua cổng thanh toán trực tuyến VNPay"
+          },
+          {
+            "answer": "Trang web hiện tại cho phép thanh toán qua cổng thanh toán trực tuyến VNPay."
+          },
+          {
+            "answer": "Bạn có thể sử dụng cổng thanh toán trực tuyến VNPay để thanh toán trên trang web này"
+          },
+          {
+            "answer": "Cổng thanh toán trực tuyến VNPay được chấp nhận để thanh toán trên trang web này."
+          },
+          {
+            "answer": "Trang web này hỗ trợ thanh toán qua cổng thanh toán trực tuyến VNPay."
+          },
+          {
+            "answer": "Bạn có thể sử dụng VNPay để thanh toán trực tuyến trên trang web này."
+          }
+        ],
+        "URHSH23D": [
+          {
+            "answer": "Về thường, sau khi hoàn tất thanh toán, bạn sẽ nhận được email xác nhận đơn hàng với thông tin chi tiết về đơn hàng của bạn"
+          },
+          {
+            "answer": "Thường thì sau khi hoàn tất thanh toán, bạn sẽ nhận được email xác nhận đơn hàng chứa thông tin chi tiết về đơn hàng của bạn."
+          },
+          {
+            "answer": "Thông thường, sau khi hoàn tất thanh toán, hệ thống sẽ tự động gửi cho bạn một email xác nhận đơn hàng chứa thông tin chi tiết về đơn hàng của bạn."
+          },
+          {
+            "answer": "Sau khi bạn hoàn tất thanh toán, thông thường bạn sẽ nhận được một email xác nhận đơn hàng có chứa thông tin chi tiết về đơn hàng của bạn."
+          },
+          {
+            "answer": "Thường thì sau khi thanh toán thành công, bạn sẽ nhận được một email xác nhận đơn hàng với thông tin chi tiết về đơn hàng của bạn."
+          }
+        ],
+        "URHSH24D": [
+          {
+            "answer": "Bạn có thể theo dõi tình trạng giao hàng thông qua email xác nhận đơn hàng hoặc trang web cửa hàng. Thường có thông tin cập nhật về việc giao hàng"
+          },
+          {
+            "answer": "Bạn có thể kiểm tra tình trạng giao hàng bằng cách kiểm tra email xác nhận đơn hàng hoặc truy cập vào trang web của cửa hàng. Thông tin về việc giao hàng thường được cập nhật đều đặn trên hai nền tảng này."
+          },
+          {
+            "answer": "Để biết tình trạng giao hàng, bạn có thể xem email xác nhận đơn hàng hoặc truy cập vào trang web của cửa hàng. Thông tin về việc giao hàng sẽ được cập nhật thường xuyên trên hai nền tảng này"
+          },
+          {
+            "answer": "Cách để bạn biết tình trạng giao hàng là thông qua email xác nhận đơn hàng hoặc trang web của cửa hàng. Thường có thông tin mới nhất về việc giao hàng trên hai nền tảng này."
+          },
+          {
+            "answer": "Để xem tình trạng giao hàng, bạn có thể kiểm tra email xác nhận đơn hàng hoặc truy cập vào trang web của cửa hàng. Thông tin cập nhật về việc giao hàng sẽ được cung cấp trên hai nền tảng này."
+          },
+          {
+            "answer": "Bạn có thể theo dõi tình trạng giao hàng qua email xác nhận đơn hàng hoặc trang web của cửa hàng. Thông tin về việc giao hàng sẽ được cập nhật đều đặn trên hai nền tảng này."
+          }
+        ],
+        "FHSH25FB": [
+          {
+            "answer": "Đơn hàng của bạn đang trong trạng thái \"Chờ xác nhận\", vì vậy việc hủy đơn hàng có thể khó khăn. Hãy xem xét kỹ trước khi đặt hàng."
+          },
+          {
+            "answer": "Trong trường hợp đơn hàng của bạn đang chờ xác nhận, việc hủy đơn hàng có thể gặp khó khăn. Vì vậy, hãy xem xét kỹ trước khi tiến hành đặt hàng."
+          },
+          {
+            "answer": "Khi đơn hàng của bạn đang trong trạng thái \"Chờ xác nhận\", việc hủy đơn hàng có thể không đơn giản. Hãy xem xét kỹ trước khi quyết định đặt hàng."
+          },
+          {
+            "answer": "Nếu đơn hàng của bạn vẫn đang chờ xác nhận, việc hủy đơn hàng có thể không dễ dàng. Vì vậy, hãy suy nghĩ cẩn thận trước khi đặt mua."
+          },
+          {
+            "answer": "Trong trường hợp đơn hàng của bạn đang trong trạng thái \"Chờ xác nhận\", việc hủy đơn hàng có thể gặp khó khăn. Vì thế, hãy xem xét kỹ trước khi thực hiện đặt hàng"
+          }
+        ],
+        "FHSH26FB": [
+          {
+            "answer": "Đúng vậy! Bạn hoàn toàn có thể đặt mua trà sữa hàng ngày trên trang web của chúng tôi."
+          },
+          {
+            "answer": "Tất nhiên! Trên hệ thống trang web của chúng tôi, bạn có thể đặt mua trà sữa hàng ngày."
+          },
+          {
+            "answer": "Chắc chắn! Hệ thống trang web của chúng tôi cho phép bạn đặt mua trà sữa hàng ngày."
+          },
+          {
+            "answer": "Đương nhiên! Bạn có thể thoải mái đặt mua trà sữa hàng ngày trên trang web của chúng tôi."
+          },
+          {
+            "answer": "Dĩ nhiên! Chúng tôi cung cấp dịch vụ đặt mua trà sữa hàng ngày trên trang web của mình."
+          },
+          {
+            "answer": "Chắc chắn rồi! Bạn có thể đặt mua trà sữa hàng ngày trên hệ thống trang web của chúng tôi ^^"
+          }
+        ],
+        "FHSH27CB": [
+          {
+            "answer": "Đúng vậy! Bạn hoàn toàn có thể đặt mua trà sữa hàng ngày trên trang web của chúng tôi."
+          },
+          {
+            "answer": "Đúng vậy, khi bạn đặt hàng, bạn có thể nhập mã giảm giá để áp dụng cho đơn hàng của mình. Hãy theo dõi và sử dụng những mã giảm giá tuyệt vời để nhận được ưu đãi đặc biệt cho đơn hàng của bạn nhé."
+          },
+          {
+            "answer": "Tất nhiên, khi bạn đặt hàng, bạn có thể áp dụng mã giảm giá để giảm giá cho đơn hàng của bạn. Đừng quên kiểm tra và sử dụng những mã giảm giá tuyệt vời để có những ưu đãi tốt nhất cho đơn hàng của bạn."
+          },
+          {
+            "answer": "Chắc chắn, khi bạn đặt hàng, bạn có thể nhập mã giảm giá để áp dụng cho đơn hàng của mình. Hãy theo dõi và áp dụng những mã giảm giá tuyệt vời để nhận được sự giảm giá đặc biệt cho đơn hàng của bạn."
+          },
+          {
+            "answer": "Đương nhiên, khi bạn đặt hàng, bạn có thể áp dụng mã giảm giá cho đơn hàng của mình. Hãy chắc chắn rằng bạn theo dõi và sử dụng những mã giảm giá tuyệt vời để nhận được những ưu đãi đặc biệt cho đơn hàng của bạn."
+          },
+          {
+            "answer": "Dĩ nhiên, khi bạn tiến hành đặt hàng, bạn có thể thêm mã giảm giá vào đơn hàng của bạn. Hãy luôn cập nhật và sử dụng những mã giảm giá tuyệt vời để nhận được những ưu đãi đặc biệt cho đơn hàng của bạn."
+          }
+        ],
+        "BHSH28DB": [
+          {
+            "answer": "Có thể. Phí giao hàng phụ thuộc vào cửa hàng và khoảng cách giao hàng. Thông tin về phí giao hàng thường được hiển thị trước khi bạn hoàn tất đơn hàng."
+          },
+          {
+            "answer": "Có, phụ thuộc vào cửa hàng và khoảng cách giao hàng, thông tin về phí giao hàng sẽ được hiển thị trước khi bạn hoàn tất đơn hàng."
+          },
+          {
+            "answer": "Phí giao hàng sẽ được tính dựa trên cửa hàng và khoảng cách giao hàng. Trước khi hoàn tất đơn hàng, bạn sẽ thấy thông tin chi tiết về phí này."
+          },
+          {
+            "answer": "Phí giao hàng sẽ khác nhau tùy thuộc vào cửa hàng và khoảng cách giao hàng. Bạn sẽ biết được thông tin về phí này trước khi hoàn tất việc đặt hàng."
+          },
+          {
+            "answer": "Có, phí giao hàng được tính dựa trên cửa hàng và khoảng cách giao hàng. Trước khi bạn xác nhận đơn hàng, thông tin về phí sẽ được hiển thị rõ ràng."
+          },
+          {
+            "answer": "Tùy thuộc vào cửa hàng và khoảng cách giao hàng, phí vận chuyển sẽ được tính toán. Bạn sẽ thấy thông tin chi tiết về phí này trước khi hoàn tất việc đặt hàng."
+          }
+        ],
+        "BHSH29LB": [
+          {
+            "answer": "Thông tin về thời gian mở cửa thường có trên trang web của cửa hàng. Bạn hãy kiểm tra trước khi đặt hàng để chắc chắn rằng bạn mua trong khoảng thời gian cửa hàng mở cửa."
+          },
+          {
+            "answer": "Thời gian mở cửa thường được hiển thị trên trang web của cửa hàng. Bạn nên kiểm tra trước khi đặt mua để đảm bảo bạn đặt hàng trong khoảng thời gian cửa hàng mở cửa."
+          },
+          {
+            "answer": "Bạn nên xem trên trang web của cửa hàng để biết thời gian mở cửa. Điều này giúp bạn đảm bảo rằng bạn đặt hàng trong khoảng thời gian cửa hàng hoạt động."
+          },
+          {
+            "answer": "Thông tin về thời gian mở cửa thường được hiển thị trên trang web của cửa hàng. Hãy kiểm tra trước khi đặt hàng để đảm bảo bạn chọn thời gian phù hợp."
+          },
+          {
+            "answer": "Trang web của cửa hàng thường cung cấp thông tin về thời gian mở cửa. Bạn nên kiểm tra trước khi đặt hàng để đảm bảo bạn đặt trong khoảng thời gian cửa hàng hoạt động."
+          },
+          {
+            "answer": "Để biết thời gian mở cửa, bạn có thể xem trên trang web của cửa hàng. Điều này giúp bạn đặt hàng trong khoảng thời gian cửa hàng mở cửa."
+          }
+        ],
+        "BHSH30SB": [
+          {
+            "answer": "Đương nhiên, bạn có thể lựa chọn giữa 2 phương thức thanh toán sau khi đã đặt hàng: 'Thanh toán khi nhận hàng' hoặc 'Thanh toán qua ví VNPay'."
+          },
+          {
+            "answer": "Có thể, sau khi đã đặt hàng, bạn có thể thay đổi phương thức thanh toán sang 'Thanh toán khi nhận hàng' hoặc 'Thanh toán qua ví VNPay'"
+          },
+          {
+            "answer": "Vâng, bạn hoàn toàn có thể thay đổi phương thức thanh toán sau khi đã đặt hàng. Bạn có thể chọn 'Thanh toán khi nhận hàng' hoặc 'Thanh toán qua ví VNPay'."
+          },
+          {
+            "answer": "Được, bạn có thể lựa chọn giữa 'Thanh toán khi nhận hàng' hoặc 'Thanh toán qua ví VNPay' sau khi đã đặt hàng."
+          },
+          {
+            "answer": "Tất nhiên, bạn có thể thay đổi phương thức thanh toán sau khi đã đặt hàng. Hai phương thức mà bạn có thể chọn là 'Thanh toán khi nhận hàng' hoặc 'Thanh toán qua ví VNPay'."
+          }
+        ],
+        "BHSH31HB": [
+          {
+            "answer": "Bất cứ khi nào khi bạn đặt hàng và trong thời gian hoạt động của hệ thống thì bạn có thể đặt hàng và nhận hàng"
+          },
+          {
+            "answer": "Bạn có thể đặt hàng và nhận hàng bất cứ khi nào trong thời gian hoạt động của hệ thống."
+          },
+          {
+            "answer": "Trong khoảng thời gian hoạt động của hệ thống, bạn có thể đặt hàng và nhận hàng mọi lúc."
+          },
+          {
+            "answer": "Hệ thống cho phép bạn đặt hàng và nhận hàng trong thời gian hoạt động của nó."
+          },
+          {
+            "answer": "Khi hệ thống hoạt động, bạn có thể đặt hàng và nhận hàng theo ý muốn."
+          },
+          {
+            "answer": "Bạn có thể tự do đặt hàng và nhận hàng trong thời gian hoạt động của hệ thống."
+          }
+        ],
+        "bought_num": [
+          {
+            "answer": "const a of =..[a]"
+          },
+          {
+            "answer": "const b of =..[b]"
+          }
+        ],
+        "about_vegetarian": [
+          {
+            "answer": "Vâng, shop chuyên cung cấp các món ăn chay 100% từ nguồn gốc thực vật, không có thịt, cá, trứng 🌱 Tất cả đều tốt cho sức khỏe!"
+          },
+          {
+            "answer": "Đúng rồi ạ! Tất cả món ăn của shop đều là thực phẩm chay nguyên chất, tốt cho sức khỏe và môi trường 💚 Shop không bán đồ mặn nhé!"
+          },
+          {
+            "answer": "Shop chuyên về thực phẩm chay organic, sạch, an toàn cho người ăn chay trường và ăn chay theo ngày 🥬 Đảm bảo không có thành phần động vật!"
+          },
+          {
+            "answer": "Thực phẩm chay rất tốt cho sức khỏe! Shop có đầy đủ các món từ rau củ quả, đậu phụ, nấm, ngũ cốc... đầy đủ dinh dưỡng 🌿"
+          },
+          {
+            "answer": "Ăn chay giúp giảm cân, tốt cho tim mạch, giảm cholesterol và bảo vệ môi trường 🌍 Shop đảm bảo món nào cũng ngon và healthy!"
+          },
+          {
+            "answer": "Đồ chay của shop vừa ngon vừa đủ chất dinh dưỡng: protein từ đậu phụ, vitamin từ rau củ, carb từ ngũ cốc 🥗 Ăn chay vẫn khỏe mạnh lắm!"
+          },
+          {
+            "answer": "Shop 100% món chay, không có đồ mặn nha bạn! 🌱 Từ nguyên liệu đến cách chế biến đều healthy và sạch sẽ!"
+          },
+          {
+            "answer": "Món chay ở shop đa dạng từ truyền thống đến hiện đại, đảm bảo ngon không thua món mặn đâu! 😋 Nhiều khách ăn mặn vẫn thích lắm!"
+          }
+        ],
+        "vegetarian_types": [
+          {
+            "answer": "Shop có đầy đủ: Cơm chay, phở chay, bún chay, mì chay, súp chay, salad, nước ép trái cây tươi... 🍜🥗 Tất cả đều ngon lắm!"
+          },
+          {
+            "answer": "Shop có rất nhiều món: Đậu phụ chiên giòn, rau củ xào, cơm niêu chay, gỏi cuốn chay, nem chay... tất cả đều ngon lắm 😋"
+          },
+          {
+            "answer": "Menu chay đa dạng: Từ món Việt đến món Á, món Âu... Đảm bảo đủ chất, đủ vị cho bạn nhé! 🌮🍝"
+          },
+          {
+            "answer": "Bestseller của shop là: Cơm niêu chay, phở chay đặc biệt, bún riêu chay và salad trộn đầu 🏆 Khách nào cũng khen ngon!"
+          },
+          {
+            "answer": "Shop có từ món Việt: cơm, phở, bún... đến món Á: pad thai, sushi chay, lẩu chay... và món Âu: pasta, pizza chay 🍕 Đủ thể loại!"
+          },
+          {
+            "answer": "Nếu lần đầu ăn chay, mình gợi ý: Cơm rang chay hoặc phở chay - quen miệng, dễ ăn 😊 Nếu muốn thử mới: Burger chay, sushi chay rất ngon!"
+          },
+          {
+            "answer": "Menu có hơn 50 món đa dạng: 🍚 Cơm (cơm rang, cơm niêu, cơm lam), 🍜 Phở bún (phở, bún, mì), 🥗 Salad, 🍕 Fast food chay, 🍲 Lẩu chay!"
+          },
+          {
+            "answer": "Món hot nhất tuần này: Bún riêu chay, gỏi cuốn chay và nước ép thanh long 🔥 Đặt ngay không thì hết đấy!"
+          }
+        ],
+        "AboutShip": [
+          {
+            "answer": "Có ship nha bạn! 🚚 Shop giao hàng tận nơi trong 30-60 phút, phí ship 15k-30k tùy khoảng cách. Miễn ship cho đơn trên 150k!"
+          },
+          {
+            "answer": "Chào bạn, shop có ship thực phẩm chay tận nơi! Đồ ăn được đóng gói cẩn thận, giữ nguyên hương vị 😙 Giao trong 30-60 phút!"
+          },
+          {
+            "answer": "Shop giao hàng tận nhà cho bạn nhé! 🛵 Thời gian: 30-60 phút. Phí ship: 15k nội thành, 30k ngoại thành. Đơn >150k miễn phí!"
+          },
+          {
+            "answer": "Có giao tận nơi nha! Đảm bảo món chay còn nóng hổi khi đến tay bạn 🔥 Ship nhanh trong 30-60 phút, phí rất rẻ!"
+          },
+          {
+            "answer": "Shop ship toàn TP và ngoại thành nha bạn! Phí ship: 15-30k (FREE ship đơn >150k) ⚡ Gọi ngay để được giao nhanh nhất!"
+          },
+          {
+            "answer": "Giao hàng tận nhà trong 30-60 phút! 🚀 Đóng gói cẩn thận, giữ nhiệt tốt. Phí ship chỉ 15-30k thôi!"
+          }
+        ],
+        "nutrition": [
+          {
+            "answer": "Thực phẩm chay hoàn toàn đủ dinh dưỡng! Đậu phụ, đậu nành, các loại đậu cung cấp protein. Rau xanh giàu vitamin & khoáng chất 💪"
+          },
+          {
+            "answer": "Món chay rất tốt cho giảm cân, ít calo, nhiều chất xơ, giúp thanh lọc cơ thể. Shop có nhiều món ăn sạch cho người ăn kiêng 🥗"
+          },
+          {
+            "answer": "Đừng lo thiếu chất nhé! Đậu phụ giàu protein, rau xanh nhiều sắt, ngũ cốc đủ vitamin B 🌾 Shop balance dinh dưỡng trong từng món!"
+          },
+          {
+            "answer": "Ăn chay giúp giảm cholesterol, tốt cho tim mạch ❤️ Đặc biệt tốt cho người tiểu đường, huyết áp cao!"
+          },
+          {
+            "answer": "Đồ chay ít calo nhưng đủ năng lượng! Protein từ đậu, carb từ cơm/ngũ cốc, chất béo tốt từ hạt 🌰 Ăn no mà không béo!"
+          },
+          {
+            "answer": "Ăn chay làm đẹp da lắm bạn ơi! 🌸 Vitamin từ rau củ giúp da sáng, giảm mụn, chống lão hóa. Nhiều sao Việt ăn chay để giữ dáng đó!"
+          },
+          {
+            "answer": "Shop đảm bảo mỗi món đều cân đối dinh dưỡng: Protein + Carb + Chất xơ + Vitamin 🍽️ Ăn chay khỏe hơn ăn mặn ấy!"
+          }
+        ],
+        "price_range": [
+          {
+            "answer": "Giá rất hợp lý: 30k-50k (cơm, phở, bún), 50k-80k (món đặc biệt), 80k-100k (combo/lẩu) 💰 Chất lượng cao, giá siêu tốt!"
+          },
+          {
+            "answer": "Đồ chay không đắt đâu bạn! Từ 30k đã có suất ngon rồi 😋 Phở 35k, cơm rang 40k, salad 45k... rẻ hơn đồ mặn ấy!"
+          },
+          {
+            "answer": "Shop cam kết giá TỐT NHẤT: Phở chay 35-45k, Bún chay 30-40k, Cơm chay 40-60k 🌿 Nguyên liệu sạch, giá cực yêu!"
+          },
+          {
+            "answer": "Có món từ 30k luôn! 🎯 Phở chay 35k, cơm rang 40k, salad 45k... Ăn ngon mà không lo hết ví đâu!"
+          },
+          {
+            "answer": "Giá siêu hợp lý: Dưới 50k có nhiều món lắm (phở, bún, cơm), 50-80k (món đặc biệt), 80-100k (lẩu, combo) 💚"
+          },
+          {
+            "answer": "Ăn chay RẺ HƠN ăn mặn đó bạn! Suất cơm chay chỉ 40k mà no lâu, nhiều rau, tốt cho sức khỏe 🥗 Tiết kiệm lại khỏe!"
+          }
+        ],
+        "promotion": [
+          {
+            "answer": "Shop có RẤT NHIỀU ưu đãi: 🎉 Rằm/Mùng 1 giảm 15-20%, ngày lễ giảm 30%, free ship >150k, mua 2 tặng 1 nước ép!"
+          },
+          {
+            "answer": "Voucher HOT hôm nay: 💥 CHAY10 (giảm 10%), CHAY20 (giảm 20% đơn >200k), FREESHIP (miễn phí ship đơn >150k)!"
+          },
+          {
+            "answer": "Ưu đãi cực đã: Thứ 2 giảm 10%, Rằm/Mùng 1 giảm 20%, mua 3 món giảm 15% 🎁 Check thường xuyên để hốt deal!"
+          },
+          {
+            "answer": "Có voucher tri ân khách VIP: Giảm 25-30%, free ship TOÀN BỘ đơn, tích điểm đổi quà 🏆 Đăng ký thành viên ngay!"
+          },
+          {
+            "answer": "Sale sập sàn: Flash sale 12h-14h giảm 30%, combo 2 người giảm 40k, nhóm 5 người giảm 20% 🔥 Nhanh tay kẻo hết!"
+          },
+          {
+            "answer": "Khuyến mãi tháng này: Miễn ship đơn >150k, giảm 15% đơn đầu, tặng salad khi mua combo 💚 Siêu deal luôn!"
+          }
+        ],
+        "NeedHelp": [
+          {
+            "answer": "Shop sẵn sàng tư vấn món chay cho bạn! 😊 Bạn thích món Việt (phở, bún, cơm) hay món Á/Âu (pasta, sushi, burger chay)?"
+          },
+          {
+            "answer": "Shop đang online đây nè! 💬 Bạn cần tư vấn món gì? Phở, bún, cơm, lẩu, hay salad giảm cân?"
+          },
+          {
+            "answer": "Mình tư vấn ngay nè! 🌱 Bạn mới ăn chay → gợi ý: Phở chay, cơm rang chay (quen miệng). Ăn lâu rồi → thử: Sushi chay, burger chay!"
+          },
+          {
+            "answer": "Shop giúp bạn chọn món nhé! 🥗 Giảm cân: Salad, nước ép. No bụng: Cơm, phở. Đổi vị: Lẩu chay, pasta. Bạn thích gì?"
+          },
+          {
+            "answer": "Bạn cần gì cứ hỏi shop nha! 💚 Tư vấn món ăn, dinh dưỡng, giá cả, giao hàng... mình support hết!"
+          },
+          {
+            "answer": "Tùy sở thích bạn nhé: 🍜 Món nước: phở/bún chay, 🍚 Món khô: cơm/mì xào, 🥗 Healthy: salad/súp, 🍕 Fast food: burger/pizza chay!"
+          },
+          {
+            "answer": "Shop lúc nào có mặt nè , bạn cần hỗ trợ gì thế ? "
+          },
+          {
+            "answer": "Shop đang online nè  , bạn có chuyện gì thế "
+          }
+        ],
+        "thanks": [
+          {
+            "answer": "Không có gì nè! Chúc bạn ăn chay vui vẻ, sức khỏe dồi dào 🙏 Hẹn gặp lại bạn!"
+          },
+          {
+            "answer": "❤️ Cảm ơn bạn đã ủng hộ shop thực phẩm chay nhé! Ăn chay là yêu thương bản thân và trái đất 🌍"
+          },
+          {
+            "answer": "Rất vui được hỗ trợ bạn! 💚 Chúc bạn có bữa ăn chay ngon miệng nha!"
+          },
+          {
+            "answer": "Không có chi bạn ơi! 😊 Shop luôn sẵn sàng tư vấn. Hẹn gặp lại, chúc bạn khỏe!"
+          },
+          {
+            "answer": "You are welcome! 🌱 Ăn chay mỗi ngày, sống khỏe mỗi ngày nha bạn!"
+          },
+          {
+            "answer": "Cảm ơn bạn đã ghé thăm! 🥗 Nhớ quay lại để thử thêm món chay mới nha!"
+          }
+        ],
+        "greeting": [
+          {
+            "answer": "Hi, shop thực phẩm chay đã nhận được tin nhắn của bạn rồi! Món nào làm bạn thích thú nhỉ? 🥗"
+          }
+        ],
+        "check_my_orders": [
+          {
+            "answer": "🔐 Để xem đơn hàng của bạn, vui lòng đăng nhập tài khoản. Sau đó vào <a href=\"/account/orders\" style=\"color:#22c55e; font-weight:600;\">Đơn Hàng Của Tôi</a> để xem chi tiết nhé!"
+          },
+          {
+            "answer": "📦 Bạn cần đăng nhập để kiểm tra đơn hàng! Hoặc bấm vào <a href=\"/account/orders\" style=\"color:#22c55e; font-weight:600;\">Lịch Sử Đơn Hàng</a> để xem tất cả đơn của bạn!"
+          },
+          {
+            "answer": "🛍️ Bạn có thể xem tất cả đơn hàng tại <a href=\"/account/orders\" style=\"color:#22c55e; font-weight:600;\">Tài Khoản > Đơn Hàng</a>. Đăng nhập để xem chi tiết trạng thái từng đơn nhé!"
+          },
+          {
+            "answer": "✅ Để kiểm tra đơn hàng, bạn đăng nhập rồi vào phần <a href=\"/account/orders\" style=\"color:#22c55e; font-weight:600;\">Quản Lý Đơn Hàng</a>. Ở đó có đầy đủ: trạng thái, thời gian giao, shipper..."
+          },
+          {
+            "answer": "🚚 Muốn biết đơn hàng đang ship chưa? Vào <a href=\"/account/orders\" style=\"color:#22c55e; font-weight:600;\">Đơn Hàng Của Tôi</a> xem ngay! Có cả số điện thoại shipper nếu cần liên hệ đó!"
+          }
+        ],
+        "how_to_order": [
+          {
+            "answer": "📱 Đặt hàng dễ lắm bạn ơi: 1️⃣ Chọn món → 2️⃣ Thêm vào giỏ 🛒 → 3️⃣ Thanh toán → 4️⃣ Nhận hàng tận nhà! Có COD và chuyển khoản nhé!"
+          },
+          {
+            "answer": "🛍️ Quy trình: Xem menu → Chọn món thích → Bấm \"Thêm giỏ hàng\" → Điền địa chỉ → Chọn thanh toán → Xong! Shop sẽ giao trong 30-60 phút!"
+          },
+          {
+            "answer": "✨ Đặt hàng siêu nhanh: Bấm vào món ăn → Chọn số lượng → Thêm giỏ → Checkout → Nhập SĐT & địa chỉ → Hoàn tất! Shipper sẽ liên hệ ngay!"
+          }
+        ],
+        "cancel_order": [
+          {
+            "answer": "❌ Bạn có thể hủy đơn hàng TRƯỚC KHI shop xác nhận (trong 5-10 phút). Vào <a href=\"/account/orders\" style=\"color:#22c55e;\">Đơn Hàng</a> → Chọn đơn → Bấm \"Hủy Đơn\"!"
+          },
+          {
+            "answer": "⏰ Hủy đơn được trong 5-10 phút đầu sau khi đặt. Sau khi shop xác nhận thì không hủy được nữa nhé! Hoàn tiền trong 3-5 ngày nếu đã thanh toán!"
+          },
+          {
+            "answer": "🔄 Muốn hủy: Vào Đơn Hàng → Tìm đơn cần hủy → Bấm \"Hủy\". Nếu đã thanh toán, tiền hoàn về trong 3-5 ngày làm việc!"
+          }
+        ],
+        "origin_quality": [
+          {
+            "answer": "Shop lấy nguyên liệu từ các trang trại organic uy tín: 🌱 Rau củ Đà Lạt, đậu phụ nhà làm, nấm tươi... đều có nguồn gốc rõ ràng!"
+          },
+          {
+            "answer": "Tất cả nguyên liệu đều được kiểm định: 💚 Không thuốc trừ sâu, không hóa chất, không chất bảo quản độc hại. Shop cam kết 100% an toàn!"
+          },
+          {
+            "answer": "Đồ chay của shop là ORGANIC nhập từ: 🥬 Rau Đà Lạt, nấm Đồng Nai, đậu phụ tự làm, gia vị tự nhiên. Đảm bảo sạch tuyệt đối!"
+          },
+          {
+            "answer": "✅ Shop có giấy chứng nhận VSATTP (Vệ sinh An toàn Thực phẩm), nguồn gốc rõ ràng, traceable từng nguyên liệu. Yên tâm ăn uống!"
+          },
+          {
+            "answer": "Nguyên liệu cao cấp: Rau organic VietGAP, đậu phụ non tự làm, nấm tươi mỗi ngày 🍄 Shop chọn kỹ lắm mới bán!"
+          }
+        ],
+        "vegetarian_day": [
+          {
+            "answer": "Ngày rằm & mùng 1, shop có combo đặc biệt: 🙏 Cơm chay + canh + đậu phụ + rau củ + tráng miệng... đầy đủ và giảm 15-20%!"
+          },
+          {
+            "answer": "Các ngày lễ Phật giáo (Phật đản, Vu Lan, Nguyên tiêu...) shop có menu đặc biệt, giảm giá đến 20% cho khách ăn chay 🪷"
+          },
+          {
+            "answer": "🌙 Menu rằm/mùng 1: Set 1 người (65k), Set 2 người (120k), Set gia đình (220k) - đầy đủ món, giảm 20%!"
+          },
+          {
+            "answer": "Thứ 2 hàng tuần giảm 10% toàn bộ đơn! Rằm/Mùng 1 giảm 20%! Ngày lễ lớn giảm đến 30% 🎉"
+          },
+          {
+            "answer": "Ăn chay ngày vía: Shop chuẩn bị combo chay đặc biệt theo truyền thống, nhiều món cúng dường, giá ưu đãi 🙏"
+          }
+        ],
+        "beginner_vegetarian": [
+          {
+            "answer": "Cho người mới, shop recommend: 🍜 Phở chay, cơm chiên chay, mì xào chay - những món quen thuộc, dễ ăn, giống món mặn!"
+          },
+          {
+            "answer": "Lần đầu ăn chay nên thử: Bún bò chay, cơm sườn chay, bánh mì chay 🥖 Vị giống món thường ăn, không bỡ ngỡ!"
+          },
+          {
+            "answer": "Newbie nên chọn: Burger chay, pizza chay, pasta chay 🍕 Fast food style, ngon không thua đồ mặn đâu!"
+          },
+          {
+            "answer": "Chưa quen ăn chay? Thử món quen thuộc trước: Phở, bún, cơm rang... sau đó mới thử món lạ như salad, lẩu 😊"
+          },
+          {
+            "answer": "Shop có combo \"Khởi đầu chay\": 3 món dễ ăn (phở + cơm + nước ép) chỉ 99k để bạn làm quen với ẩm thực chay! 🌱"
+          },
+          {
+            "answer": "Bạn có thể thử bún bò chay, bánh mì chay - vị giống món mặn nhưng healthy hơn! Đảm bảo ngon 😋"
+          },
+          {
+            "answer": "Shop có set combo cho người mới ăn chay: Đa dạng món, không kén miệng, giá ưu đãi luôn! 💯"
+          }
+        ],
+        "opening_hours": [
+          {
+            "answer": "Shop mở cửa từ 6h sáng đến 21h tối hàng ngày 🕐 Phục vụ đầy đủ các bữa: Sáng, trưa, tối đều có món chay tươi ngon!"
+          },
+          {
+            "answer": "Giờ làm việc: 6:00 - 21:00 mỗi ngày, kể cả cuối tuần & ngày lễ! 📱 Đặt hàng online 24/7 luôn nha!"
+          },
+          {
+            "answer": "🕕 Sáng sớm 6h đã mở! Tối đến 9h vẫn bán! Chủ nhật không nghỉ nha bạn! Order online bất cứ lúc nào!"
+          },
+          {
+            "answer": "Shop phục vụ 6AM - 9PM hàng ngày! Sáng có cháo/phở, trưa có cơm, tối có lẩu 🌙 Không nghỉ T7 CN!"
+          }
+        ],
+        "address_contact": [
+          {
+            "answer": "Bạn xem thông tin liên hệ, địa chỉ shop tại phần <a href=\"#footer\" style=\"color:#22c55e;\">footer website</a> 📍 Hoặc inbox trực tiếp!"
+          },
+          {
+            "answer": "Shop có giao hàng toàn quốc! 📞 Bạn đặt online hoặc gọi hotline (xem ở footer) để được tư vấn chi tiết!"
+          },
+          {
+            "answer": "📍 Địa chỉ & liên hệ ở cuối trang website. Có SĐT, email, fanpage, Zalo... Liên hệ cách nào cũng được nha!"
+          },
+          {
+            "answer": "Shop có nhiều chi nhánh! Xem địa chỉ gần bạn nhất tại <a href=\"/stores\" style=\"color:#22c55e;\">Hệ Thống Cửa Hàng</a> 🏪"
+          }
+        ],
+        "kids_vegetarian": [
+          {
+            "answer": "Có nha! Shop có món chay dành cho bé: 👶 Cháo chay bổ dưỡng, cơm chiên chay, súp bí đỏ, nước ép trái cây... vừa bổ vừa ngon!"
+          },
+          {
+            "answer": "Trẻ em ăn chay rất tốt cho sức khỏe! 💪 Shop có menu riêng cho bé: Cháo, súp, pasta nhẹ... đủ dưỡng chất phát triển!"
+          },
+          {
+            "answer": "Menu kids: Cháo tươi (25k), Súp rau củ (30k), Mì xào nhẹ (35k), Smoothie trái cây (20k) 🍼 Đảm bảo bé ăn ngon!"
+          },
+          {
+            "answer": "Bé ăn chay đủ chất nhé! Shop balance protein từ đậu, vitamin từ rau, carb từ gạo 🥄 Nhiều mẹ cho bé ăn chay lắm!"
+          }
+        ],
+        "combo_set": [
+          {
+            "answer": "Shop có nhiều combo: 🍱 Combo 1 người (50-65k), Combo 2 người (110-130k), Set gia đình (220-280k) - đầy đủ món!"
+          },
+          {
+            "answer": "Set meal chay gồm: Món chính + canh + rau + đồ uống + tráng miệng 🥘 Giá ưu đãi hơn gọi lẻ 20%!"
+          },
+          {
+            "answer": "Gói trọn gói tiết kiệm: Combo A (phở+nem+nước) 60k, Combo B (cơm+canh+salad) 65k, Combo C (lẩu 2 người) 150k 💰"
+          },
+          {
+            "answer": "Set cặp đôi romantic: 2 món chính + 2 nước ép + tráng miệng chỉ 120k! 💑 Phù hợp date hoặc ăn gia đình!"
+          }
+        ]
+      }
+    }
+  },
+  "actionManager": {
+    "settings": {
+      "tag": "action-manager"
+    },
+    "actions": {}
+  },
+  "slotManager": {}
+}

@@ -7,6 +7,7 @@ import Voucher from '../models/voucher.model.js';
 import { orderValidate } from '../validates/order.validate.js';
 import { sendEmailOrder } from './nodeMailer.controllers.js';
 import Enviroment from '../utils/checkEnviroment.js';
+import { debouncedRetrain } from '../../bot/auto-retrain.js';
 dotenv.config();
 
 export const orderController = {
@@ -104,6 +105,9 @@ export const orderController = {
       }
 
       const url = `${Enviroment()}/products/checkout/payment-result?encode=${encodeStripe}`;
+
+      // Trigger bot retrain khi có order mới
+      debouncedRetrain('New order created: ' + order._id);
 
       return res.status(200).json({
         message: 'create order successfully',

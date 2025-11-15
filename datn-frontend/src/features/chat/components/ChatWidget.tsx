@@ -3,10 +3,32 @@ import CustomerChat from './CustomerChat'
 import { messageService } from '../../../api/message.service'
 import { useAppSelector } from '../../../store/hooks'
 
-const ChatWidget: React.FC = () => {
+interface ChatWidgetProps {
+  isOpen?: boolean
+  onToggle?: (isOpen: boolean) => void
+}
+
+const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen: controlledIsOpen, onToggle }) => {
   const { user } = useAppSelector((state) => state.persistedReducer.auth)
-  const [isOpen, setIsOpen] = useState(false)
+  const [internalIsOpen, setInternalIsOpen] = useState(false)
   const [unreadCount, setUnreadCount] = useState(0)
+  
+  // Sử dụng controlled hoặc uncontrolled state
+  const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen
+  const setIsOpen = (value: boolean) => {
+    if (onToggle) {
+      onToggle(value)
+    } else {
+      setInternalIsOpen(value)
+    }
+  }
+
+  // Đồng bộ controlled state
+  useEffect(() => {
+    if (controlledIsOpen !== undefined) {
+      setInternalIsOpen(controlledIsOpen)
+    }
+  }, [controlledIsOpen])
 
   useEffect(() => {
     if (user) {
@@ -39,7 +61,7 @@ const ChatWidget: React.FC = () => {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className='fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#D7B978] text-white shadow-lg transition-all hover:bg-[#C5A868] hover:scale-110'
+        className='fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#D7B978] text-white shadow-lg transition-all hover:bg-[#C5A868] hover:scale-110'
       >
         {isOpen ? (
           <svg className='h-6 w-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
@@ -66,7 +88,7 @@ const ChatWidget: React.FC = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className='fixed bottom-24 right-6 z-50 h-[600px] w-[400px] overflow-hidden rounded-lg shadow-2xl'>
+        <div className='fixed bottom-20 right-4 z-50 h-[500px] w-[380px] overflow-hidden rounded-lg shadow-2xl'>
           <CustomerChat onClose={() => setIsOpen(false)} />
         </div>
       )}

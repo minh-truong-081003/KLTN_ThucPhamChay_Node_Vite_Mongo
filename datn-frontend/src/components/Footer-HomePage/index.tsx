@@ -74,16 +74,19 @@ const FooterHomePage = () => {
             <div className='content'>
               <ul>
                 <li className='mb-2 text-sm'>
-                  <Link to='/'>Giới thiệu </Link>
+                  <Link to='/about' className='hover:text-[#d3b673] transition-colors'>Giới thiệu</Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/'>Tin tức khuyến mại</Link>
+                  <Link to='/products' className='hover:text-[#d3b673] transition-colors'>Sản phẩm</Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/'>Cửa hàng</Link>
+                  <Link to='/blogs' className='hover:text-[#d3b673] transition-colors'>Tin tức</Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/'>Quy định chung</Link>
+                  <Link to='/account-layout/my-voucher' className='hover:text-[#d3b673] transition-colors'>Khuyến mãi</Link>
+                </li>
+                <li className='mb-2 text-sm'>
+                  <Link to='/account-layout/my-order' className='hover:text-[#d3b673] transition-colors'>Đơn hàng</Link>
                 </li>
               </ul>
             </div>
@@ -95,22 +98,19 @@ const FooterHomePage = () => {
             <div className='content'>
               <ul>
                 <li className='mb-2 text-sm'>
-                  <Link to='/'>Chính sách thành viên</Link>
+                  <Link to='/account-layout' className='hover:text-[#d3b673] transition-colors'>Chính sách thành viên</Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/'>Hình thức thanh toán</Link>
+                  <Link to='/payment-methods' className='hover:text-[#d3b673] transition-colors'>Hình thức thanh toán</Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/'>Vận chuyển giao nhận</Link>
+                  <Link to='/shipping-policy' className='hover:text-[#d3b673] transition-colors'>Vận chuyển giao nhận</Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/'>Đổi trả và hoàn tiền</Link>
+                  <Link to='/warranty-policy' className='hover:text-[#d3b673] transition-colors'>Đổi trả và bảo hành</Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/'>Bảo vệ thông tin cá nhân</Link>
-                </li>
-                <li className='mb-2 text-sm'>
-                  <Link to='/'>Bảo trì, bảo hành</Link>
+                  <Link to='/account-layout' className='hover:text-[#d3b673] transition-colors'>Bảo vệ thông tin cá nhân</Link>
                 </li>
               </ul>
             </div>

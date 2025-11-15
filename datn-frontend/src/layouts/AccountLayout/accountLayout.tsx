@@ -1,22 +1,30 @@
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { items, rootSubmenuKeys } from './components'
 
-import { Header } from '../../components'
 import { Menu } from 'antd'
 import type { MenuProps } from 'antd'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
 import { useLogoutMutation } from '../../api/Auth'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Loader from '../../components/Loader'
 import { ClientSocket } from '../../socket'
 import { useAppDispatch } from '../../store/hooks'
 import { resetAllCart } from '../../store/slices/cart.slice'
+import HeaderHomePage from '../../components/Header-HomePage'
+import ButtonDelivery from '../../components/Button-Delivery'
+import FooterHomePage from '../../components/Footer-HomePage'
 
 const AccountLayout = () => {
   const [logout] = useLogoutMutation()
   const navigate = useNavigate()
+  const location = useLocation()
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+
   const onLogout = () => {
     Swal.fire({
       icon: 'question',
@@ -49,8 +57,8 @@ const AccountLayout = () => {
   return (
     <>
       <Loader />
-      <Header />
-      <div className='container mx-auto p-[20px] grid grid-cols-[1fr,3fr]'>
+      <HeaderHomePage />
+      <div className='container mx-auto p-[20px] grid grid-cols-[1fr,3fr] mt-[80px]'>
         <div className='list-sidebar w-[250px] max-w-[250px] mr-[20px] flex-shrink-0'>
           <Menu mode='inline' openKeys={openKeys} onOpenChange={onOpenChange} items={items({ onLogout })} />
         </div>
@@ -146,6 +154,8 @@ const AccountLayout = () => {
         </div>
       </div> */}
       </div>
+      <FooterHomePage />
+      <ButtonDelivery />
     </>
   )
 }

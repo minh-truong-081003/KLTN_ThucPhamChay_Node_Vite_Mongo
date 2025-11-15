@@ -7,18 +7,27 @@ import NewProducts from '../../components/New-Products'
 import News from '../../components/News'
 import Popup from '../../components/Popup'
 import Sliders from '../../components/Slider'
+import ServiceInfo from '../../components/ServiceInfo'
+import AboutSection from '../../components/AboutSection'
+import { useEffect } from 'react'
 
 const HomePage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <>
       <Loader />
       <HeaderHomePage />
       <Sliders />
+      <AboutSection />
       <main className='md:p-5 p-8'>
         <NewProducts />
         {/* <About /> */}
         {/* <News /> */}
       </main>
+      <ServiceInfo />
       <FooterHomePage />
       <ButtonDelivery />
       <Popup />

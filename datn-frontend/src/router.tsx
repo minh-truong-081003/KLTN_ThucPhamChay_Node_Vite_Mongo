@@ -21,6 +21,10 @@ import ProductsPage from './pages/Products/Products'
 import ResetForgotPassword from './pages/Forgot-password/ResetForgotPassword'
 import Signin from './pages/Sign-in/Signin'
 import Signup from './pages/Sign-up/Signup'
+import AboutPage from './pages/About/AboutPage'
+import PaymentMethodsPage from './pages/Policy/PaymentMethodsPage'
+import ShippingPolicyPage from './pages/Policy/ShippingPolicyPage'
+import WarrantyPolicyPage from './pages/Policy/WarrantyPolicyPage'
 import { createBrowserRouter } from 'react-router-dom'
 
 const routes = createBrowserRouter([
@@ -65,11 +69,23 @@ const routes = createBrowserRouter([
 
   {
     path: 'about',
-    element: <Introduce />
+    element: <AboutPage />
   },
   {
     path: 'achievement',
     element: <Achievement />
+  },
+  {
+    path: 'payment-methods',
+    element: <PaymentMethodsPage />
+  },
+  {
+    path: 'shipping-policy',
+    element: <ShippingPolicyPage />
+  },
+  {
+    path: 'warranty-policy',
+    element: <WarrantyPolicyPage />
   },
   {
     path: 'blogs',

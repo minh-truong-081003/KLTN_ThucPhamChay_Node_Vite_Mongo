@@ -150,6 +150,46 @@ app.get('/toppings', async (req, res) => {
     });
   }
 });
+app.get('/vouchers', async (req, res) => {
+  try {
+    const axios = require('axios');
+    console.log('📞 Calling main API: http://localhost:8000/api/vouchers');
+    
+    const response = await axios.get('http://localhost:8000/api/vouchers', {
+      timeout: 5000,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    console.log('✅ Got vouchers from main API:', response.data?.data?.docs?.length || 0, 'items');
+    res.json(response.data);
+  } catch (error) {
+    console.error('❌ Error fetching vouchers from main API:');
+    console.error('   Status:', error.response?.status);
+    console.error('   Status Text:', error.response?.statusText);
+    console.error('   Message:', error.message);
+    console.error('   Code:', error.code);
+    console.error('   Data:', error.response?.data);
+    
+    // Nếu là lỗi timeout hoặc connection
+    if (error.code === 'ECONNREFUSED' || error.code === 'ETIMEDOUT') {
+      return res.status(503).json({
+        error: 'Main API is not available',
+        message: 'Cannot connect to main API server',
+        code: error.code
+      });
+    }
+    
+    return res.status(500).json({
+      error: error.message || 'Unknown error',
+      message: 'Failed to fetch vouchers from main API',
+      details: error.response?.data,
+      code: error.code
+    });
+  }
+});
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
@@ -184,10 +224,27 @@ io.on('connection', (socket) => {
 });
 
 app.get('/update', async (req, res) => {
-  const manager = require('./langchain.js');
-  await manager.train();
-  await manager.save();
-  res.send('ok');
+  try {
+    console.log('🔄 Starting bot retrain...');
+    
+    // Xóa cache của langchain.js để load lại module mới
+    delete require.cache[require.resolve('./langchain.js')];
+    
+    // Load lại module langchain.js (sẽ tự động fetch data mới từ DB)
+    const manager = require('./langchain.js');
+    
+    // Đợi một chút để các axios request trong langchain.js hoàn thành
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    await manager.train();
+    await manager.save();
+    
+    console.log('✅ Bot retrain completed successfully!');
+    res.json({ success: true, message: 'Bot retrained successfully' });
+  } catch (error) {
+    console.error('❌ Error during bot retrain:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
 app.get('/ask', async (req, res) => {
   const { query, id } = req.query;

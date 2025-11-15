@@ -3,6 +3,7 @@ import Product from '../models/product.model.js';
 import Size from '../models/size.model.js';
 import Topping from '../models/topping.model.js';
 import productValidate from '../validates/product.validate.js';
+import { debouncedRetrain } from '../../bot/auto-retrain.js';
 
 export const ProductController = {
   createProduct: async (req, res, next) => {
@@ -58,6 +59,10 @@ export const ProductController = {
           });
         }
       }
+      
+      // Trigger bot retrain khi có sản phẩm mới
+      debouncedRetrain('New product created: ' + product.name);
+      
       return res.status(200).json({ message: 'success', data: product });
     } catch (error) {
       next(error);
@@ -333,6 +338,10 @@ export const ProductController = {
         return res.status(404).json({ message: 'fail', err: 'Not found Product to update' });
       }
       await existCategory.updateOne({ $addToSet: { products: product._id } });
+      
+      // Trigger bot retrain khi cập nhật sản phẩm
+      debouncedRetrain('Product updated: ' + product.name);
+      
       return res.status(200).json({ message: 'success', data: product });
     } catch (error) {
       next(error);
@@ -550,19 +559,31 @@ export const ProductController = {
           { path: 'toppings', select: 'name price' },
         ],
       };
+      // Base filter: only active and not deleted products
+      const baseFilter = {
+        is_deleted: false,
+        is_active: true
+      };
+
       if (query) {
+        // Escape special regex characters and create sequential word search
+        const escapedQuery = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const words = escapedQuery.split(/\s+/).filter(word => word.length > 0);
+        
+        // Create regex that requires all words to appear in sequence (with possible chars between)
+        const searchPattern = words.join('.*');
+        
+        // Priority search: exact match in name > partial in name
         const products = await Product.paginate(
           {
-            $or: [
-              { name: { $regex: query, $options: 'i' } },
-              { description: { $regex: query, $options: 'i' } },
-            ],
+            ...baseFilter,
+            name: { $regex: searchPattern, $options: 'i' }
           },
           options
         );
         return res.status(200).json({ ...products });
       }
-      const products = await Product.paginate({}, options);
+      const products = await Product.paginate(baseFilter, options);
       if (!products) {
         return res.status(404).json({ message: 'fail', err: 'Not found any size' });
       }
