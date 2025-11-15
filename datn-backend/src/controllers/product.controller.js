@@ -148,55 +148,158 @@ export const ProductController = {
   /* lấy ra các sản phẩm đang hoạt động */
   getAllProducts: async (req, res, next) => {
     try {
-      const { _page = 1, _limit = 10, q = '', c = '' } = req.query;
+      const { _page = 1, _limit = 10, q = '', c = '', priceRange = '', rating = '', sortBy = '' } = req.query;
+      console.log('🔍 Filter params:', { _page, _limit, q, c, priceRange, rating, sortBy });
+      
       let query = { $and: [{ is_deleted: false }, { is_active: true }] };
+      
+      // Build sort option (only for non-price sorts, price sort will be done in-memory)
+      let sortOption = { createdAt: -1 }; // Default: newest first
+      let needsManualSort = false;
+      
+      if (sortBy === 'price-asc' || sortBy === 'price-desc') {
+        needsManualSort = true;
+        sortOption = { createdAt: -1 }; // Use default for initial fetch
+      } else if (sortBy === 'bestseller') {
+        sortOption = { totalOrders: -1 };
+      }
+      
       const options = {
         page: _page,
         limit: _limit,
-        sort: { createdAt: -1 },
+        sort: sortOption,
         populate: [
           { path: 'category', select: 'name' },
           { path: 'sizes', select: 'name price is_default' },
           { path: 'toppings', select: 'name price' },
         ],
       };
-      if (q && !c) {
-        query = {
-          $and: [
-            {
-              $or: [{ name: { $regex: q, $options: 'i' } }],
-            },
-            { is_deleted: false },
-            { is_active: true },
-          ],
-        };
-      } else if (c && !q) {
-        query = {
-          $and: [
-            {
-              $or: [{ category: { _id: c } }],
-            },
-            { is_deleted: false },
-            { is_active: true },
-          ],
-        };
-      } else if (q && c) {
-        query = {
-          $and: [
-            {
-              $or: [{ name: { $regex: q, $options: 'i' } }],
-            },
-            {
-              $or: [{ category: { _id: c } }],
-            },
-            { is_deleted: false },
-            { is_active: true },
-          ],
-        };
+
+      // Build query conditions
+      const conditions = [{ is_deleted: false }, { is_active: true }];
+
+      // Search by name
+      if (q) {
+        conditions.push({ name: { $regex: q, $options: 'i' } });
       }
-      const products = await Product.paginate(query, options);
-      if (!products) {
-        return res.status(404).json({ message: 'fail', err: 'Not found any size' });
+
+      // Filter by category
+      if (c) {
+        conditions.push({ category: c });
+      }
+
+      // Note: Price filtering will be done after fetching since price is in sizes array
+      // We'll need to filter in memory or add a price field to products
+
+      // Filter by rating
+      if (rating) {
+        const minRating = Number(rating);
+        if (!isNaN(minRating) && minRating >= 0) {
+          conditions.push({ averageRating: { $gte: minRating } });
+        }
+      }
+
+      query = { $and: conditions };
+
+      let products;
+      
+      // If we need price filtering or price sorting, do manual processing
+      if (priceRange || needsManualSort) {
+        // Get all products matching base conditions
+        const baseProducts = await Product.find(query)
+          .populate([
+            { path: 'category', select: 'name' },
+            { path: 'sizes', select: 'name price is_default' },
+            { path: 'toppings', select: 'name price' },
+          ])
+          .sort(sortOption);
+        
+        console.log('📦 Base products fetched:', baseProducts.length);
+        if (baseProducts.length > 0) {
+          const sample = baseProducts[0];
+          console.log('📦 First product raw data:', {
+            name: sample.name,
+            _id: sample._id,
+            sizesArray: sample.sizes, // Raw sizes array
+            sizesLength: sample.sizes?.length,
+            hasOwnProperty: sample.hasOwnProperty('sizes')
+          });
+        }
+        
+        let filteredDocs = baseProducts;
+        
+        // Filter by price range if specified
+        if (priceRange) {
+          const [minPrice, maxPrice] = priceRange.split('-').map(Number);
+          console.log('💰 Price filter:', { minPrice, maxPrice, beforeFilter: filteredDocs.length });
+          
+          if (!isNaN(minPrice) && !isNaN(maxPrice)) {
+            filteredDocs = filteredDocs.filter(product => {
+              // Use 'sale' field as price (this is the display price)
+              const productPrice = product.sale || 0;
+              const hasMatch = productPrice >= minPrice && productPrice <= maxPrice;
+              
+              console.log(`  ${hasMatch ? '✅' : '❌'} ${product.name}: ${productPrice}đ`);
+              
+              return hasMatch;
+            });
+            
+            console.log('💰 After price filter:', filteredDocs.length, 'products');
+          }
+        }
+        
+        // Sort by price if needed (using default/first size price)
+        if (needsManualSort) {
+          console.log('🔀 Sorting by price:', sortBy);
+          
+          filteredDocs = filteredDocs.sort((a, b) => {
+            // Use 'sale' field as price
+            const priceA = a.sale || 0;
+            const priceB = b.sale || 0;
+            
+            return sortBy === 'price-asc' ? priceA - priceB : priceB - priceA;
+          });
+          
+          console.log('🔀 After sorting, first 3 products:', 
+            filteredDocs.slice(0, 3).map(p => ({
+              name: p.name,
+              price: p.sale || 0
+            }))
+          );
+        }
+        
+        // Manual pagination
+        const page = parseInt(_page) || 1;
+        const limit = parseInt(_limit) || 10;
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
+        
+        products = {
+          docs: filteredDocs.slice(startIndex, endIndex),
+          totalDocs: filteredDocs.length,
+          limit: limit,
+          page: page,
+          totalPages: Math.ceil(filteredDocs.length / limit),
+          hasNextPage: endIndex < filteredDocs.length,
+          hasPrevPage: page > 1,
+          nextPage: endIndex < filteredDocs.length ? page + 1 : null,
+          prevPage: page > 1 ? page - 1 : null,
+          pagingCounter: startIndex + 1
+        };
+      } else {
+        // Normal pagination without price filtering
+        products = await Product.paginate(query, options);
+      }
+      
+      console.log('✅ Returning products:', {
+        docsCount: products.docs?.length || 0,
+        totalDocs: products.totalDocs,
+        totalPages: products.totalPages,
+        page: products.page
+      });
+      
+      if (!products || !products.docs) {
+        return res.status(404).json({ message: 'fail', err: 'Not found any products' });
       }
       return res.status(200).json({ ...products });
     } catch (error) {
@@ -548,48 +651,117 @@ export const ProductController = {
   /* lấy ra tất cả sản phẩm không tính is_delete hay is_active */
   getAllProductsStore: async (req, res, next) => {
     try {
-      const { _page = 1, _limit = 10, query = '' } = req.query;
-      const options = {
-        page: _page,
-        limit: _limit,
-        sort: { createdAt: -1 },
-        populate: [
-          { path: 'category', select: 'name' },
-          { path: 'sizes', select: 'name price is_default' },
-          { path: 'toppings', select: 'name price' },
-        ],
-      };
+      const { _page = 1, _limit = 10, query = '', category = '', priceRange = '', rating = '', sortBy = '' } = req.query;
+      
       // Base filter: only active and not deleted products
       const baseFilter = {
         is_deleted: false,
         is_active: true
       };
 
+      // Filter by category
+      if (category) {
+        baseFilter.category = category;
+      }
+
+      // Search by name
       if (query) {
-        // Escape special regex characters and create sequential word search
         const escapedQuery = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const words = escapedQuery.split(/\s+/).filter(word => word.length > 0);
-        
-        // Create regex that requires all words to appear in sequence (with possible chars between)
         const searchPattern = words.join('.*');
+        baseFilter.name = { $regex: searchPattern, $options: 'i' };
+      }
+
+      // Filter by rating - sử dụng averageRating
+      if (rating) {
+        const ratingNum = Number(rating);
+        if (!isNaN(ratingNum) && ratingNum > 0) {
+          baseFilter.averageRating = { $gte: ratingNum };
+        }
+      }
+
+      // Lấy tất cả sản phẩm thỏa điều kiện base
+      let allProducts = await Product.find(baseFilter)
+        .populate([
+          { path: 'category', select: 'name' },
+          { path: 'sizes', select: 'name price is_default' },
+          { path: 'toppings', select: 'name price' },
+        ])
+        .lean();
+
+      // Xử lý price cho mỗi sản phẩm (lấy từ sale hoặc size default)
+      allProducts = allProducts.map(product => {
+        let productPrice = product.sale || 0;
         
-        // Priority search: exact match in name > partial in name
-        const products = await Product.paginate(
-          {
-            ...baseFilter,
-            name: { $regex: searchPattern, $options: 'i' }
-          },
-          options
-        );
-        return res.status(200).json({ ...products });
+        // Nếu sale = 0, lấy giá từ size default
+        if (productPrice === 0 && product.sizes && product.sizes.length > 0) {
+          const defaultSize = product.sizes.find(s => s.is_default);
+          if (defaultSize && defaultSize.price) {
+            productPrice = defaultSize.price;
+          } else if (product.sizes[0] && product.sizes[0].price) {
+            productPrice = product.sizes[0].price;
+          }
+        }
+        
+        return {
+          ...product,
+          _price: productPrice // Thêm trường tạm để sort/filter
+        };
+      });
+
+      // Filter by price range
+      if (priceRange) {
+        const [minPrice, maxPrice] = priceRange.split('-').map(Number);
+        if (!isNaN(minPrice) && !isNaN(maxPrice)) {
+          allProducts = allProducts.filter(p => p._price >= minPrice && p._price <= maxPrice);
+        }
       }
-      const products = await Product.paginate(baseFilter, options);
-      if (!products) {
-        return res.status(404).json({ message: 'fail', err: 'Not found any size' });
+
+      // Sort
+      if (sortBy === 'price-asc') {
+        allProducts.sort((a, b) => a._price - b._price);
+      } else if (sortBy === 'price-desc') {
+        allProducts.sort((a, b) => b._price - a._price);
+      } else if (sortBy === 'bestseller') {
+        allProducts.sort((a, b) => {
+          if (b.totalReviews !== a.totalReviews) return b.totalReviews - a.totalReviews;
+          return b.averageRating - a.averageRating;
+        });
+      } else if (sortBy === 'newest') {
+        allProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      } else {
+        allProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       }
-      return res.status(200).json({ ...products });
+
+      // Manual pagination
+      const page = parseInt(_page);
+      const limit = parseInt(_limit);
+      const total = allProducts.length;
+      const totalPages = Math.ceil(total / limit);
+      const startIndex = (page - 1) * limit;
+      const endIndex = startIndex + limit;
+      const docs = allProducts.slice(startIndex, endIndex);
+
+      // Xóa trường _price trước khi trả về
+      const cleanDocs = docs.map(({ _price, ...rest }) => rest);
+
+      const result = {
+        docs: cleanDocs,
+        totalDocs: total,
+        limit: limit,
+        totalPages: totalPages,
+        page: page,
+        pagingCounter: startIndex + 1,
+        hasPrevPage: page > 1,
+        hasNextPage: page < totalPages,
+        prevPage: page > 1 ? page - 1 : null,
+        nextPage: page < totalPages ? page + 1 : null
+      };
+      
+      return res.status(200).json(result);
     } catch (error) {
-      return res.status(500).json({ message: 'fail', err: error });
+      console.error('Error in getAllProductsStore:', error);
+      return res.status(500).json({ message: 'fail', err: error.message });
     }
   },
 

@@ -61,8 +61,6 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
 
   // Search products real-time with optimized debounce
   useEffect(() => {
-    console.log('Search effect triggered. searchValue:', searchValue, 'isProductsPage:', isProductsPage)
-    
     // Clear dropdown if search value is too short
     if (!searchValue || searchValue.trim().length <= 1) {
       setSearchResults([])
@@ -84,7 +82,6 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
 
     setIsSearching(true)
     const debounceTimer = setTimeout(async () => {
-      console.log('Making search request for:', searchValue)
       try {
         // Fetch dropdown results
         const response = await http.get(`/products/all`, {
@@ -94,13 +91,11 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
             _page: 1
           }
         })
-        console.log('Search response:', response.data)
         setSearchResults(response.data.docs || [])
         setShowDropdown(true)
         
         // Only update URL and filter products when on products page
         if (isProductsPage) {
-          console.log('Updating URL with searchName:', searchValue.trim())
           navigate({
             pathname: '/products',
             search: createSearchParams({
@@ -127,8 +122,8 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
   // Sync input value with URL searchName (only on mount or when URL changes externally)
   useEffect(() => {
     const urlSearchName = queryConfig.searchName || ''
-    // Only update if different and not caused by user typing
-    if (urlSearchName && urlSearchName !== searchValue) {
+    // Always sync input with URL - set to empty if URL has no searchName
+    if (urlSearchName !== searchValue) {
       setValue('name', urlSearchName)
     }
   }, [queryConfig.searchName])
@@ -144,16 +139,7 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
-  useEffect(() => {
-    dispatch(
-      getAllProducts({
-        page: queryConfig._page,
-        limit: queryConfig.limit,
-        query: queryConfig.searchName,
-        category: queryConfig.c == 'all' ? '' : queryConfig.c
-      })
-    )
-  }, [dispatch, queryConfig._page, queryConfig.c, queryConfig.limit, queryConfig.searchName])
+  // Removed duplicate getAllProducts call - ProductsPage handles this
 
   useEffect(() => {
     ClientSocket.getUnreadNotificationsByidUser(setNotification, user._id!)
@@ -222,7 +208,7 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
                             pathname: '/products',
                             search: createSearchParams({
                               _page: '1',
-                              limit: '12',
+                              limit: '6',
                               searchName: currentSearchValue,
                               c: ''
                             }).toString()
@@ -261,7 +247,7 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
                           pathname: '/products',
                           search: createSearchParams({
                             _page: '1',
-                            limit: '12',
+                            limit: '6',
                             searchName: currentSearchValue,
                             c: ''
                           }).toString()

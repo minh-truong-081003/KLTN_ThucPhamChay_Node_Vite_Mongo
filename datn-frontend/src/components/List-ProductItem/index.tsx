@@ -1,6 +1,11 @@
 import { AiOutlinePlus } from 'react-icons/ai'
 import { IProduct } from '../../interfaces/products.type'
 import { formatCurrency } from '../../utils/formatCurrency'
+import { useCreateCartDBMutation } from '../../api/cartDB'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { addToCart } from '../../store/slices/cart.slice'
+import { CartItem } from '../../store/slices/types/cart.type'
+import { message } from 'antd'
 
 interface ListProductItemProps {
   product: IProduct
@@ -8,6 +13,45 @@ interface ListProductItemProps {
 }
 
 const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) => {
+  const [addCartDbFn] = useCreateCartDBMutation()
+  const dispatch = useAppDispatch()
+  const { user } = useAppSelector((state) => state.persistedReducer.auth)
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation() // Ngăn không cho click vào popup detail
+    
+    const data = {
+      name: product.name,
+      size: product.sizes?.[0],
+      toppings: [],
+      quantity: 1,
+      image: product.images[0]?.url ?? '',
+      price: product.sale as number,
+      total: product.sale * 1,
+      product: product._id,
+      sale: 0
+    }
+
+    if (user._id !== '' && user.accessToken !== '') {
+      const { sale, name, ...rest } = data
+      addCartDbFn({
+        name: name,
+        items: [
+          {
+            ...rest,
+            image: rest.image,
+            size: data.size?._id as string,
+            toppings: []
+          }
+        ]
+      })
+      message.success('Đã thêm vào giỏ hàng!')
+    } else {
+      dispatch(addToCart(data as CartItem))
+      message.success('Đã thêm vào giỏ hàng!')
+    }
+  }
+
   return (
     <div
       onClick={() => fetchProductById(product._id)}
@@ -35,8 +79,11 @@ const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) =>
           )} */}
         </div>
       </div>
-      <div className='quantity w-[20px] h-[20px] bg-[#799dd9] rounded-full text-white absolute right-[15px] bottom-[15px] flex justify-around items-center'>
-        <AiOutlinePlus />
+      <div 
+        onClick={handleAddToCart}
+        className='quantity w-[28px] h-[28px] bg-[#799dd9] rounded-full text-white absolute right-[15px] bottom-[15px] flex justify-around items-center cursor-pointer hover:bg-[#4ade80] hover:scale-110 transition-all duration-200 active:scale-95'
+      >
+        <AiOutlinePlus className='text-[16px]' />
       </div>
     </div>
   )

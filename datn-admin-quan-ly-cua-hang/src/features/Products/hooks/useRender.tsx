@@ -23,7 +23,14 @@ import clsxm from '~/utils/clsxm'
 import { formatCurrency } from '~/utils'
 import { useAppSelector } from '~/store/hooks'
 
-export const useRender = (productsList: IProduct[], deleteReal?: boolean) => {
+export const useRender = (
+  productsList: IProduct[],
+  deleteReal?: boolean,
+  setSearchTextParent?: (text: string) => void,
+  setCategoryFilterParent?: (categories: string[]) => void,
+  setPriceFilterParent?: (prices: string[]) => void,
+  setSaleFilterParent?: (sales: string[]) => void
+) => {
   const dispatch = useAppDispatch()
   const searchInput = useRef<InputRef>(null)
   const [searchText, setSearchText] = useState<string>('')
@@ -37,18 +44,31 @@ export const useRender = (productsList: IProduct[], deleteReal?: boolean) => {
   const { user } = useAppSelector((state: RootState) => state.persistedReducer.auth)
 
   const handleSearch = (selectedKeys: string[], confirm: (param?: FilterConfirmProps) => void, dataIndex: IProduct) => {
+    const searchValue = selectedKeys[0]
     confirm()
-    setSearchText(selectedKeys[0])
+    setSearchText(searchValue)
     setSearchedColumn(dataIndex.name)
+    // Update parent state for combined filtering
+    if (setSearchTextParent) {
+      setSearchTextParent(searchValue)
+    }
+  }
+
+  const handleResetSearch = () => {
+    setSearchText('')
+    setSearchedColumn('')
+    if (setSearchTextParent) {
+      setSearchTextParent('')
+    }
   }
 
   const getColumnSearchProps = (dataIndex: IProduct): ColumnType<IProduct> => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8, width: '100%' }} onKeyDown={(e) => e.stopPropagation()}>
         <Input
           ref={searchInput}
           size='large'
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Tìm kiếm ${dataIndex === 'name' ? 'tên sản phẩm' : dataIndex}`}
           value={selectedKeys[0]}
           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
@@ -61,19 +81,33 @@ export const useRender = (productsList: IProduct[], deleteReal?: boolean) => {
             icon={<SearchOutlined />}
             size='large'
           >
-            Tìm kiếm sản phẩm
+            Tìm kiếm
+          </ButtonAntd>
+          <ButtonAntd
+            onClick={() => {
+              if (clearFilters) {
+                clearFilters()
+                handleResetSearch()
+              }
+            }}
+            size='large'
+          >
+            Xóa
           </ButtonAntd>
         </Space>
       </div>
     ),
-    filterIcon: () => (
+    filterIcon: (filtered: boolean) => (
       <Tooltip title='Tìm kiếm sản phẩm'>
-        <ButtonAntd type='primary' shape='circle' icon={<SearchOutlined />} />
+        <ButtonAntd
+          type={filtered ? 'primary' : 'default'}
+          shape='circle'
+          icon={<SearchOutlined />}
+          style={{ color: filtered ? '#1890ff' : undefined }}
+        />
       </Tooltip>
     ),
-    onFilter: (value: any, record: any) => {
-      return record[dataIndex as unknown as number].toString().toLowerCase().includes(value.toLowerCase())
-    },
+    // Remove onFilter to prevent client-side filtering in Table
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100)
@@ -171,69 +205,133 @@ export const useRender = (productsList: IProduct[], deleteReal?: boolean) => {
   })
   const [options, setOptions] = useState({ _page: 1, _limit: 10 })
   const { data: categories } = useGetAllCategoryQuery(options)
+  
+  // Helper function to get min price from sizes
+  const getMinPrice = (sizes: ISizeRefProduct[]) => {
+    if (!sizes || sizes.length === 0) return 0
+    return Math.min(...sizes.map(size => size.price))
+  }
+
   /* columns staff */
   const columnsStaff: any = [
     {
       title: '#',
       dataIndex: 'index',
       key: 'index',
-      width: 50
+      width: 50,
+      sorter: (a: any, b: any) => a.index - b.index
     },
     {
       title: 'Tên sản phẩm',
       dataIndex: 'name',
       key: 'name',
       width: 270,
+      sorter: (a: any, b: any) => a.name.localeCompare(b.name),
       ...getColumnSearchProps('name' as unknown as IProduct)
     },
-    // {
-    //   title: 'Size  ',
-    //   dataIndex: 'sizes',
-    //   key: 'sizes',
-    //   width: 180,
-    //   render: (sizes: ISizeRefProduct[]) => (
-    //     <>
-    //       <div className='flex flex-col gap-1'>
-    //         {sizes?.slice(0, 2).map((size: ISizeRefProduct) => (
-    //           <div key={size._id} className='relative grid grid-cols-2'>
-    //             <p className='border-r-graydark w-full pr-3 uppercase border-r border-opacity-50'>{size.name}</p>
-    //             <p className='w-full pl-3'>{formatCurrency(size.price)}</p>
-    //           </div>
-    //         ))}
-    //       </div>
-    //       <p className=''>{sizes?.length > 2 && '....'}</p>
-    //     </>
-    //   )
-    // },
-    // {
-    //   title: 'Topping ',
-    //   dataIndex: 'toppings',
-    //   key: 'toppings',
-    //   width: 190,
-    //   render: (toppings: IToppingRefProduct[]) => (
-    //     <>
-    //       <div className='flex flex-col gap-1'>
-    //         {/* chỉ map 2 topping ra ngoài màn hình thôi */}
-    //         {toppings.slice(0, 2).map((topping: IToppingRefProduct) => (
-    //           <div key={topping._id} className='relative grid grid-cols-2'>
-    //             <p className='border-r-graydark w-full pr-3 uppercase border-r border-opacity-50'>{topping.name}</p>
-    //             <p className='w-full pl-3'>{formatCurrency(topping.price)}</p>
-    //           </div>
-    //         ))}
-    //       </div>
-    //       <p className=''>{toppings?.length > 2 && '....'}</p>
-    //     </>
-    //   )
-    // },
     {
-      title: 'Danh mục  ',
+      title: 'Size',
+      dataIndex: 'sizes',
+      key: 'sizes',
+      width: 180,
+      render: (sizes: ISizeRefProduct[]) => (
+        <>
+          <div className='flex flex-col gap-1'>
+            {sizes?.slice(0, 2).map((size: ISizeRefProduct) => (
+              <div key={size._id} className='relative grid grid-cols-2'>
+                <p className='border-r-graydark w-full pr-3 uppercase border-r border-opacity-50'>{size.name}</p>
+                <p className='w-full pl-3'>{formatCurrency(size.price)}</p>
+              </div>
+            ))}
+          </div>
+          {sizes?.length > 2 && <p className='text-gray-400'>+{sizes.length - 2} size khác</p>}
+        </>
+      )
+    },
+    {
+      title: 'Giá thấp nhất',
+      dataIndex: 'sizes',
+      key: 'minPrice',
+      width: 140,
+      sorter: (a: any, b: any) => getMinPrice(a.sizes) - getMinPrice(b.sizes),
+      render: (sizes: ISizeRefProduct[]) => (
+        <span className='font-semibold text-green-600'>{formatCurrency(getMinPrice(sizes))}</span>
+      ),
+      filters: [
+        { text: 'Dưới 50.000đ', value: '0-50000' },
+        { text: '50.000đ - 100.000đ', value: '50000-100000' },
+        { text: '100.000đ - 200.000đ', value: '100000-200000' },
+        { text: 'Trên 200.000đ', value: '200000-999999999' }
+      ],
+      filterMode: 'menu',
+      onFilter: (value: any, record: any) => {
+        const minPrice = getMinPrice(record.sizes)
+        const [min, max] = value.split('-').map(Number)
+        return minPrice >= min && minPrice <= max
+      }
+    },
+    {
+      title: 'Topping',
+      dataIndex: 'toppings',
+      key: 'toppings',
+      width: 190,
+      render: (toppings: IToppingRefProduct[]) => (
+        <>
+          <div className='flex flex-col gap-1'>
+            {toppings?.slice(0, 2).map((topping: IToppingRefProduct) => (
+              <div key={topping._id} className='relative grid grid-cols-2'>
+                <p className='border-r-graydark w-full pr-3 uppercase border-r border-opacity-50'>{topping.name}</p>
+                <p className='w-full pl-3'>{formatCurrency(topping.price)}</p>
+              </div>
+            ))}
+          </div>
+          {toppings?.length > 2 && <p className='text-gray-400'>+{toppings.length - 2} topping khác</p>}
+        </>
+      )
+    },
+    {
+      title: 'Giảm giá',
+      dataIndex: 'sale',
+      key: 'sale',
+      width: 120,
+      sorter: (a: any, b: any) => a.sale - b.sale,
+      render: (sale: number) => (
+        sale > 0 ? (
+          <span className='text-red-500 font-semibold'>{formatCurrency(sale)}</span>
+        ) : (
+          <span className='text-gray-400'>Không</span>
+        )
+      ),
+      filters: [
+        { text: 'Có giảm giá', value: 'has_sale' },
+        { text: 'Không giảm giá', value: 'no_sale' }
+      ],
+      filterMode: 'menu',
+      onFilter: (value: any, record: any) => {
+        if (value === 'has_sale') return record.sale > 0
+        if (value === 'no_sale') return record.sale === 0
+        return true
+      }
+    },
+    {
+      title: 'Danh mục',
       dataIndex: 'category',
       key: 'category',
-      width: 120,
+      width: 140,
       render: (category: ICategoryRefProduct) => <p className='capitalize'>{category?.name || 'Không có thông tin'}</p>,
-      filters: categories?.docs.map((product: any) => ({ text: product.name, value: product._id })),
-      onFilter: (value: string, record: IProduct) => record.category._id.includes(value),
+      filters: categories?.docs.map((category: any) => ({ text: category.name, value: category._id })),
+      filterMode: 'tree',
+      filterSearch: true,
+      onFilter: (value: any, record: any) => record.category._id === value,
       ellipsis: true
+    },
+    {
+      title: 'Ngày tạo',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      width: 140,
+      sorter: (a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      render: (date: string) => new Date(date).toLocaleDateString('vi-VN')
     }
   ]
 

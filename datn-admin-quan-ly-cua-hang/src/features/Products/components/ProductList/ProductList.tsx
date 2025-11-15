@@ -10,6 +10,10 @@ const ProductList = () => {
   const { productsList } = useAppSelector((state: RootState) => state.products)
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
   const [loading, setLoading] = useState(false)
+  const [searchText, setSearchText] = useState<string>('')
+  const [categoryFilter, setCategoryFilter] = useState<string[]>([])
+  const [priceFilter, setPriceFilter] = useState<string[]>([])
+  const [saleFilter, setSaleFilter] = useState<string[]>([])
   const { user } = useAppSelector((state: RootState) => state.persistedReducer.auth)
 
   const products = productsList.map((product: IProduct, index: number) => ({
@@ -37,7 +41,14 @@ const ProductList = () => {
   }
   const hasSelected = selectedRowKeys.length > 0
 
-  const columns = useRender(productsList)
+  const columns = useRender(
+    productsList,
+    false,
+    setSearchText,
+    setCategoryFilter,
+    setPriceFilter,
+    setSaleFilter
+  )
 
   return (
     <div>
@@ -78,7 +89,8 @@ const ProductList = () => {
         pagination={{
           pageSizeOptions: ['5', '10', '15', '20', '25', '30', '40', '50'],
           defaultPageSize: 5,
-          showSizeChanger: true
+          showSizeChanger: true,
+          showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} sản phẩm`
         }}
         bordered
       />

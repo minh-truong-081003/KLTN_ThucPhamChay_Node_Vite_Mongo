@@ -6,12 +6,14 @@ interface DebouncedInputProps {
   value: string | number
   onChange: (value: string | number) => void
   debounce?: number
+  onEnterPress?: () => void
 }
 
 export const DebouncedInput = ({
   value: initialValue,
   onChange,
   debounce = 500,
+  onEnterPress,
   ...props
 }: DebouncedInputProps & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>) => {
   const [value, setValue] = useState(initialValue)
@@ -39,6 +41,12 @@ export const DebouncedInput = ({
         {...props}
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && onEnterPress) {
+            e.preventDefault()
+            onEnterPress()
+          }
+        }}
       />
     </div>
   )

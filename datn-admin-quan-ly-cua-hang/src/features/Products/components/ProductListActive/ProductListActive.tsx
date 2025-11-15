@@ -4,12 +4,16 @@ import { useState } from 'react'
 import { useAppSelector } from '~/store/hooks'
 import { useGetAllProductActiveQuery } from '~/store/services'
 import { RootState } from '~/store/store'
-import { IRoleUser } from '~/types'
+import { IRoleUser, IProduct } from '~/types'
 import { useRender } from '../../hooks'
 
 export const ProductListActive = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
   const [loading, setLoading] = useState(false)
+  const [searchText, setSearchText] = useState<string>('')
+  const [categoryFilter, setCategoryFilter] = useState<string[]>([])
+  const [priceFilter, setPriceFilter] = useState<string[]>([])
+  const [saleFilter, setSaleFilter] = useState<string[]>([])
   const { user } = useAppSelector((state: RootState) => state.persistedReducer.auth)
   const [options, setOptions] = useState({
     page: 1,
@@ -17,10 +21,11 @@ export const ProductListActive = () => {
   })
   const { data } = useGetAllProductActiveQuery({
     _page: options.page,
-    _limit: options.limit
+    _limit: options.limit,
+    query: ''
   })
 
-  const products = data?.docs.map((product: any, index: number) => ({
+  const products = (data?.docs || []).map((product: any, index: number) => ({
     ...product,
     key: product._id,
     index: index + 1
@@ -45,7 +50,14 @@ export const ProductListActive = () => {
   }
   const hasSelected = selectedRowKeys.length > 1
 
-  const columnsData = useRender(data?.docs || [])
+  const columnsData = useRender(
+    data?.docs || [],
+    false,
+    setSearchText,
+    setCategoryFilter,
+    setPriceFilter,
+    setSaleFilter
+  )
 
   return (
     <div>
@@ -88,7 +100,8 @@ export const ProductListActive = () => {
           pageSizeOptions: ['5', '10', '15', '20', '25', '30', '40', '50'],
           defaultPageSize: options.limit,
           showSizeChanger: true,
-          total: data && data?.totalDocs,
+          total: data?.totalDocs,
+          showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} sản phẩm`,
           onChange: (page, pageSize) => {
             setOptions((prev) => ({ ...prev, page, limit: pageSize }))
           }

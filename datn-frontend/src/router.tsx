@@ -91,8 +91,11 @@ const routes = createBrowserRouter([
     path: 'blogs',
     element: <LayoutBlog />,
     children: [
+      {
+        index: true,
+        element: <News />
+      },
       // {
-      //   index: true,
       //   path: 'tin-tuc-khuyen-mai',
       //   element: <News />
       // },

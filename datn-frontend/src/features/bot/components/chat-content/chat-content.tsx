@@ -40,7 +40,7 @@ export const ChatContent = ({ messages }: ChatContentProps) => {
             </div>
           </div>
           <div
-            className={`px-2 w-fit py-3 flex flex-col bg-[#D3B673] items-start rounded-lg text-white ${
+            className={`px-3 py-3 flex flex-col bg-[#D3B673] items-start rounded-lg text-white max-w-[75%] ${
               message.isChatOwner ? 'order-1 mr-2' : 'order-2 ml-2'
             }`}
           >
@@ -51,7 +51,7 @@ export const ChatContent = ({ messages }: ChatContentProps) => {
                 minute: '2-digit'
               })}
             </span>
-            <span className='text-md'>{parse(message.text)}</span>
+            <div className='text-sm mt-1 break-words w-full'>{parse(message.text)}</div>
           </div>
         </div>
       ))}

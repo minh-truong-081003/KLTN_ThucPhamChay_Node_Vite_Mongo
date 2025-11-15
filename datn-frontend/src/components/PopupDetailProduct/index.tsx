@@ -55,7 +55,7 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
         totalReviews: product.totalReviews || 0,
       }
     }
-    const totalRating = allReviews.reduce((sum, review) => sum + review.rating, 0)
+    const totalRating = allReviews.reduce((sum, review) => sum + (review.rating || 0), 0)
     const averageRating = parseFloat((totalRating / allReviews.length).toFixed(1))
     return {
       averageRating,
@@ -205,14 +205,23 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
                  {product.sale ? <span className='old-price text-xs line-through'>{formatCurrency(price)}</span> : ''} */}
                 </div>
                 <div className='quantity md:items-center gap-y-2 md:flex-row flex flex-col items-start mt-5'>
-                  <div className='change-quantity flex'>
+                  <div className='change-quantity flex items-center'>
                     <div
                       onClick={() => (quantity === 1 ? setQuantity(1) : setQuantity((prev) => prev - 1))}
                       className='decrease text-white bg-[#799dd9] w-5 h-5 rounded-[50%] leading-[19px] text-[26px] font-semibold  text-center cursor-pointer select-none '
                     >
                       -
                     </div>
-                    <div className='amount select-none px-[10px] text-sm'>{quantity}</div>
+                    <input
+                      type='number'
+                      min='1'
+                      value={quantity}
+                      onChange={(e) => {
+                        const value = parseInt(e.target.value) || 1
+                        setQuantity(value < 1 ? 1 : value)
+                      }}
+                      className='amount w-[60px] text-center px-[10px] text-sm border-0 focus:outline-none mx-1'
+                    />
                     <div
                       onClick={() => setQuantity((prev) => prev + 1)}
                       className='increase text-white bg-[#799dd9] w-5 h-5 rounded-[50%] leading-[20px] text-[26px] font-semibold  text-center cursor-pointer select-none'
@@ -323,19 +332,19 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
 
       {/* Reviews Modal */}
       {showReviews && (
-        <div className='fixed inset-0 z-[20] flex items-center justify-center'>
+        <div className='fixed inset-0 z-[9999] flex items-center justify-center pt-20 pb-6'>
           <div className='absolute inset-0 bg-black bg-opacity-50' onClick={() => setShowReviews(false)}></div>
-          <div className='relative bg-white rounded-lg shadow-xl w-[90vw] max-w-4xl max-h-[90vh] overflow-hidden z-[21]'>
-            <div className='flex items-center justify-between p-4 border-b'>
-              <h3 className='text-xl font-semibold'>Đánh giá sản phẩm: {product.name}</h3>
+          <div className='relative bg-white rounded-lg shadow-xl w-[85vw] max-w-3xl max-h-[calc(100vh-120px)] overflow-hidden my-auto'>
+            <div className='flex items-center justify-between p-3 border-b bg-gray-50'>
+              <h3 className='text-lg font-semibold truncate pr-4'>Đánh giá: {product.name}</h3>
               <button
                 onClick={() => setShowReviews(false)}
-                className='text-gray-500 hover:text-gray-700 text-2xl'
+                className='text-gray-500 hover:text-gray-700 text-xl flex-shrink-0'
               >
                 <FaTimes />
               </button>
             </div>
-            <div className='overflow-y-auto max-h-[calc(90vh-80px)] p-6'>
+            <div className='overflow-y-auto max-h-[calc(100vh-180px)] p-4'>
               <ProductReviews product={product} />
             </div>
           </div>

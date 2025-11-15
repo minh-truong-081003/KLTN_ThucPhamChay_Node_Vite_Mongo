@@ -47,6 +47,7 @@ export const ChatInputBox = ({ sendANewMessage }: ChatInputBoxProps) => {
           placeholder='Nội dung tin nhắn'
           debounce={100}
           onChange={(value) => setNewMessage(String(value))}
+          onEnterPress={doSendMessage}
         />
         <button
           type='button'

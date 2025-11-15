@@ -59,7 +59,7 @@ const MyCart = () => {
     navigate('/products/checkout')
   }
   return (
-    <div className='sidebar shrink-0 w-[300px] bg-[#fff] text-[14px] rounded-sm mx-[16px] pb-[12px] h-fit hidden lg:block'>
+    <div className='sidebar shrink-0 w-[360px] bg-[#fff] text-[14px] rounded-sm mx-[16px] pb-[12px] h-fit hidden lg:block'>
       <div className='border border-transparent border-b-[#f1f1f1]  px-4 py-2 flex justify-between items-center'>
         <div className='uppercase font-semibold'>Giỏ hàng của tôi</div>
         <div

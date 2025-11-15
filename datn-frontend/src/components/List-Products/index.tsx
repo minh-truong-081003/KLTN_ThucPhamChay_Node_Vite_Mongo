@@ -93,7 +93,7 @@ const ListProducts = ({ products, isLoading, queryConfig }: ListProductsProps) =
               <div className='text-lg capitalize select-none'>{'Tất cả sản phẩm'}</div>
               <div className='right'>{/* <FaAngleDown /> */}</div>
             </div>
-            {productList && productList.docs && productList.docs.length <= 0 ? (
+            {!isLoading && productList && productList.docs && productList.docs.length <= 0 ? (
               <section className='flex flex-col justify-center bg-gray-100 items-center h-[70vh] font-bold my-5'>
                 <img
                   className='mx-auto'
@@ -119,7 +119,13 @@ const ListProducts = ({ products, isLoading, queryConfig }: ListProductsProps) =
           </div>
           <div className='text-center'>
             {productList && productList.totalPages > 1 && (
-              <Pagination defaultCurrent={1} onChange={onChange} total={productList.totalDocs} />
+              <Pagination 
+                current={productList.page}
+                pageSize={productList.limit}
+                onChange={onChange} 
+                total={productList.totalDocs}
+                showSizeChanger={false}
+              />
             )}
           </div>
         </div>

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useAppSelector } from '~/store/hooks'
 import { useGeAllProductDeletedTrueQuery } from '~/store/services'
 import { RootState } from '~/store/store'
-import { IRoleUser } from '~/types'
+import { IRoleUser, IProduct } from '~/types'
 import { useRender } from '../../hooks'
 
 export const ProductListDelete = () => {
@@ -13,14 +13,18 @@ export const ProductListDelete = () => {
   /* lấy ra tất cả các sản phẩm bị xóa mềm */
   const { data: dataProductsDeleted } = useGeAllProductDeletedTrueQuery({
     _page: 1,
-    _limit: 10,
+    _limit: 1000,
     query: ''
   })
 
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
   const [loading, setLoading] = useState(false)
+  const [searchText, setSearchText] = useState<string>('')
+  const [categoryFilter, setCategoryFilter] = useState<string[]>([])
+  const [priceFilter, setPriceFilter] = useState<string[]>([])
+  const [saleFilter, setSaleFilter] = useState<string[]>([])
 
-  const products = dataProductsDeleted?.docs.map((product: any, index: number) => ({
+  const products = (dataProductsDeleted?.docs || []).map((product: any, index: number) => ({
     ...product,
     key: product._id,
     index: index + 1
@@ -45,7 +49,14 @@ export const ProductListDelete = () => {
   }
   const hasSelected = selectedRowKeys.length > 0
 
-  const columnData = useRender(dataProductsDeleted?.docs || [], true)
+  const columnData = useRender(
+    dataProductsDeleted?.docs || [],
+    true,
+    setSearchText,
+    setCategoryFilter,
+    setPriceFilter,
+    setSaleFilter
+  )
 
   return (
     <div>
@@ -88,7 +99,9 @@ export const ProductListDelete = () => {
         pagination={{
           pageSizeOptions: ['5', '10', '15', '20', '25', '30', '40', '50'],
           defaultPageSize: 5,
-          showSizeChanger: true
+          showSizeChanger: true,
+          total: dataProductsDeleted?.totalDocs,
+          showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} sản phẩm`
         }}
       />
     </div>

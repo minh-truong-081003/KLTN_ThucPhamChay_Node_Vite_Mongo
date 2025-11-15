@@ -176,7 +176,7 @@ manager.addDocument('vi', 'Giảm giá khi nào', 'promotion');
 manager.addDocument('vi', 'Có chương trình ưu đãi', 'promotion');
 
 // === LẤY KHUYẾN MÃI TỪ DATABASE ===
-// Delay 2000ms để đảm bảo cả bot server routes và main API đã sẵn sàng
+// Delay 5000ms để đảm bảo main API server đã khởi động hoàn toàn
 setTimeout(() => {
   axios
     .get('http://localhost:3333/vouchers', {
@@ -210,12 +210,14 @@ setTimeout(() => {
       voucherText += '🛒 Áp dụng mã khi thanh toán để được giảm giá nhé!';
       
       manager.addAnswer('vi', 'promotion', voucherText);
+      console.log(`✅ Đã tải ${activeVouchers.length} voucher đang hoạt động`);
     } else {
       manager.addAnswer(
         'vi',
         'promotion',
         '📢 Hiện tại chưa có khuyến mãi đang hoạt động. Theo dõi shop để nhận thông báo ưu đãi mới nhé! 💚'
       );
+      console.log('✅ Đã tải 0 voucher đang hoạt động');
     }
 
     // Thêm câu trả lời chung
@@ -225,22 +227,27 @@ setTimeout(() => {
       'Shop luôn có ưu đãi hấp dẫn! Vào <a href="/account-layout/my-voucher" style="color:#22c55e;font-weight:600;">Trang Khuyến Mãi</a> để xem tất cả voucher đang áp dụng nhé! 🎁'
     );
 
-    console.log('✅ Đã tải ' + (activeVouchers?.length || 0) + ' voucher đang hoạt động');
     })
     .catch((error) => {
-      console.error('Error fetching vouchers:');
-      console.error('❌ Lỗi khi tải voucher:', error.message || error);
-      if (error.response) {
-        console.error('   Response status:', error.response.status);
-        console.error('   Response data:', error.response.data);
+      // Chỉ log nếu không phải lỗi ECONNREFUSED (main API chưa sẵn sàng)
+      if (error.code !== 'ECONNREFUSED') {
+        console.error('❌ Lỗi khi tải voucher:', error.message || error);
+        if (error.response) {
+          console.error('   Response status:', error.response.status);
+          console.error('   Response data:', error.response.data);
+        }
+      } else {
+        console.log('⏳ Main API chưa sẵn sàng, sử dụng fallback voucher response');
       }
+      
+      // Thêm câu trả lời mặc định cho trường hợp API chưa sẵn sàng
       manager.addAnswer(
         'vi',
         'promotion',
         'Shop có nhiều chương trình khuyến mãi! Vui lòng vào <a href="/account-layout/my-voucher" style="color:#22c55e;">Trang Voucher</a> để xem chi tiết nhé! 🎉'
       );
     });
-}, 2000); // Delay 2 giây để đảm bảo main API đã sẵn sàng
+}, 5000); // Delay 5 giây để đảm bảo main API đã khởi động hoàn toàn
 
 // === 7. CÂU HỎI GIÚP ĐỠ & TƯ VẤN ===
 manager.addDocument('vi', 'Có ai online không', 'NeedHelp');

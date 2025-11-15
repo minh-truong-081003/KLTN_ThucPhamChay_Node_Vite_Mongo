@@ -1,5 +1,5 @@
 import { Divider, List, ListItem, ListItemText, Paper, Popover, Stack, Typography, IconButton } from '@mui/material'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { SerializedError } from '@reduxjs/toolkit'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query'
@@ -19,13 +19,21 @@ interface SidebarCateProps {
   queryConfig?: IQueryConfig
 }
 
-const SidebarCate = ({ categories, error, isLoading }: SidebarCateProps) => {
+const SidebarCate = ({ categories, error, isLoading, queryConfig }: SidebarCateProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
   const dispatch = useAppDispatch()
-  const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState(queryConfig?.c || '')
+  const [totalProductsCount, setTotalProductsCount] = useState<number>(0)
 
   const navigate = useNavigate()
   const { products } = useAppSelector((state) => state.persistedReducer.products)
+
+  // Lưu tổng số sản phẩm ban đầu (khi không có filter)
+  useEffect(() => {
+    if (products?.totalDocs && !queryConfig?.c && !queryConfig?.priceRange && !queryConfig?.rating && !queryConfig?.sortBy) {
+      setTotalProductsCount(products.totalDocs)
+    }
+  }, [products?.totalDocs, queryConfig])
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget)
@@ -35,12 +43,32 @@ const SidebarCate = ({ categories, error, isLoading }: SidebarCateProps) => {
     setAnchorEl(null)
   }
 
-  // Hàm reload lại trang, sẽ reset lại danh mục và sản phẩm
+  // Hàm reload lại trang, sẽ reset lại danh mục và sản phẩm và XÓA HẾT BỘ LỌC
   const handleReload = () => {
     dispatch(getIdCate(''))  // Reset danh mục
     setSelectedCategory('')  // Reset selectedCategory
     dispatch(savePage(1))  // Reset lại trang đầu tiên
-    navigate('/products')  // Chuyển hướng về trang sản phẩm
+    // Chuyển hướng về trang sản phẩm với params - CHỈ GIỮ LẠI _page và limit, XÓA HẾT CÁC FILTER
+    navigate('/products?_page=1&limit=6')
+  }
+  
+  const handleCategoryClick = (categoryId: string) => {
+    dispatch(getIdCate(categoryId ? { idCate: categoryId, nameCate: categories?.find(c => c._id === categoryId)?.name || '' } : ''))
+    dispatch(savePage(1))
+    setSelectedCategory(categoryId)
+    
+    // Build URL với category param
+    const params: any = {
+      _page: '1',
+      limit: queryConfig?.limit || '6'
+    }
+    if (categoryId) params.c = categoryId
+    if (queryConfig?.searchName) params.searchName = queryConfig.searchName
+    if (queryConfig?.priceRange) params.priceRange = queryConfig.priceRange
+    if (queryConfig?.rating) params.rating = queryConfig.rating
+    if (queryConfig?.sortBy) params.sortBy = queryConfig.sortBy
+    
+    navigate(`/products?${new URLSearchParams(params).toString()}`)
   }
 
   if (error) return <NotFound />
@@ -53,28 +81,44 @@ const SidebarCate = ({ categories, error, isLoading }: SidebarCateProps) => {
 
   return (
     <>
-      <div className='sidebar select-none shrink-0 w-[300px] bg-[#fff] text-[14px] rounded-sm mx-[16px] pb-[12px] h-fit hidden lg:block'>
-        <div className='flex justify-between items-center border border-transparent border-b-[#f1f1f1] uppercase px-4 py-2'>
-          <div>Danh mục</div>
+      <div className='sidebar select-none w-full bg-white text-[14px] rounded-sm shadow-sm h-fit'>
+        <div className='flex justify-between items-center border-b border-gray-200 px-4 py-3 bg-gradient-to-r from-[#d3b673] to-[#c4a962]'>
+          <div className='font-semibold text-white flex items-center gap-2'>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            DANH MỤC SẢN PHẨM
+          </div>
           {/* Nút reload */}
-          <IconButton onClick={handleReload}>
-            <FaRedo />
-          </IconButton>
-        </div>
-        <div className=''>
-          <div
-            className='block'
+          <button 
+            onClick={handleReload}
+            className="text-white hover:bg-white/20 p-1.5 rounded transition-all"
+            title="Làm mới"
           >
+            <FaRedo size={14} />
+          </button>
+        </div>
+        <div className='p-2'>
+          <div className='block'>
             <div
-              onClick={() => {
-                dispatch(getIdCate(''))
-                setSelectedCategory('')
-              }}
-              className={`cursor-pointer hover:bg-gray-100 transition-all duration-300 px-[16px] flex justify-between border border-transparent border-b-[#f1f1f1] py-[8px] last:border-none ${
-                selectedCategory == '' ? 'bg-gray-200' : ''
+              onClick={() => handleCategoryClick('')}
+              className={`cursor-pointer rounded-lg transition-all duration-200 px-4 py-3 flex justify-between items-center group ${
+                selectedCategory == '' 
+                  ? 'bg-gradient-to-r from-[#d3b673]/10 to-[#c4a962]/10 border-l-4 border-[#d3b673]' 
+                  : 'hover:bg-gray-50'
               }`}
             >
-              <div className='cat-name capitalize'>Tất cả sản phẩm</div>
+              <div className={`cat-name capitalize font-medium ${selectedCategory == '' ? 'text-[#d3b673]' : 'text-gray-700'}`}>
+                🏠 Tất cả sản phẩm
+              </div>
+              <div className={`cat-amount text-xs font-semibold px-2 py-1 rounded-full ${
+                selectedCategory === '' 
+                  ? 'bg-[#d3b673] text-white' 
+                  : 'bg-gray-200 text-gray-600'
+              }`}>
+                {/* Luôn hiển thị tổng số sản phẩm ban đầu (cố định) */}
+                {totalProductsCount || products?.totalDocs || 0}
+              </div>
             </div>
           </div>
           {categories &&
@@ -86,18 +130,22 @@ const SidebarCate = ({ categories, error, isLoading }: SidebarCateProps) => {
                 className='block'
               >
                 <div
-                  onClick={() => {
-                    dispatch(getIdCate({ idCate: category._id, nameCate: category.name }))
-                    dispatch(savePage(1))
-                    setSelectedCategory(category._id)
-                  }}
-                  className={`cursor-pointer hover:bg-gray-100 transition-all duration-300 px-[16px] flex justify-between border border-transparent  border-b-[#f1f1f1] py-[8px] last:border-none ${
-                    selectedCategory === category._id ? 'bg-gray-200' : ''
+                  onClick={() => handleCategoryClick(category._id)}
+                  className={`cursor-pointer rounded-lg transition-all duration-200 px-4 py-3 flex justify-between items-center group mb-1 ${
+                    selectedCategory === category._id 
+                      ? 'bg-gradient-to-r from-[#d3b673]/10 to-[#c4a962]/10 border-l-4 border-[#d3b673]' 
+                      : 'hover:bg-gray-50 border-l-4 border-transparent'
                   }`}
                 >
-                  <div className='cat-name capitalize'>{category.name}</div>
-                  <div className='cat-amount text-[#8a733f]'>
-                    {products && products?.docs?.filter((item) => item.category._id == category._id).length}
+                  <div className={`cat-name capitalize font-medium ${selectedCategory === category._id ? 'text-[#d3b673]' : 'text-gray-700'}`}>
+                    📦 {category.name}
+                  </div>
+                  <div className={`cat-amount text-xs font-semibold px-2 py-1 rounded-full ${
+                    selectedCategory === category._id 
+                      ? 'bg-[#d3b673] text-white' 
+                      : 'bg-gray-200 text-gray-600'
+                  }`}>
+                    {category.products?.filter(p => p.is_active && !p.is_deleted).length || 0}
                   </div>
                 </div>
               </div>

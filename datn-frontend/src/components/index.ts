@@ -9,6 +9,7 @@ import MyOrderDetail from './My-OrderDetail'
 import MyVoucher from './My-voucher'
 import SidebarCate from './Category'
 import SupporterBtn from './Supporter-Button'
+import ProductFilter from './ProductFilter'
 
 export * from './My-address'
 
@@ -23,5 +24,6 @@ export {
   MyOrder,
   MyVoucher,
   SupporterBtn,
-  MyOrderDetail
+  MyOrderDetail,
+  ProductFilter
 }
