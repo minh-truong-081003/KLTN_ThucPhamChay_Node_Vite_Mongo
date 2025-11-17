@@ -155,34 +155,68 @@
       </div>
     </div>
 
+    <!-- Image Modal / Lightbox -->
+    <div id="imageModal" style="display:none;position:fixed;inset:0;z-index:60;align-items:center;justify-content:center;">
+      <div id="imageModalBackdrop" style="position:absolute;inset:0;background:rgba(0,0,0,0.7);"></div>
+      <div style="position:relative;z-index:70;max-width:90vw;max-height:90vh;display:flex;align-items:center;justify-content:center;">
+        <button id="imageModalClose" style="position:absolute;top:-32px;right:0;background:#fff;border-radius:6px;padding:6px;border:none;cursor:pointer;">✕</button>
+        <img id="imageModalImg" src="" style="max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain;" />
+      </div>
+    </div>
+
     <!-- <script src="/socket.io/socket.io.js"></script> -->
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
-      function a() {
+      (function setupFilePreview() {
         const fileInput = document.getElementById('fileInput');
         const previewContainer = document.getElementById('previewContainer');
+        // Store selected files until send
+        let pendingFiles = [];
 
-        fileInput.addEventListener('change', handleFileUpload);
+        fileInput.addEventListener('change', handleFileSelect);
 
-        function handleFileUpload(event) {
+        function handleFileSelect(event) {
+          const files = Array.from(event.target.files || []);
+          if (files.length === 0) return;
           previewContainer.style.display = 'flex';
-          // previewContainer.style.border = '1px green solid';
-          previewContainer.innerHTML = '';
-
-          const files = event.target.files;
-          for (const file of files) {
+          // append previews and keep files in pendingFiles
+          files.forEach((file) => {
             const reader = new FileReader();
             reader.onload = function (e) {
+              const wrapper = document.createElement('div');
+              wrapper.style.position = 'relative';
               const previewImage = document.createElement('img');
               previewImage.className = 'previewImage';
               previewImage.src = e.target.result;
-              previewContainer.appendChild(previewImage);
+              const removeBtn = document.createElement('button');
+              removeBtn.textContent = '✕';
+              removeBtn.style.position = 'absolute';
+              removeBtn.style.top = '0';
+              removeBtn.style.right = '0';
+              removeBtn.style.background = 'rgba(0,0,0,0.6)';
+              removeBtn.style.color = 'white';
+              removeBtn.style.border = 'none';
+              removeBtn.style.borderRadius = '6px';
+              removeBtn.style.cursor = 'pointer';
+              removeBtn.addEventListener('click', () => {
+                pendingFiles = pendingFiles.filter((f) => f !== file);
+                previewContainer.removeChild(wrapper);
+                if (pendingFiles.length === 0) {
+                  previewContainer.style.display = 'none';
+                }
+              });
+              wrapper.appendChild(previewImage);
+              wrapper.appendChild(removeBtn);
+              previewContainer.appendChild(wrapper);
             };
             reader.readAsDataURL(file);
-          }
+            pendingFiles.push(file);
+          });
+
+          // expose pendingFiles for submit handler via element property
+          previewContainer._pendingFiles = pendingFiles;
         }
-      }
-      a();
+      })();
     </script>
     <script>
       const socket = io();
@@ -320,26 +354,46 @@
           LoadUser();
 
           if (queryUsername) {
-            form.addEventListener('submit', (e) => {
+            form.addEventListener('submit', async (e) => {
               e.preventDefault();
-              const textInput = input.value;
-              const textInpFile = document.getElementById('previewContainer').innerHTML;
-              if (textInpFile && textInput) {
+              const textInput = input.value.trim();
+              const previewContainer = document.getElementById('previewContainer');
+              const pendingFiles = previewContainer?._pendingFiles || [];
+
+              try {
+                let attachments = [];
+                if (pendingFiles && pendingFiles.length > 0) {
+                  const formData = new FormData();
+                  pendingFiles.forEach((f) => formData.append('images', f));
+
+                  // Upload to backend (/api/uploadImages)
+                  const res = await fetch('/api/uploadImages', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin',
+                  });
+                  const json = await res.json();
+                  attachments = (json.urls || []).map((u) => u.url);
+                }
+
+                // Emit AdminMsg with text and attachments array
                 socket.emit('AdminMsg', {
-                  text: `${textInpFile} <br/> ${textInput}`,
+                  text: textInput || '',
                   username: queryUsername,
+                  attachments,
                 });
+
+                // Clear UI
                 input.value = '';
-                document.getElementById('previewContainer').innerHTML = '';
+                if (previewContainer) {
+                  previewContainer.innerHTML = '';
+                  previewContainer._pendingFiles = [];
+                  previewContainer.style.display = 'none';
+                }
                 document.getElementById('fileInput').value = '';
-                return;
-              }
-              if (textInput) {
-                socket.emit('AdminMsg', { text: textInput, username: queryUsername });
-                input.value = '';
-                // if (textInpFile !== '') {
-                //   socket.emit('AdminMsg', { text: textInpFile, username });
-                // }
+              } catch (err) {
+                console.error('Upload error', err);
+                alert('Không thể tải ảnh lên. Vui lòng thử lại.');
               }
             });
             // form3.addEventListener('submit', (e) => {
@@ -354,11 +408,17 @@
               if (message.username == username || message.to == 'toAdmin') {
                 const listClass = ['flex', 'justify-center', 'py-5'];
                 const li = document.createElement('li');
+                // Build message body with text and attachments
+                const attachmentsHtml = (message.attachments || [])
+                  .map((url) => `<img src="${url}" style="width:60px;height:60px;object-fit:cover;margin:4px;border-radius:8px;"/>`)
+                  .join('');
+
                 if (message.to !== 'toAdmin') {
                   li.classList.add(...listClass, 'bg-[#444654]');
                   li.innerHTML = /*html*/ `<div class="w-[70%] flex gap-x-4 items-center justify-between">
                         <div class="flex-1">
-                          <span class='text-white text-right flex justify-end'>${message.text}</span>
+                          <div class='text-white text-right flex justify-end'>${message.text || ''}</div>
+                          <div class='mt-2 flex justify-end'>${attachmentsHtml}</div>
                         </div>
                         <img class='w-9 h-9' src="https://ui-avatars.com/api/?name=${message.username}"/>
                         </div>`;
@@ -367,12 +427,37 @@
                   li.innerHTML = /*html*/ `<div class="w-[70%] flex gap-x-4 items-center justify-between">
                         <img class='w-9 h-9' src="https://png.pngtree.com/png-clipart/20230409/original/pngtree-admin-and-customer-service-job-vacancies-png-image_9041264.png"/>
                         <div class="flex-1">
-                          <span class='text-white '>${message.text}</span>
+                          <div class='text-white '>${message.text || ''}</div>
+                          <div class='mt-2 flex'>${attachmentsHtml}</div>
                         </div>
                         </div>`;
                 }
                 messagesList.appendChild(li);
                 messagesList.scrollTop = messagesList.scrollHeight;
+              }
+            });
+
+            // Delegated click handler to open images in modal
+            messagesList.addEventListener('click', (ev) => {
+              const target = ev.target;
+              if (target && target.tagName === 'IMG') {
+                const src = target.getAttribute('src');
+                if (src) {
+                  const modal = document.getElementById('imageModal');
+                  const modalImg = document.getElementById('imageModalImg');
+                  const backdrop = document.getElementById('imageModalBackdrop');
+                  const closeBtn = document.getElementById('imageModalClose');
+                  modalImg.setAttribute('src', src);
+                  modal.style.display = 'flex';
+
+                  const closeModal = () => {
+                    modal.style.display = 'none';
+                    modalImg.setAttribute('src', '');
+                  };
+
+                  backdrop.onclick = closeModal;
+                  closeBtn.onclick = closeModal;
+                }
               }
             });
           }

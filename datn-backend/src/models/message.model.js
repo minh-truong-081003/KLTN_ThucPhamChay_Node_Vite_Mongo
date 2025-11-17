@@ -5,8 +5,8 @@ const messageSchema = new mongoose.Schema(
   {
     text: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     },
     sender: {
       type: mongoose.Schema.Types.ObjectId,

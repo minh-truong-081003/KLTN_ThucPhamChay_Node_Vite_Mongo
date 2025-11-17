@@ -48,14 +48,14 @@ const Popup = () => {
             <Link to='/products'>
               <img
                 className='w-full'
-                src='https://bizweb.dktcdn.net/100/455/873/themes/863314/assets/bn_pr_4.png?1724922962616'
+                src='https://i.pinimg.com/736x/8b/ed/24/8bed24afc34de86b7d1988f940adf8a4.jpg?1724922962616'
                 alt=''
               />
             </Link>
             <Link to='/products'>
               <img
                 className='w-full'
-                src='https://bizweb.dktcdn.net/100/455/873/themes/863314/assets/bn_pr_5.png?1724922962616'
+                src='https://i.pinimg.com/736x/41/74/0a/41740a257015a8fcee1241a629066c3b.jpg?1724922962616'
                 alt=''
               />
             </Link>

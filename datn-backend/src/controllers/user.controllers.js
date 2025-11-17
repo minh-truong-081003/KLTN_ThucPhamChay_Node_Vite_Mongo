@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { sendEmail } from '../configs/sendMail.js';
+import redisClient from '../configs/redis.config.js';
 import { signupSchema } from '../validates/auth.js';
 import slugify from 'slugify';
 import { userValidate } from '../validates/user.validate.js';
@@ -83,20 +84,32 @@ export const userController = {
           username: req.body.username,
           account: req.body.account,
           password: hashedPassword,
-          // role: 'customer',
+          isVerified: false,
           avatar: `https://ui-avatars.com/api/?name=${req.body.username}`,
           gender: 'male',
           birthday: new Date('1999-01-01'),
         });
 
-        return res.status(201).json({
-          message: 'Đăng ký tài khoản thành công',
+        // Generate OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
+        // Store OTP in Redis with expiration (5 minutes)
+        await redisClient.setEx(`otp:${req.body.account}`, 300, otp);
+
+        // Send OTP email
+        const data = {
+          to: req.body.account,
+          subject: 'Mã OTP xác thực đăng ký tài khoản',
+          html: `<p>Mã OTP của bạn là: <strong>${otp}</strong></p><p>Mã này sẽ hết hạn sau 5 phút.</p>`,
+        };
+        await sendEmail(data);
+
+        return res.status(201).json({
+          message: 'Đăng ký tài khoản thành công. Vui lòng kiểm tra email để xác thực.',
           user: {
             _id: user._id,
             username: user.username,
             account: user.account,
-            address: user.address,
           },
         });
       } else {
@@ -110,6 +123,82 @@ export const userController = {
       });
     }
   },
+  // verify OTP
+  verifyOtp: async (req, res) => {
+    try {
+      const { account, otp } = req.body;
+
+      const storedOtp = await redisClient.get(`otp:${account}`);
+
+      if (!storedOtp) {
+        return res.status(400).json({
+          message: 'Mã OTP đã hết hạn hoặc không tồn tại.',
+        });
+      }
+
+      if (storedOtp !== otp) {
+        return res.status(400).json({
+          message: 'Mã OTP không đúng.',
+        });
+      }
+
+      // Update user isVerified
+      await User.findOneAndUpdate({ account }, { isVerified: true });
+
+      // Delete OTP from Redis
+      await redisClient.del(`otp:${account}`);
+
+      return res.status(200).json({
+        message: 'Xác thực thành công.',
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  },
+  // resend OTP
+  resendOtp: async (req, res) => {
+    try {
+      const { account } = req.body;
+
+      const user = await User.findOne({ account });
+
+      if (!user) {
+        return res.status(400).json({
+          message: 'Tài khoản không tồn tại.',
+        });
+      }
+
+      if (user.isVerified) {
+        return res.status(400).json({
+          message: 'Tài khoản đã được xác thực.',
+        });
+      }
+
+      // Generate new OTP
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+      // Store OTP in Redis with expiration (5 minutes)
+      await redisClient.setEx(`otp:${account}`, 300, otp);
+
+      // Send OTP email
+      const data = {
+        to: account,
+        subject: 'Mã OTP xác thực đăng ký tài khoản',
+        html: `<p>Mã OTP mới của bạn là: <strong>${otp}</strong></p><p>Mã này sẽ hết hạn sau 5 phút.</p>`,
+      };
+      await sendEmail(data);
+
+      return res.status(200).json({
+        message: 'Mã OTP đã được gửi lại.',
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  },
   // login
   login: async (req, res) => {
     try {
@@ -120,6 +209,9 @@ export const userController = {
       ]);
       if (!findUser) {
         return res.status(400).json({ message: 'Tài khoản không tồn tại' });
+      }
+      if (!findUser.isVerified) {
+        return res.status(400).json({ message: 'Tài khoản chưa được xác thực. Vui lòng kiểm tra email để xác thực.' });
       }
       if (findUser.status !== 'active') {
         return res

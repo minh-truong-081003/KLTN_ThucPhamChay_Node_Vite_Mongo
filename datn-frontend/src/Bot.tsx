@@ -11,8 +11,28 @@ const Bot = () => {
 
   const sendMessage = async () => {
     try {
-      const response = await fetch(`http://localhost:3333/ask?query=${inputMessage}`)
-      const data = await response.json()
+      const url = `http://localhost:3333/ask?query=${encodeURIComponent(inputMessage)}`
+      const response = await fetch(url)
+
+      if (!response.ok) {
+        const text = await response.text().catch(() => null)
+        console.error('Bot /ask non-OK response', response.status, text)
+        setMessages((prevMessages) => [...prevMessages, { user: inputMessage, bot: 'Đã có lỗi khi gọi bot (mã ' + response.status + ')' }])
+        setInputMessage('')
+        return
+      }
+
+      let data
+      try {
+        data = await response.json()
+      } catch (err) {
+        const text = await response.text().catch(() => null)
+        console.error('Bot /ask returned non-JSON body', text)
+        setMessages((prevMessages) => [...prevMessages, { user: inputMessage, bot: text || 'Lỗi: phản hồi không hợp lệ' }])
+        setInputMessage('')
+        return
+      }
+
       setMessages((prevMessages) => [...prevMessages, { user: inputMessage, bot: data.answer }])
       setInputMessage('')
     } catch (error) {

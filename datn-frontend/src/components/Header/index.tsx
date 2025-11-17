@@ -161,7 +161,7 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
         <div ref={searchRef} className="relative w-full">
           <div className="relative">
             <input
-              className="p-0 outline-none block focus:bg-gray-50 w-full bg-[#fbfbfb] h-[32px] text-[14px] rounded-2xl focus:outline-none border-none pl-10 pr-10 lg:mx-auto lg:w-[35rem] border focus:ring-0"
+              className="p-0 outline-none block focus:bg-gray-50 w-full bg-[#fbfbfb] h-[32px] text-[14px] rounded-2xl focus:outline-none border-none pl-10 pr-10 lg:mx-auto lg:w-[28rem] border focus:ring-0"
               placeholder="Tìm kiếm sản phẩm..."
               {...register('name')}
               autoComplete="off"
@@ -184,7 +184,7 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
 
           {/* Dropdown Search Results */}
           {showDropdown && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-2xl border border-gray-200 max-h-[400px] overflow-y-auto z-50 lg:mx-auto lg:w-[35rem]">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-2xl border border-gray-200 max-h-[400px] overflow-y-auto z-50 lg:mx-auto lg:w-[28rem]">
               {isSearching ? (
                 <div className="p-4 text-center text-gray-500">
                   <div className="animate-spin h-6 w-6 border-2 border-[#d3b673] border-t-transparent rounded-full mx-auto"></div>

@@ -17,16 +17,21 @@ export const ChatInputBox = ({ sendANewMessage }: ChatInputBoxProps) => {
 
   const doSendMessage = async () => {
     if (newMessage && newMessage.length > 0) {
-      /* call api */
-      const data = await sendMessage(newMessage, userInfo ? userInfo._id : '')
-      if (data) {
-        const newMessageUser: Message = {
-          sentAt: new Date(),
-          sentBy: (userInfo as IUser)?.username || 'customer',
-          isChatOwner: true,
-          text: newMessage
-        }
-        sendANewMessage(newMessageUser)
+      // Hiển thị tin nhắn của người dùng ngay lập tức để giảm cảm giác lag
+      const newMessageUser: Message = {
+        sentAt: new Date(),
+        sentBy: (userInfo as IUser)?.username || 'customer',
+        isChatOwner: true,
+        text: newMessage
+      }
+      sendANewMessage(newMessageUser)
+
+      // Clear input ngay để cảm giác mượt khi người dùng nhấn Enter
+      setNewMessage('')
+
+      // Gọi API bất đồng bộ — khi có phản hồi mới đẩy bot message vào
+      try {
+        const data = await sendMessage(newMessage, userInfo ? userInfo._id : '')
         const newMessageBot: Message = {
           sentAt: new Date(),
           sentBy: 'Tôi là bot',
@@ -34,8 +39,16 @@ export const ChatInputBox = ({ sendANewMessage }: ChatInputBoxProps) => {
           text: data?.answer || 'Chúng tôi sẽ liên lạc với bạn sớm nhất có thể'
         }
         sendANewMessage(newMessageBot)
+      } catch (err) {
+        // Nếu lỗi, gửi tin nhắn lỗi nhẹ nhàng
+        const errorBot: Message = {
+          sentAt: new Date(),
+          sentBy: 'Tôi là bot',
+          isChatOwner: false,
+          text: 'Có lỗi khi gửi tin nhắn. Vui lòng thử lại.'
+        }
+        sendANewMessage(errorBot)
       }
-      setNewMessage('')
     }
   }
 

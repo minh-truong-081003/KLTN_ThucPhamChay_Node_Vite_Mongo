@@ -21,6 +21,7 @@ import ProductsPage from './pages/Products/Products'
 import ResetForgotPassword from './pages/Forgot-password/ResetForgotPassword'
 import Signin from './pages/Sign-in/Signin'
 import Signup from './pages/Sign-up/Signup'
+import VerifyOtp from './pages/Verify-otp/VerifyOtp'
 import AboutPage from './pages/About/AboutPage'
 import PaymentMethodsPage from './pages/Policy/PaymentMethodsPage'
 import ShippingPolicyPage from './pages/Policy/ShippingPolicyPage'
@@ -39,6 +40,10 @@ const routes = createBrowserRouter([
   {
     path: '/signup',
     element: <GuardSign JSX={Signup} />
+  },
+  {
+    path: '/verify-otp',
+    element: <VerifyOtp />
   },
   {
     path: '/forgot-password',

@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+dotenv.config();
 import { errHandler, notFound } from './middlewares/errhandle.js';
 import Coins from './models/coin.js';
 import PassportRoutes from './routes/passport.routes.js';
@@ -29,8 +30,6 @@ import fs from 'fs';
 // import Order from './models/order.model.js';
 
 //lấy  jwt
-
-dotenv.config();
 
 /* config */
 

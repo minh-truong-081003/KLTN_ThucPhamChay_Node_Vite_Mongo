@@ -3,7 +3,7 @@ import { Register, RegisterSchema } from '../../validate/Form'
 
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useRegisterMutation } from '../../api/Auth'
@@ -12,6 +12,7 @@ import Loader from '../../components/Loader'
 
 const Signup = () => {
   const [registerUser, { isSuccess }] = useRegisterMutation()
+  const [registeredAccount, setRegisteredAccount] = useState<string>('')
   const {
     register,
     handleSubmit,
@@ -23,19 +24,20 @@ const Signup = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isSuccess) {
-      navigate('/signin')
+    if (isSuccess && registeredAccount) {
+      navigate('/verify-otp', { state: { account: registeredAccount } })
     }
   })
 
   const onRegister = (registerData: any) => {
+    setRegisteredAccount(registerData.account)
     registerUser(registerData).then((data: any) => {
       if (data.error) {
         return toast.error(data.error.data.message, {
           position: toast.POSITION.TOP_RIGHT
         })
       } else {
-        return toast.success('Register Success', {
+        return toast.success('Đăng ký thành công. Vui lòng kiểm tra email để xác thực.', {
           position: toast.POSITION.TOP_RIGHT
         })
       }

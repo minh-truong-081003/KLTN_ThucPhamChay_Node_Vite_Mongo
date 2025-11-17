@@ -1,4 +1,4 @@
-const manager = require('./more.js');
+module.exports.registerStaticIntents = async function registerStaticIntents(manager) {
 //
 const axios = require('axios');
 const crypto = require('crypto');
@@ -484,8 +484,8 @@ axios
     manager.addAnswer('vi', 'Products', '🌿 Thực đơn chay hôm nay có mấy món này bạn nhé:\n' + AllProduct);
     manager.addAnswer('vi', 'Products', '💚 Shop có các món chay tươi ngon này, bạn tham khảo nha:\n' + AllProduct);
 
-    manager.save();
-    manager.train();
+    // manager.save();
+    // manager.train();
   })
   .catch((error) => {
     console.error('Lỗi khi truy vấn API:', error);
@@ -573,8 +573,8 @@ axios
   .get('http://localhost:3333/checkouts')
   .then((response) => {
     console.log('✅ Đã tải ' + response['data'].length + ' đơn hàng để training bot');
-    manager.save();
-    manager.train();
+    // manager.save();
+    // manager.train();
   })
   .catch((error) => {
     console.error('❌ Lỗi khi tải đơn hàng:', error);
@@ -727,6 +727,5 @@ manager.addAnswer('vi', 'combo_set', 'Set meal chay gồm: Món chính + canh + 
 manager.addAnswer('vi', 'combo_set', 'Gói trọn gói tiết kiệm: Combo A (phở+nem+nước) 60k, Combo B (cơm+canh+salad) 65k, Combo C (lẩu 2 người) 150k 💰');
 manager.addAnswer('vi', 'combo_set', 'Set cặp đôi romantic: 2 món chính + 2 nước ép + tráng miệng chỉ 120k! 💑 Phù hợp date hoặc ăn gia đình!');
 
-manager.save();
-
-module.exports = manager;
+// End of static intent registration function
+};

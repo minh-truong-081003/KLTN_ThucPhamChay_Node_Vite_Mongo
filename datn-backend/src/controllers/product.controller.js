@@ -149,7 +149,7 @@ export const ProductController = {
   getAllProducts: async (req, res, next) => {
     try {
       const { _page = 1, _limit = 10, q = '', c = '', priceRange = '', rating = '', sortBy = '' } = req.query;
-      console.log('🔍 Filter params:', { _page, _limit, q, c, priceRange, rating, sortBy });
+      // console.log('🔍 Filter params:', { _page, _limit, q, c, priceRange, rating, sortBy });
       
       let query = { $and: [{ is_deleted: false }, { is_active: true }] };
       

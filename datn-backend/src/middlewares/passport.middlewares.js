@@ -17,6 +17,12 @@ const passportMiddleware = {
           const user = await User.findOne({ googleId: profile.id });
 
           if (!user) {
+            // Check if account already exists from email registration
+            const existingUser = await User.findOne({ account: profile.emails[0].value });
+            if (existingUser && !existingUser.googleId) {
+              return cb(null, false, { message: 'Tài khoản đã đăng ký bằng email.' });
+            }
+
             const newUser = await User.create({
               googleId: profile.id,
               username: profile.name.givenName,
@@ -24,6 +30,7 @@ const passportMiddleware = {
               account: profile.emails[0].value,
               role: 'customer',
               gender: 'male',
+              isVerified: true, // Google login is verified
             });
             return cb(null, newUser);
           }

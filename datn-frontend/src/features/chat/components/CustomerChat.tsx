@@ -3,6 +3,7 @@ import { messageService, IMessage, IConversation } from '../../../api/message.se
 import { useAppSelector } from '../../../store/hooks'
 import { socket } from '../../../socket'
 import { message as antdMessage } from 'antd'
+import ImageModal from './ImageModal'
 
 interface CustomerChatProps {
   onClose?: () => void
@@ -16,7 +17,12 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
   const [loading, setLoading] = useState(false)
   const [sending, setSending] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalImage, setModalImage] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const scrollToBottom = () => {
@@ -125,13 +131,13 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!inputText.trim() || !conversation?._id) return
+    if (!conversation?._id) return
 
     setSending(true)
     try {
       await messageService.sendMessage({
         conversationId: conversation._id,
-        text: inputText.trim()
+        text: inputText.trim() || ' '
       })
       setInputText('')
       // Stop typing indicator
@@ -142,6 +148,95 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
     } finally {
       setSending(false)
     }
+  }
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files || files.length === 0 || !conversation?._id) return
+
+    // Helper: resize image on client to improve upload speed
+    const resizeImage = (file: File, maxWidth = 1200, quality = 0.8): Promise<Blob> => {
+      return new Promise((resolve) => {
+        if (!file.type.startsWith('image/')) return resolve(file)
+        // If already small, skip resizing
+        if (file.size <= 200 * 1024) return resolve(file)
+
+        const img = new Image()
+        const reader = new FileReader()
+        reader.onload = (ev) => {
+          img.src = ev.target?.result as string
+        }
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          const ratio = img.width / img.height
+          const width = Math.min(maxWidth, img.width)
+          const height = Math.round(width / ratio)
+          canvas.width = width
+          canvas.height = height
+          const ctx = canvas.getContext('2d')
+          if (!ctx) return resolve(file)
+          ctx.drawImage(img, 0, 0, width, height)
+          canvas.toBlob((blob) => {
+            if (blob) resolve(blob)
+            else resolve(file)
+          }, 'image/jpeg', quality)
+        }
+        reader.readAsDataURL(file)
+      })
+    }
+
+    const fileArray = Array.from(files)
+    try {
+      setUploading(true)
+      setUploadProgress(0)
+
+      const processedFiles = await Promise.all(
+        fileArray.map(async (file) => {
+          try {
+            const blob = await resizeImage(file)
+            // If resize returned the original File (not a Blob) keep it
+            if (blob instanceof File) return blob
+            return new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), { type: blob.type })
+          } catch (err) {
+            return file
+          }
+        })
+      )
+
+      const formData = new FormData()
+      processedFiles.forEach((f) => formData.append('images', f))
+
+      const uploadRes = await messageService.uploadImages(formData, (progressEvent: any) => {
+        if (progressEvent?.total) {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+          setUploadProgress(percent)
+        }
+      })
+
+      const uploaded = uploadRes?.urls || []
+      const urls = uploaded.map((u: any) => u.url)
+
+      if (urls.length > 0) {
+        await messageService.sendMessage({
+          conversationId: conversation._id,
+          text: ' ',
+          attachments: urls,
+        })
+      }
+    } catch (error) {
+      console.error('Error uploading images:', error)
+      antdMessage.error('Không thể tải ảnh lên')
+    } finally {
+      setUploading(false)
+      setUploadProgress(null)
+      // reset input
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
+
+  const openImage = (url: string) => {
+    setModalImage(url)
+    setModalVisible(true)
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -241,6 +336,19 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
                         }`}
                       >
                         <p className='whitespace-pre-wrap break-words text-sm'>{message.text}</p>
+                        {message.attachments && message.attachments.length > 0 && (
+                          <div className='mt-2 flex flex-wrap gap-2'>
+                            {message.attachments.map((att: string, idx: number) => (
+                              <img
+                                key={idx}
+                                src={att}
+                                alt={`attachment-${idx}`}
+                                onClick={() => openImage(att)}
+                                className='h-28 w-28 cursor-pointer rounded-md object-cover shadow-sm'
+                              />
+                            ))}
+                          </div>
+                        )}
                       </div>
                       <span
                         className={`text-xs text-gray-400 ${isMyMessage ? 'text-right' : 'text-left'}`}
@@ -277,7 +385,34 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
 
       {/* Input */}
       <div className='border-t bg-white p-4'>
-        <form onSubmit={handleSendMessage} className='flex gap-2'>
+        <form onSubmit={handleSendMessage} className='flex gap-2 items-end'>
+          <input ref={fileInputRef} type='file' accept='image/*' multiple onChange={handleFileChange} className='hidden' />
+          <button
+            type='button'
+            onClick={() => fileInputRef.current?.click()}
+            title='Gửi ảnh'
+            disabled={uploading}
+            className='mr-1 flex items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-gray-700 hover:bg-gray-50 disabled:opacity-50'
+          >
+            {uploading ? (
+              <span className='text-sm'>Đang tải{uploadProgress ? ` ${uploadProgress}%` : '...'}</span>
+            ) : (
+              // image SVG icon
+              <svg xmlns='http://www.w3.org/2000/svg' className='h-5 w-5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                <rect x='3' y='3' width='18' height='18' rx='2' ry='2' className='stroke-current' />
+                <circle cx='8.5' cy='8.5' r='1.5' className='stroke-current' />
+                <path d='M21 15l-5-5L5 21' className='stroke-current' strokeLinecap='round' strokeLinejoin='round' />
+              </svg>
+            )}
+          </button>
+          {uploadProgress !== null && (
+            <div className='mr-2 flex items-center'>
+              <div className='h-2 w-20 overflow-hidden rounded bg-gray-200'>
+                <div style={{ width: `${uploadProgress}%` }} className='h-full bg-[#D7B978] transition-all' />
+              </div>
+              <span className='ml-2 text-xs text-gray-600'>{uploadProgress}%</span>
+            </div>
+          )}
           <textarea
             value={inputText}
             onChange={handleInputChange}
@@ -303,6 +438,7 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
           </button>
         </form>
       </div>
+      <ImageModal open={modalVisible} imageUrl={modalImage} onClose={() => setModalVisible(false)} />
     </div>
   )
 }

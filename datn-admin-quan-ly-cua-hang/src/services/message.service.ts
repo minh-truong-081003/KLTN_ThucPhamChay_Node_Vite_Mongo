@@ -88,6 +88,15 @@ class MessageService {
     return response.data
   }
 
+  // Upload images (multipart/form-data)
+  async uploadImages(formData: FormData, onUploadProgress?: (progressEvent: any) => void) {
+    const response = await http.post('/uploadImages', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress,
+    })
+    return response.data
+  }
+
   // Lấy danh sách tin nhắn của một conversation
   async getMessages(conversationId: string, params?: { page?: number; limit?: number }) {
     const response = await http.get(`/messages/conversation/${conversationId}/messages`, {

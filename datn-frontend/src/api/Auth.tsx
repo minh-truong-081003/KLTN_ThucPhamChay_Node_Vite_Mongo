@@ -54,6 +54,22 @@ export const Auth = createApi({
         credentials: 'include'
       })
     }),
+    verifyOtp: builder.mutation({
+      query: (data: { account: string; otp: string }) => ({
+        url: '/api/verify-otp',
+        body: data,
+        method: 'POST',
+        credentials: 'include'
+      })
+    }),
+    resendOtp: builder.mutation({
+      query: (data: { account: string }) => ({
+        url: '/api/resend-otp',
+        body: data,
+        method: 'POST',
+        credentials: 'include'
+      })
+    }),
     login: builder.mutation<responseUser, Login>({
       query: ({ ...rest }) => ({
         url: '/api/login',
@@ -104,6 +120,8 @@ export const Auth = createApi({
 
 export const {
   useRegisterMutation,
+  useVerifyOtpMutation,
+  useResendOtpMutation,
   useResetForgotPasswordMutation,
   useLoginMutation,
   useLogoutMutation,

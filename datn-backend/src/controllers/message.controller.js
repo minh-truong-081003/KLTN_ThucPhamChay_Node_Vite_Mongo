@@ -56,10 +56,13 @@ export const sendMessage = async (req, res) => {
     const senderId = req.user._id;
     const senderRole = req.user.role || 'user';
 
-    if (!conversationId || !text) {
+    // Require conversationId and at least text or attachments
+    const hasText = typeof text === 'string' && text.trim().length > 0;
+    const hasAttachments = Array.isArray(attachments) && attachments.length > 0;
+    if (!conversationId || (!hasText && !hasAttachments)) {
       return res.status(400).json({
         success: false,
-        message: 'Thiếu thông tin cần thiết',
+        message: 'Thiếu thông tin cần thiết: conversationId hoặc nội dung/đính kèm',
       });
     }
 
@@ -129,14 +132,14 @@ export const sendMessage = async (req, res) => {
       // Convert message to plain object để emit
       const messageData = message.toObject();
       
-      console.log('🚀 Emitting new-message to conversation:', conversationId);
-      console.log('📦 Message data:', { 
-        id: messageData._id, 
-        text: messageData.text, 
-        senderModel: messageData.senderModel,
-        sender: messageData.sender,
-        unreadCount: conversation.unreadCount
-      });
+      // console.log('🚀 Emitting new-message to conversation:', conversationId);
+      // console.log('📦 Message data:', { 
+      //   id: messageData._id, 
+      //   text: messageData.text, 
+      //   senderModel: messageData.senderModel,
+      //   sender: messageData.sender,
+      //   unreadCount: conversation.unreadCount
+      // });
 
       // Emit tới conversation room (cho cả 2 bên)
       global.io.to(conversationId).emit('new-message', {
@@ -528,11 +531,11 @@ export const assignStaffToConversation = async (req, res) => {
 // Lấy số lượng tin nhắn chưa đọc
 export const getUnreadCount = async (req, res) => {
   try {
-    console.log('🔍 getUnreadCount - req.user:', req.user);
+    // console.log('🔍 getUnreadCount - req.user:', req.user);
     const userId = req.user._id;
     // Xử lý role có thể là string hoặc object
     const userRole = typeof req.user.role === 'object' ? req.user.role?.name : req.user.role;
-    console.log('🔍 getUnreadCount - userRole:', userRole);
+    // console.log('🔍 getUnreadCount - userRole:', userRole);
 
     let unreadCount = 0;
 

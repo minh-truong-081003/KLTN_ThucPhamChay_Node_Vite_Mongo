@@ -3,8 +3,9 @@ import { Button, Input } from '../../components'
 import { Login, LoginSchema } from '../../validate/Form'
 
 import CardSigin from '../../components/CardSignin'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useLoginMutation } from '../../api/Auth'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -18,6 +19,8 @@ const Signin = () => {
   const [loginUser] = useLoginMutation()
   const [addCartDbFn] = useCreateCartDBMutation()
   const { items } = useAppSelector((state: RootState) => state.persistedReducer.cart)
+  const navigate = useNavigate()
+  const location = useLocation()
   const {
     register,
     handleSubmit,
@@ -26,10 +29,25 @@ const Signin = () => {
     mode: 'onChange',
     resolver: yupResolver(LoginSchema)
   })
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search)
+    const error = searchParams.get('error')
+    if (error) {
+      toast.error(error, {
+        position: toast.POSITION.TOP_RIGHT
+      })
+    }
+  }, [location])
   const onLogin = async (loginData: Login) => {
     await loginUser(loginData).then((data: any) => {
       if (data.error) {
-        return toast.error(data.error.data.message, {
+        const errorMessage = data.error.data.message
+        if (errorMessage === 'Tài khoản chưa được xác thực. Vui lòng kiểm tra email để xác thực.') {
+          navigate('/verify-otp', { state: { account: loginData.account } })
+          return
+        }
+        return toast.error(errorMessage, {
           position: toast.POSITION.TOP_RIGHT
         })
       } else {

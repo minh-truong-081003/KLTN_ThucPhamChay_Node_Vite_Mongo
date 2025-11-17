@@ -18,6 +18,13 @@ const ChatRoom: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [isTyping, setIsTyping] = useState(false)
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const [pendingFiles, setPendingFiles] = useState<File[]>([])
+  const [previews, setPreviews] = useState<string[]>([])
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalImage, setModalImage] = useState<string | null>(null)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -157,16 +164,84 @@ const ChatRoom: React.FC = () => {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    if (!inputText.trim() || !conversationId) return
+    if (!conversationId) return
 
     setSending(true)
     try {
+      // If there are pending files, upload them first
+      let attachments: string[] | undefined = undefined
+      if (pendingFiles && pendingFiles.length > 0) {
+        setUploading(true)
+        setUploadProgress(0)
+
+        // client-side resize helper
+        const resizeImage = (file: File, maxWidth = 1200, quality = 0.8): Promise<Blob | File> => {
+          return new Promise((resolve) => {
+            if (!file.type.startsWith('image/')) return resolve(file)
+            if (file.size <= 200 * 1024) return resolve(file)
+            const img = new Image()
+            const reader = new FileReader()
+            reader.onload = (ev) => { img.src = ev.target?.result as string }
+            img.onload = () => {
+              const canvas = document.createElement('canvas')
+              const ratio = img.width / img.height
+              const width = Math.min(maxWidth, img.width)
+              const height = Math.round(width / ratio)
+              canvas.width = width
+              canvas.height = height
+              const ctx = canvas.getContext('2d')
+              if (!ctx) return resolve(file)
+              ctx.drawImage(img, 0, 0, width, height)
+              canvas.toBlob((blob) => {
+                if (blob) resolve(blob)
+                else resolve(file)
+              }, 'image/jpeg', quality)
+            }
+            reader.readAsDataURL(file)
+          })
+        }
+
+        const processedFiles = await Promise.all(pendingFiles.map(async (file) => {
+          try {
+            const result = await resizeImage(file)
+            if (result instanceof File) return result
+            return new File([result], file.name.replace(/\.[^/.]+$/, '.jpg'), { type: 'image/jpeg' })
+          } catch (err) {
+            return file
+          }
+        }))
+
+        const formData = new FormData()
+        processedFiles.forEach((f) => formData.append('images', f))
+
+        const uploadRes = await messageService.uploadImages(formData, (progressEvent: any) => {
+          if (progressEvent?.total) {
+            const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            setUploadProgress(percent)
+          }
+        })
+
+        const uploaded = uploadRes?.urls || []
+        attachments = uploaded.map((u: any) => u.url)
+      }
+
+      // Only restrict empty message if no attachments either
+      if (!inputText.trim() && (!attachments || attachments.length === 0)) {
+        setSending(false)
+        setUploading(false)
+        return
+      }
+
       await messageService.sendMessage({
         conversationId,
-        text: inputText.trim()
+        text: inputText.trim() || ' ',
+        attachments,
       })
+
       setInputText('')
+      setPendingFiles([])
+      setPreviews([])
+      if (fileInputRef.current) fileInputRef.current.value = ''
       // Stop typing indicator
       socket.emit('typing:stop', { conversationId })
     } catch (error) {
@@ -174,8 +249,54 @@ const ChatRoom: React.FC = () => {
       antdMessage.error('Không thể gửi tin nhắn')
     } finally {
       setSending(false)
+      setUploading(false)
+      setUploadProgress(null)
     }
   }
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+    const arr = Array.from(files)
+    setPendingFiles((prev) => [...prev, ...arr])
+
+    // create previews
+    const newPreviews = arr.map((f) => URL.createObjectURL(f))
+    setPreviews((prev) => [...prev, ...newPreviews])
+  }
+
+  const removePreview = (index: number) => {
+    setPreviews((prev) => {
+      const url = prev[index]
+      try {
+        if (url) {
+          URL.revokeObjectURL(url)
+        }
+      } catch (e) {
+        console.warn('Failed to revoke object URL', e)
+      }
+      return prev.filter((_, i) => i !== index)
+    })
+    setPendingFiles((prev) => prev.filter((_, i) => i !== index))
+  }
+
+  const openImage = (url: string) => {
+    setModalImage(url)
+    setModalVisible(true)
+  }
+
+  useEffect(() => {
+    return () => {
+      // cleanup object URLs
+      previews.forEach((p) => {
+        try {
+          URL.revokeObjectURL(p)
+        } catch (e) {
+          console.warn('Failed to revoke object URL', e)
+        }
+      })
+    }
+  }, [previews])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value)
@@ -331,6 +452,19 @@ const ChatRoom: React.FC = () => {
                         style={isMyMessage ? { backgroundColor: '#2563eb', color: 'white' } : undefined}
                       >
                         <p className='whitespace-pre-wrap break-words'>{message.text}</p>
+                        {message.attachments && message.attachments.length > 0 && (
+                          <div className='mt-2 flex flex-wrap gap-2'>
+                            {message.attachments.map((att: string, idx: number) => (
+                              <img
+                                key={idx}
+                                src={att}
+                                alt={`att-${idx}`}
+                                className='h-24 w-24 cursor-pointer rounded-md object-cover shadow-sm'
+                                onClick={() => openImage(att)}
+                              />
+                            ))}
+                          </div>
+                        )}
                       </div>
                       <span
                         className={`text-xs ${
@@ -363,9 +497,47 @@ const ChatRoom: React.FC = () => {
         )}
       </div>
 
+      {/* Previews of selected images (before send) */}
+      {previews.length > 0 && (
+        <div className='px-4 py-2 border-t border-gray-200 bg-white dark:bg-slate-800'>
+          <div className='flex gap-2 overflow-x-auto py-2'>
+            {previews.map((p, idx) => (
+              <div key={p} className='relative'>
+                <img src={p} alt={`preview-${idx}`} className='h-20 w-20 rounded-md object-cover shadow' />
+                <button
+                  onClick={() => removePreview(idx)}
+                  className='absolute -top-1 -right-1 rounded-full bg-white p-1 text-sm shadow'
+                  title='Xóa'
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Input */}
       <div className='border-t border-gray-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-800'>
         <form onSubmit={handleSendMessage} className='flex items-end gap-2'>
+          <input ref={fileInputRef} type='file' accept='image/*' multiple onChange={handleFileSelect} className='hidden' />
+          <button
+            type='button'
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
+            className='mr-1 flex h-9 w-9 items-center justify-center rounded-full border bg-white text-gray-700'
+            title='Gửi ảnh'
+          >
+            {uploading ? (
+              <span className='text-xs'>{uploadProgress ? `${uploadProgress}%` : 'Đang'}</span>
+            ) : (
+              <svg xmlns='http://www.w3.org/2000/svg' className='h-5 w-5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+                <rect x='3' y='3' width='18' height='18' rx='2' ry='2' />
+                <circle cx='8.5' cy='8.5' r='1.5' />
+                <path d='M21 15l-5-5L5 21' strokeLinecap='round' strokeLinejoin='round' />
+              </svg>
+            )}
+          </button>
           <textarea
             value={inputText}
             onChange={handleInputChange}
@@ -382,7 +554,7 @@ const ChatRoom: React.FC = () => {
           />
           <button
             type='submit'
-            disabled={!inputText.trim() || sending}
+            disabled={sending || (!inputText.trim() && pendingFiles.length === 0)}
             className='flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50'
             title='Gửi (Enter)'
           >
@@ -400,6 +572,17 @@ const ChatRoom: React.FC = () => {
         </form>
         <p className='mt-1 text-xs text-gray-400'>Nhấn Enter để gửi, Shift+Enter để xuống dòng</p>
       </div>
+
+      {/* Image modal/lightbox */}
+      {modalVisible && modalImage && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center'>
+          <div className='absolute inset-0 bg-black/60' onClick={() => setModalVisible(false)} />
+          <div className='relative z-10 max-h-[90vh] max-w-[90vw]'>
+            <button onClick={() => setModalVisible(false)} className='absolute -top-8 right-0 z-20 rounded-full bg-white p-1 text-gray-700 shadow'>✕</button>
+            <img src={modalImage} alt='attachment' className='max-h-[90vh] max-w-[90vw] rounded-md object-contain' />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

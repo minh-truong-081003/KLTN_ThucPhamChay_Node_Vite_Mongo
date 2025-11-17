@@ -13,7 +13,7 @@ PassportRoutes.get('/google', passport.authenticate('google', { scope: ['profile
 
 PassportRoutes.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: Enviroment() + '/signin' }),
+  passport.authenticate('google', { failureRedirect: Enviroment() + '/signin?error=Tài khoản đã đăng ký bằng email.' }),
   function (req, res) {
     const { role } = req.user;
     if (role === 'customer') {

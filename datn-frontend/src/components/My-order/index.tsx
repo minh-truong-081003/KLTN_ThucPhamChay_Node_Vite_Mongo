@@ -147,32 +147,14 @@ const MyOrder = () => {
               <div className='top py-3 px-6 shadow rounded-md max-h-[250px] overflow-y-auto hidden-scroll-bar'>
                 {order.items.map((item: any) => (
                   <div key={item._id} className='item flex items-center mb-5'>
-                    <div className='left flex pr-4 flex-1'>
+                    <div className='left flex pr-4 flex-1 items-center'>
                       <div className='image w-[100px] h-[100px] shrink-0'>
                         <img className='w-full object-cover' src={item.image} alt='' />
                       </div>
-                      <div className='title pl-3 flex flex-col'>
-                        <h3 title={item?.product?.name} className='line-clamp-2 text-[16px] font-semibold uppercase '>
-                          {item?.product.name}
+                      <div className='title pl-3 flex flex-col justify-center'>
+                        <h3 title={item?.product?.name} className='truncate text-[16px] font-semibold text-[#333]'>
+                          {item?.product?.name || item?.product?.title || item?.name}
                         </h3>
-                        {/* <div className='category'>
-                          <span className='text-sm text-[#866312]'>Danh mục: Cà phê</span>
-                        </div> */}
-                        {/* <div>
-                          <div className='size'>
-                            <span className='text-sm text-[#866312]'>Size: {item.size.name}</span>
-                          </div>
-                          <div className={`topping ${item.toppings.length > 0 ? '' : 'hidden'}`}>
-                            <span className='text-sm text-[#866312]'>
-                              Toppings:{' '}
-                              {item.toppings.map((topping: ITopping) =>
-                                item.toppings[item.toppings.length - 1].name === topping.name
-                                  ? topping.name + '.'
-                                  : topping.name + ', '
-                              )}
-                            </span>
-                          </div>
-                        </div> */}
                         <div className='quantity'>x{item.quantity}</div>
                       </div>
                     </div>

@@ -101,30 +101,20 @@ const CardOrder = ({ product }: CardOrderProps) => {
       <div className='name font-semibold mb-2'>{product.name?.length > 35 ? product.name?.slice(0,35) +'...' :product.name }</div>
       {product?.items?.length > 0 &&
         product?.items?.map((item, index) => (
-          <div className='space-y-2' key={item._id || index}>
-            {/* {dataSize && (
-              <Select
-                defaultValue={item.size._id}
-                style={{ width: 120 }}
-                onChange={(value) => handleChange(value, item, index)}
-                className='text-sm text-[#adaeae] truncate'
-                options={dataSize.map((item) => ({
-                  value: item._id,
-                  label: item.name
-                }))}
-              />
-            )} */}
-
-            <div className='customize text-[#adaeae] text-xs truncate'>
-              <span className='overflow-hidden truncate'>
-                {item.toppings?.map((topping) => topping?.name).join(', ')}
-              </span>
-            </div>
-            <div className='flex items-center justify-between'>
-              <div className='total text-[#8a733f] text-sm'>
-                {formatCurrency(item.price)} x {item.quantity}
-              </div>
-              <div className='flex select-none items-center gap-1'>
+            <div className='space-y-2' key={item._id || index}>
+            <div className='flex items-center gap-3'>
+              <img src={item.image} alt={product.name} className='w-[60px] h-[60px] object-cover rounded' />
+              <div className='flex-1'>
+                <div className='customize text-[#adaeae] text-xs truncate'>
+                  <span className='overflow-hidden truncate'>
+                    {item.toppings?.map((topping) => topping?.name).join(', ')}
+                  </span>
+                </div>
+                <div className='flex items-center justify-between mt-1'>
+                  <div className='total text-[#8a733f] text-sm'>
+                    {formatCurrency(item.price)} x {item.quantity}
+                  </div>
+                  <div className='flex select-none items-center gap-1'>
                 <div
                   className={`quantity w-[24px] cursor-pointer h-[24px] bg-[#799dd9] rounded-full text-white flex justify-center items-center flex-shrink-0 ${
                     (updateCartDbRes.isLoading || deleteCartDBRes.isLoading) && 'cursor-no-drop'
@@ -253,9 +243,11 @@ const CardOrder = ({ product }: CardOrderProps) => {
                 >
                   <AiOutlinePlus className='text-sm' />
                 </div>
-              </div>
+                </div>
             </div>
           </div>
+        </div>
+      </div>
         ))}
     </div>
   )
