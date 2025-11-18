@@ -42,7 +42,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
     return `${price}`
   }
 
-  const applyFilters = (immediate = false) => {
+  const _applyFilters = (immediate = false) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
     }

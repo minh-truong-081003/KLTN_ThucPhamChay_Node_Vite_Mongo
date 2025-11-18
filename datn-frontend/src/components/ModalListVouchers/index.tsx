@@ -73,7 +73,7 @@ const ModalListVouchers = ({ isOpen, toggleModal, setVoucherChecked, totallPrice
   return (
     <Modal
       title='Mã khuyến mại hôm nay 😍'
-      destroyOnClose={true}
+      destroyOnHidden={true}
       open={isOpen}
       onOk={toggleModal}
       // style={{ top: 0 }}

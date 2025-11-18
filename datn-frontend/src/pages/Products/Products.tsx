@@ -31,7 +31,6 @@ const ProductsPage = () => {
       sortBy: queryConfig.sortBy || ''
     }
     
-    console.log('🔵 Frontend dispatching getAllProducts with:', params)
     dispatch(getAllProducts(params))
   }, [
     dispatch,

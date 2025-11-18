@@ -1,4 +1,4 @@
-import { FaBars, FaSearch, FaTimes } from 'react-icons/fa'
+import { FaBars, FaTimes } from 'react-icons/fa'
 import { useEffect, useRef, useState } from 'react'
 
 import { Auth } from '../../api/Auth'
@@ -8,7 +8,6 @@ import { RootState } from '../../store/store'
 import styles from './HeaderHomePage.module.scss'
 import { useGetAllBlogCategoryQuery } from '../../api/NewBlogs'
 import { useSelector } from 'react-redux'
-import { Tooltip } from 'flowbite-react'
 import Header from '../Header'
 
 const HeaderHomePage = () => {

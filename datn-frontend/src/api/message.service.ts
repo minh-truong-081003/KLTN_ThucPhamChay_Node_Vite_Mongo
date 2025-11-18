@@ -128,7 +128,8 @@ class MessageService {
   // Lấy số lượng tin nhắn chưa đọc
   async getUnreadCount() {
     const response = await http.get('/messages/unread-count')
-    return response.data
+    // Trả về toàn bộ response để caller có thể kiểm tra status hoặc cấu trúc dữ liệu
+    return response
   }
 
   // Xóa tin nhắn

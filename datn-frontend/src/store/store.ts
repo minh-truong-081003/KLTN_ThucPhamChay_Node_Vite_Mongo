@@ -95,7 +95,9 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      }
+      },
+      // Disable immutable state invariant middleware in development for better performance
+      immutableCheck: false
     }).concat(...middleware)
 })
 

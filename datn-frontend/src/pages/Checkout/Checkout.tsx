@@ -96,6 +96,13 @@ const Checkout = () => {
           if (item.default) {
             setValue('shippingLocation', item.address)
             setValue('phone', item.phone)
+            // Save default checkout address so map component can pick it up
+            try {
+              localStorage.setItem('checkoutDefaultAddress', item.address)
+              localStorage.setItem('checkoutDefaultPhone', item.phone || '')
+            } catch (e) {
+              // ignore storage errors
+            }
             return
           }
           return
@@ -283,8 +290,11 @@ const Checkout = () => {
                 <h2>Giao đến</h2>
               </div>
               <div>
-                <div id='geocoderCheckout' className='flex flex-row gap-3'>
-                  <i className='fa-solid fa-location-dot'></i>
+                <div className='w-full relative flex items-center'>
+                  <span className='mr-3 text-lg'>
+                    <i className='fa-solid fa-location-dot'></i>
+                  </span>
+                  <div id='geocoderCheckout' className='flex-1'></div>
                 </div>
                 {errors.shippingLocation && (
                   <span className='text-red-500 text-[13px] self-start'>Địa chỉ nhận hàng là bắt buộc</span>
@@ -301,8 +311,8 @@ const Checkout = () => {
               />
             </div>
             <div>
-              <YaSuoMap setValue={setValue} setGapStore={setGapStore} setPickGapStore={setPickGapStore} />
               <div id='mapCheckout'></div>
+              <YaSuoMap setValue={setValue} setGapStore={setGapStore} setPickGapStore={setPickGapStore} />
             </div>
           </div>
 

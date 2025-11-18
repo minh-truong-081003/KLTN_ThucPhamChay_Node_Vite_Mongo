@@ -2,8 +2,13 @@ import Category from '../models/category.model.js';
 import Product from '../models/product.model.js';
 import Size from '../models/size.model.js';
 import Topping from '../models/topping.model.js';
+import Review from '../models/review.model.js';
+import Order from '../models/order.model.js';
 import productValidate from '../validates/product.validate.js';
 import { debouncedRetrain } from '../../bot/auto-retrain.js';
+import cosineSimilarity from 'cosine-similarity';
+import natural from 'natural';
+import { Matrix, SingularValueDecomposition } from 'ml-matrix';
 
 export const ProductController = {
   createProduct: async (req, res, next) => {
@@ -839,4 +844,244 @@ export const ProductController = {
       return res.status(500).json({ message: 'fail', err: error });
     }
   },
+
+  /* Hybrid Recommender System */
+  getRecommendations: async (req, res) => {
+    try {
+      if (!req.user || !req.user._id) {
+        return res.status(401).json({ message: 'fail', err: 'User not authenticated' });
+      }
+      
+      const userId = req.user._id;
+      const { limit = 10 } = req.query;
+      const cacheKey = `recommendations:${userId}:${limit}`;
+
+      // Check cache first
+      const redis = (await import('../configs/redis.config.js')).default;
+      const cached = await redis.get(cacheKey);
+      if (cached) {
+        return res.status(200).json({ message: 'success', data: JSON.parse(cached), cached: true });
+      }
+
+      // Get all active products
+      const allProducts = await Product.find({ is_deleted: false, is_active: true })
+        .populate('category', 'name');
+
+      if (allProducts.length === 0) {
+        return res.status(200).json({ message: 'success', data: [] });
+      }
+
+      // Get user's interaction history
+      const userOrders = await Order.find({ 
+        user: userId, 
+        status: { $in: ['completed', 'delivered'] }
+      }).populate('items.product');
+
+      const userReviews = await Review.find({ 
+        user: userId, 
+        is_deleted: false, 
+        is_active: true 
+      });
+
+      // Extract interacted product IDs
+      const interactedProductIds = [
+        ...new Set([
+          ...userOrders.flatMap(order => 
+            order.items.map(item => item.product._id.toString())
+          ),
+          ...userReviews.map(review => review.product.toString())
+        ])
+      ];
+
+      console.log(`🔍 User ${userId} has interacted with ${interactedProductIds.length} products`);
+
+      let recommendations = [];
+
+      if (interactedProductIds.length > 0) {
+        // Calculate content-based recommendations (TF-IDF)
+        const contentBased = await calculateContentBasedSimilarity(
+          interactedProductIds, 
+          allProducts, 
+          Math.ceil(limit / 2)
+        );
+
+        // Calculate collaborative filtering recommendations
+        const collaborative = await calculateCollaborativeSimilarity(
+          userId, 
+          allProducts, 
+          Math.ceil(limit / 2)
+        );
+
+        console.log(`📊 Content-based: ${contentBased.length}, Collaborative: ${collaborative.length}`);
+
+        // Combine and deduplicate recommendations
+        const combined = new Map();
+
+        // Add content-based with weight
+        contentBased.forEach(item => {
+          combined.set(item.product._id.toString(), {
+            product: item.product,
+            score: item.score * 0.6 // 60% weight for content-based
+          });
+        });
+
+        // Add collaborative with weight
+        collaborative.forEach(item => {
+          const key = item.product._id.toString();
+          if (combined.has(key)) {
+            combined.get(key).score += item.score * 0.4; // 40% weight for collaborative
+          } else {
+            combined.set(key, {
+              product: item.product,
+              score: item.score * 0.4
+            });
+          }
+        });
+
+        // Sort by combined score and take top recommendations
+        recommendations = Array.from(combined.values())
+          .sort((a, b) => b.score - a.score)
+          .slice(0, limit)
+          .map(item => item.product);
+
+        console.log(`✅ Generated ${recommendations.length} hybrid recommendations`);
+      } else {
+        // Cold start: Return popular products
+        console.log('🆕 Cold start user - returning popular products');
+        recommendations = await Product.find({ is_deleted: false, is_active: true })
+          .sort({ averageRating: -1, totalReviews: -1 })
+          .limit(limit)
+          .populate('category', 'name');
+      }
+
+      // Cache results for 1 hour
+      await redis.set(cacheKey, JSON.stringify(recommendations), { EX: 3600 });
+
+      return res.status(200).json({ message: 'success', data: recommendations });
+    } catch (error) {
+      console.error('Error in getRecommendations:', error);
+      return res.status(500).json({ message: 'fail', err: error.message });
+    }
+  },
 };
+
+// Helper functions for recommendations
+async function calculateContentBasedSimilarity(interactedProductIds, allProducts, limit) {
+  try {
+    const interactedProducts = allProducts.filter(p => interactedProductIds.includes(p._id.toString()));
+    
+    if (interactedProducts.length === 0) return [];
+
+    // Create TF-IDF vectors for descriptions
+    const TfIdf = natural.TfIdf;
+    const tfidf = new TfIdf();
+
+    allProducts.forEach(product => {
+      const text = `${product.name} ${product.description || ''}`.toLowerCase();
+      tfidf.addDocument(text);
+    });
+
+    const scores = [];
+
+    interactedProducts.forEach(interactedProduct => {
+      const interactedIndex = allProducts.findIndex(p => p._id.equals(interactedProduct._id));
+      
+      allProducts.forEach((product, index) => {
+        if (!interactedProductIds.includes(product._id.toString())) {
+          const similarity = tfidf.tfidf(interactedIndex, index);
+          if (similarity > 0) {
+            scores.push({ product, score: similarity });
+          }
+        }
+      });
+    });
+
+    // Aggregate scores
+    const aggregatedScores = {};
+    scores.forEach(item => {
+      const id = item.product._id.toString();
+      if (aggregatedScores[id]) {
+        aggregatedScores[id].score += item.score;
+      } else {
+        aggregatedScores[id] = item;
+      }
+    });
+
+    return Object.values(aggregatedScores)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit);
+  } catch (error) {
+    console.error('Error in calculateContentBasedSimilarity:', error);
+    return [];
+  }
+}
+
+async function calculateCollaborativeSimilarity(userId, allProducts, limit) {
+  try {
+    // Get all reviews for matrix
+    const allReviews = await Review.find({ is_deleted: false, is_active: true })
+      .populate('user', '_id')
+      .populate('product', '_id');
+
+    if (allReviews.length === 0) return [];
+
+    // Create user-item matrix
+    const users = [...new Set(allReviews.map(r => r.user._id.toString()))];
+    const products = allProducts.map(p => p._id.toString());
+    
+    const userIndex = users.indexOf(userId.toString());
+    if (userIndex === -1) return [];
+
+    const matrix = new Matrix(users.length, products.length);
+    
+    allReviews.forEach(review => {
+      const uIdx = users.indexOf(review.user._id.toString());
+      const pIdx = products.indexOf(review.product._id.toString());
+      if (uIdx >= 0 && pIdx >= 0) {
+        matrix.set(uIdx, pIdx, review.rating);
+      }
+    });
+
+    // Simple collaborative: Find similar users and recommend their highly rated items
+    const userRatings = matrix.getRow(userIndex);
+    const similarUsers = [];
+
+    for (let i = 0; i < users.length; i++) {
+      if (i !== userIndex) {
+        const otherRatings = matrix.getRow(i);
+        const similarity = cosineSimilarity(userRatings, otherRatings);
+        if (!isNaN(similarity) && similarity > 0.3) { // Threshold
+          similarUsers.push({ index: i, similarity });
+        }
+      }
+    }
+
+    similarUsers.sort((a, b) => b.similarity - a.similarity);
+
+    const recommendations = {};
+    
+    similarUsers.slice(0, 5).forEach(({ index }) => { // Top 5 similar users
+      const ratings = matrix.getRow(index);
+      ratings.forEach((rating, pIdx) => {
+        if (rating >= 4 && userRatings[pIdx] === 0) { // Highly rated and not rated by user
+          const productId = products[pIdx];
+          if (recommendations[productId]) {
+            recommendations[productId].score += rating;
+          } else {
+            const product = allProducts.find(p => p._id.toString() === productId);
+            if (product) {
+              recommendations[productId] = { product, score: rating };
+            }
+          }
+        }
+      });
+    });
+
+    return Object.values(recommendations)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit);
+  } catch (error) {
+    console.error('Error in calculateCollaborativeSimilarity:', error);
+    return [];
+  }
+}

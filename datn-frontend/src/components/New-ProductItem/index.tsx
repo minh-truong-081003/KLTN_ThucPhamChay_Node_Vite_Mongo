@@ -1,7 +1,6 @@
 import { Button } from '..'
 import { IProduct } from '../../interfaces/products.type'
 import { formatCurrency } from '../../utils/formatCurrency'
-import { saleCaculator } from '../../utils/saleCaculator'
 import { useNavigate } from 'react-router-dom'
 
 interface NewProductItemProps {

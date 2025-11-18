@@ -20,9 +20,8 @@ const VerifyOtp = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const account = location.state?.account || ''
-
-  const [timeLeft, setTimeLeft] = useState(300) // 5 minutes
   const [canResend, setCanResend] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(300) // 5 minutes
   const [resendCount, setResendCount] = useState(0)
   const [isResending, setIsResending] = useState(false)
 

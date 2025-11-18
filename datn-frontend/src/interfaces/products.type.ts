@@ -46,9 +46,7 @@ export interface IAddProduct {
   toppings: ITopping[]
 }
 
-export interface ProductListConfig {
-  _page?: number | string
-  limit?: number | string
-  c?: string
-  searchName?: string
+export interface IRecommendationsResponse {
+  message: string
+  data: IProduct[]
 }

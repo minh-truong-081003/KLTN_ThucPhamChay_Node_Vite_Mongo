@@ -35,7 +35,6 @@ export const getAllProducts = createAsyncThunk<
     if (sortBy && sortBy.trim()) params.append('sortBy', sortBy.trim())
 
     const url = `/products?${params.toString()}`
-    console.log('🟢 API Request URL:', url)
     
     const response = await http.get(url)
 

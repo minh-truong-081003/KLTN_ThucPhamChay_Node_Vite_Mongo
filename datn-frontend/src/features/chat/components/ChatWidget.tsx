@@ -36,11 +36,19 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen: controlledIsOpen, onTog
       const loadUnreadCount = async () => {
         try {
           const response = await messageService.getUnreadCount()
-          if (response.success) {
-            setUnreadCount(response.data.unreadCount)
+          // message.service.getUnreadCount() trả về Axios response
+          if (response && response.status === 200 && response.data) {
+            // cố gắng đọc các vị trí phổ biến cho unreadCount
+            const count = response.data.unreadCount ?? response.data.data?.unreadCount ?? 0
+            setUnreadCount(typeof count === 'number' ? count : 0)
           }
-        } catch (error) {
-          console.error('Error loading unread count:', error)
+        } catch (error: any) {
+          // Không log quá nhiều thông tin cho lỗi 4xx thông thường
+          if (error?.response && error.response.status >= 400 && error.response.status < 500) {
+            console.debug('Unread count request returned client error:', error.response.status)
+          } else {
+            console.error('Error loading unread count:', error)
+          }
         }
       }
 

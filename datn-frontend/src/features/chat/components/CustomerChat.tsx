@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react'
 import { messageService, IMessage, IConversation } from '../../../api/message.service'
 import { useAppSelector } from '../../../store/hooks'
 import { socket } from '../../../socket'
@@ -72,10 +72,8 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
         await loadMessages(convId)
 
         // Join conversation room
-        console.log('🔌 Joining conversation room:', convId)
         socket.emit('conversation:join', convId)
         if (user?._id) {
-          console.log('🔌 Joining user room:', user._id)
           socket.emit('user:join', user._id)
         }
 
@@ -86,13 +84,11 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
 
         // Socket events
         const handleNewMessage = (data: { message: IMessage; conversationId: string }) => {
-          console.log('📨 Received new message:', data)
           if (data.conversationId === convId) {
             setMessages((prev) => {
               // Check xem message đã tồn tại chưa để tránh duplicate
               const exists = prev.some(msg => msg._id === data.message._id)
               if (exists) {
-                console.log('⚠️ Message already exists, skipping')
                 return prev
               }
               return [...prev, data.message]
@@ -154,36 +150,48 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
     const files = e.target.files
     if (!files || files.length === 0 || !conversation?._id) return
 
-    // Helper: resize image on client to improve upload speed
-    const resizeImage = (file: File, maxWidth = 1200, quality = 0.8): Promise<Blob> => {
+    // Helper: resize image on client to improve upload speed (optimized)
+    const resizeImage = useCallback((file: File, maxWidth = 800, quality = 0.7): Promise<Blob> => {
       return new Promise((resolve) => {
-        if (!file.type.startsWith('image/')) return resolve(file)
-        // If already small, skip resizing
-        if (file.size <= 200 * 1024) return resolve(file)
+        // Skip processing for non-images or small files
+        if (!file.type.startsWith('image/') || file.size <= 100 * 1024) {
+          resolve(file)
+          return
+        }
 
         const img = new Image()
         const reader = new FileReader()
+
         reader.onload = (ev) => {
           img.src = ev.target?.result as string
         }
+
         img.onload = () => {
           const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+
+          if (!ctx) {
+            resolve(file)
+            return
+          }
+
           const ratio = img.width / img.height
           const width = Math.min(maxWidth, img.width)
           const height = Math.round(width / ratio)
+
           canvas.width = width
           canvas.height = height
-          const ctx = canvas.getContext('2d')
-          if (!ctx) return resolve(file)
+
           ctx.drawImage(img, 0, 0, width, height)
+
           canvas.toBlob((blob) => {
-            if (blob) resolve(blob)
-            else resolve(file)
+            resolve(blob || file)
           }, 'image/jpeg', quality)
         }
+
         reader.readAsDataURL(file)
       })
-    }
+    }, [])
 
     const fileArray = Array.from(files)
     try {
@@ -191,12 +199,10 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
       setUploadProgress(0)
 
       const processedFiles = await Promise.all(
-        fileArray.map(async (file) => {
+        fileArray.slice(0, 5).map(async (file) => { // Limit to 5 files max
           try {
             const blob = await resizeImage(file)
-            // If resize returned the original File (not a Blob) keep it
-            if (blob instanceof File) return blob
-            return new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), { type: blob.type })
+            return blob instanceof File ? blob : new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), { type: blob.type })
           } catch (err) {
             return file
           }
@@ -260,127 +266,120 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
     }
   }
 
-  const formatTime = (time: string) => {
+  // Memoize formatTime to avoid recalculating on every render
+  const formatTime = useCallback((time: string) => {
     const date = new Date(time)
     return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-  }
+  }, [])
+
+  // Memoize message rendering for better performance
+  const renderedMessages = useMemo(() => {
+    return messages.map((message) => {
+      const isMyMessage = message.sender._id === user?._id
+
+      return (
+        <div
+          key={message._id}
+          className={`flex ${isMyMessage ? 'justify-end' : 'justify-start'}`}
+        >
+          <div
+            className={`flex max-w-[80%] gap-2 ${isMyMessage ? 'flex-row-reverse' : 'flex-row'}`}
+          >
+            <img
+              src={message.sender.avatar || `https://ui-avatars.com/api/?name=${message.sender.username}`}
+              alt={message.sender.username}
+              className='h-8 w-8 flex-shrink-0 rounded-full object-cover'
+              loading="lazy"
+            />
+            <div className='flex flex-col gap-1'>
+              <div
+                className={`rounded-lg px-4 py-2 shadow-md ${
+                  isMyMessage
+                    ? 'bg-[#D7B978] text-white'
+                    : 'bg-gray-100 text-gray-900 border border-gray-200'
+                }`}
+              >
+                <p className='whitespace-pre-wrap break-words text-sm'>{message.text}</p>
+                {message.attachments && message.attachments.length > 0 && (
+                  <div className='mt-2 flex flex-wrap gap-2'>
+                    {message.attachments.map((att: string, idx: number) => (
+                      <img
+                        key={idx}
+                        src={att}
+                        alt={`attachment-${idx}`}
+                        onClick={() => openImage(att)}
+                        className='h-28 w-28 cursor-pointer rounded-md object-cover shadow-sm'
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+              <span
+                className={`text-xs text-gray-400 ${isMyMessage ? 'text-right' : 'text-left'}`}
+              >
+                {formatTime(message.createdAt)}
+              </span>
+            </div>
+          </div>
+        </div>
+      )
+    })
+  }, [messages, user?._id, formatTime])
 
   return (
     <div className='flex h-full flex-col bg-white'>
       {/* Header */}
-      <div className='flex items-center justify-between border-b bg-[#D7B978] px-4 py-3'>
-        <div className='flex items-center gap-3'>
-          <img
-            src='https://png.pngtree.com/png-clipart/20230409/original/pngtree-admin-and-customer-service-job-vacancies-png-image_9041264.png'
-            alt='Support'
-            className='h-10 w-10 rounded-full object-cover'
-          />
-          <div>
-            <h3 className='font-semibold text-white'>Nhân viên hỗ trợ</h3>
-            <p className='text-xs text-white/80'>{isTyping ? 'Đang nhập...' : 'Luôn sẵn sàng hỗ trợ bạn'}</p>
-          </div>
-        </div>
-        {onClose && (
-          <button onClick={onClose} className='text-white hover:text-white/80 transition-colors'>
-            <svg className='h-6 w-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
-            </svg>
-          </button>
-        )}
+      <div className='flex items-center justify-between border-b bg-[#D7B978] px-4 py-3 text-white'>
+        <h3 className='text-lg font-semibold'>Chat với chúng tôi</h3>
+        <button
+          onClick={onClose}
+          className='rounded-full p-1 hover:bg-white/20'
+          title='Đóng chat'
+        >
+          <svg className='h-5 w-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+          </svg>
+        </button>
       </div>
 
       {/* Messages */}
-      <div className='flex-1 overflow-y-auto bg-gray-50 p-4'>
+      <div className='flex-1 overflow-y-auto p-4 space-y-4'>
         {loading ? (
-          <div className='flex items-center justify-center py-12'>
-            <div className='h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-[#D7B978]'></div>
+          <div className='flex items-center justify-center py-8'>
+            <div className='text-gray-500'>Đang tải tin nhắn...</div>
           </div>
         ) : messages.length === 0 ? (
-          <div className='flex flex-col items-center justify-center py-12 text-center'>
-            <svg className='mb-4 h-16 w-16 text-gray-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'
-              />
-            </svg>
-            <p className='text-gray-500'>Bắt đầu cuộc trò chuyện của bạn</p>
-            <p className='text-sm text-gray-400'>Chúng tôi sẵn sàng hỗ trợ bạn!</p>
+          <div className='flex items-center justify-center py-8'>
+            <div className='text-center text-gray-500'>
+              <p>Chào mừng bạn đến với ViFood!</p>
+              <p className='text-sm mt-1'>Hãy gửi tin nhắn để được hỗ trợ.</p>
+            </div>
           </div>
         ) : (
-          <div className='space-y-4'>
-            {messages.map((message) => {
-              // Tin nhắn của mình (customer hiện tại) - bên phải
-              const isMyMessage = message.sender._id === user?._id
-              
-              return (
-                <div
-                  key={message._id}
-                  className={`flex ${isMyMessage ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`flex max-w-[80%] gap-2 ${isMyMessage ? 'flex-row-reverse' : 'flex-row'}`}
-                  >
-                    <img
-                      src={message.sender.avatar || `https://ui-avatars.com/api/?name=${message.sender.username}`}
-                      alt={message.sender.username}
-                      className='h-8 w-8 flex-shrink-0 rounded-full object-cover'
-                    />
-                    <div className='flex flex-col gap-1'>
-                      <div
-                        className={`rounded-lg px-4 py-2 shadow-md ${
-                          isMyMessage 
-                            ? 'bg-[#D7B978] text-white' 
-                            : 'bg-gray-100 text-gray-900 border border-gray-200'
-                        }`}
-                      >
-                        <p className='whitespace-pre-wrap break-words text-sm'>{message.text}</p>
-                        {message.attachments && message.attachments.length > 0 && (
-                          <div className='mt-2 flex flex-wrap gap-2'>
-                            {message.attachments.map((att: string, idx: number) => (
-                              <img
-                                key={idx}
-                                src={att}
-                                alt={`attachment-${idx}`}
-                                onClick={() => openImage(att)}
-                                className='h-28 w-28 cursor-pointer rounded-md object-cover shadow-sm'
-                              />
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                      <span
-                        className={`text-xs text-gray-400 ${isMyMessage ? 'text-right' : 'text-left'}`}
-                      >
-                        {formatTime(message.createdAt)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-
+          <>
+            {renderedMessages}
             {isTyping && (
-              <div className='flex items-start gap-2'>
-                <img
-                  src='https://png.pngtree.com/png-clipart/20230409/original/pngtree-admin-and-customer-service-job-vacancies-png-image_9041264.png'
-                  alt='Support'
-                  className='h-8 w-8 rounded-full object-cover'
-                />
-                <div className='rounded-lg bg-white px-4 py-3 shadow-sm'>
-                  <div className='flex gap-1'>
-                    <span className='h-2 w-2 animate-bounce rounded-full bg-gray-400'></span>
-                    <span className='h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:0.1s]'></span>
-                    <span className='h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:0.2s]'></span>
+              <div className='flex justify-start'>
+                <div className='flex max-w-[80%] gap-2'>
+                  <img
+                    src={`https://ui-avatars.com/api/?name=Admin`}
+                    alt='Admin'
+                    className='h-8 w-8 flex-shrink-0 rounded-full object-cover'
+                  />
+                  <div className='rounded-lg bg-gray-100 px-4 py-2 border border-gray-200'>
+                    <div className='flex space-x-1'>
+                      <div className='h-2 w-2 animate-bounce rounded-full bg-gray-400'></div>
+                      <div className='h-2 w-2 animate-bounce rounded-full bg-gray-400' style={{ animationDelay: '0.1s' }}></div>
+                      <div className='h-2 w-2 animate-bounce rounded-full bg-gray-400' style={{ animationDelay: '0.2s' }}></div>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
-
-            <div ref={messagesEndRef} />
-          </div>
+          </>
         )}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Input */}

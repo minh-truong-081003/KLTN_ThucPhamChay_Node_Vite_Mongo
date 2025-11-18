@@ -128,7 +128,8 @@
   }
 
   .bg_title {
-    background: url(./home_line.webp) no-repeat center;
+    /* home_line.webp không tồn tại trong repo, đổi sang ảnh có sẵn trong `public` để tránh 404 */
+    background: url('/bg-footer.png') no-repeat center;
     width: 315px;
     height: 30px;
   }

@@ -14,7 +14,6 @@ import { IProduct } from '../../interfaces/products.type'
 import { IImage } from '../../interfaces/image.type'
 import ReviewList from './ReviewList'
 import ReviewForm from './ReviewForm'
-import formatDate from '../../utils/formatDate'
 import { toast } from 'react-toastify'
 
 interface ProductReviewsProps {
@@ -101,7 +100,11 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
         order: data.order,
         rating: data.rating,
         comment: data.comment,
-        images: data.images || [],
+        images: (data.images || []).filter(img => img.url).map(img => ({
+          url: img.url!,
+          publicId: img.publicId || '',
+          filename: img.filename || ''
+        })),
       }).unwrap()
       toast.success('Đánh giá của bạn đã được gửi thành công!')
       refetchReviews()
@@ -161,7 +164,7 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
   const calculateAverageRating = () => {
     const allReviews = allReviewsData?.docs || []
     if (allReviews.length === 0) return 0
-    const totalRating = allReviews.reduce((sum, review) => sum + review.rating, 0)
+    const totalRating = allReviews.reduce((sum, review) => sum + (review.rating || 0), 0)
     return parseFloat((totalRating / allReviews.length).toFixed(1))
   }
   

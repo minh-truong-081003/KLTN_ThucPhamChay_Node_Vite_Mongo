@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 import { FaArrowDown, FaBars } from 'react-icons/fa'
 import { Link, createSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { IProduct, IProductDocs } from '../../interfaces/products.type'
@@ -13,7 +13,6 @@ import { useAppSelector } from '../../store/hooks'
 import ListProductItem from '../List-ProductItem'
 import PopupDetailProduct from '../PopupDetailProduct'
 import SKProduct from '../Skeleton/SKProduct'
-import { useGetAllCartDBQuery } from '../../api/cartDB'
 
 interface ListProductsProps {
   products: IProductDocs
@@ -25,10 +24,8 @@ interface ListProductsProps {
 const ListProducts = ({ products, isLoading, queryConfig }: ListProductsProps) => {
   const orderRef = useRef<HTMLDivElement>(null)
   const [isShowPopup, setIsShowPopup] = useState<boolean>(false)
-  const [productList, setProductList] = useState<IProductDocs | null>(null)
   const [product, setProduct] = useState<IProduct | object>({})
   const { idCate } = useAppSelector((state) => state.persistedReducer.category)
-  const a =    useGetAllCartDBQuery()
 
   const { state } = useLocation()
   const navigate = useNavigate()
@@ -36,23 +33,17 @@ const ListProducts = ({ products, isLoading, queryConfig }: ListProductsProps) =
     setIsShowPopup(!isShowPopup)
   }, [isShowPopup])
 
-  // const paginatePage = (page: number) => {
-  //   dispatch(savePage(page))
-  // }
+  // Memoize filtered products to avoid expensive filtering on every render
+  const filteredProducts = useMemo(() => {
+    if (!products?.docs) return products
 
-  useEffect(() => {
-    setProductList(products)
-  }, [products])
-
-  /* filter product with idcategory */
-  useEffect(() => {
     if (idCate) {
-      const filterProduct = products?.docs?.filter((product) => product.category._id === idCate)
-      setProductList({ ...products, docs: filterProduct })
-    } else {
-      setProductList(products)
+      const filteredDocs = products.docs.filter((product) => product.category._id === idCate)
+      return { ...products, docs: filteredDocs }
     }
-  }, [idCate])
+
+    return products
+  }, [products, idCate])
 
   const fetchProductById = async (id: string | number) => {
     try {
@@ -93,7 +84,7 @@ const ListProducts = ({ products, isLoading, queryConfig }: ListProductsProps) =
               <div className='text-lg capitalize select-none'>{'Tất cả sản phẩm'}</div>
               <div className='right'>{/* <FaAngleDown /> */}</div>
             </div>
-            {!isLoading && productList && productList.docs && productList.docs.length <= 0 ? (
+            {!isLoading && filteredProducts && filteredProducts.docs && filteredProducts.docs.length <= 0 ? (
               <section className='flex flex-col justify-center bg-gray-100 items-center h-[70vh] font-bold my-5'>
                 <img
                   className='mx-auto'
@@ -110,20 +101,20 @@ const ListProducts = ({ products, isLoading, queryConfig }: ListProductsProps) =
               {isLoading ? (
                 <SKProduct amount={10} />
               ) : (
-                productList?.docs &&
-                productList?.docs?.map((product: IProduct) => (
+                filteredProducts?.docs &&
+                filteredProducts?.docs?.map((product: IProduct) => (
                   <ListProductItem key={product._id} product={product} fetchProductById={fetchProductById} />
                 ))
               )}
             </div>
           </div>
           <div className='text-center'>
-            {productList && productList.totalPages > 1 && (
+            {filteredProducts && filteredProducts.totalPages > 1 && (
               <Pagination 
-                current={productList.page}
-                pageSize={productList.limit}
+                current={filteredProducts.page}
+                pageSize={filteredProducts.limit}
                 onChange={onChange} 
-                total={productList.totalDocs}
+                total={filteredProducts.totalDocs}
                 showSizeChanger={false}
               />
             )}

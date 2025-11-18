@@ -1,5 +1,6 @@
 import { ProductController } from '../controllers/product.controller.js';
 import express from 'express';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const productRoutes = express.Router();
 productRoutes.route('/products').get(ProductController.getAllProducts);
@@ -18,6 +19,6 @@ productRoutes.get(
 );
 productRoutes.post('/create/product', ProductController.createProductV2);
 
-productRoutes.get('/products/in-active', ProductController.getAllProductInActive);
+productRoutes.get('/products/recommendations', authMiddleware.verifyToken, ProductController.getRecommendations);
 
 export default productRoutes;

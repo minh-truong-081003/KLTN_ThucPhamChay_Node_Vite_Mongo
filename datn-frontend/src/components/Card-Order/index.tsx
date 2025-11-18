@@ -1,11 +1,9 @@
 import { AiOutlineLine, AiOutlinePlus } from 'react-icons/ai'
 import { useDeleteCartDBMutation, useUpdateCartDBMutation } from '../../api/cartDB'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { decreamentQuantity, increamentQuantity, updateCart } from '../../store/slices/cart.slice'
+import { decreamentQuantity, increamentQuantity } from '../../store/slices/cart.slice'
 import { CartItemState, CartLists } from '../../store/slices/types/cart.type'
 
-import { Select } from 'antd'
-import { v4 as uuidv4 } from 'uuid'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { useState, useEffect, useRef } from 'react'
 
@@ -17,7 +15,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
   const dispatch = useAppDispatch()
   const [updateCartDbFn, updateCartDbRes] = useUpdateCartDBMutation()
   const { user } = useAppSelector((state) => state.persistedReducer.auth)
-  const { products } = useAppSelector((state) => state.persistedReducer.products)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, deleteCartDBRes] = useDeleteCartDBMutation()
   const [localQuantities, setLocalQuantities] = useState<{[key: string]: number}>({})
@@ -62,38 +59,50 @@ const CardOrder = ({ product }: CardOrderProps) => {
         )
       }
     } else {
-      // item.quantity--
-      let quantity: number = item.quantity
-      action === 'decreamentQuantity' && quantity--
-      action === 'increamentQuantity' && quantity++
-      const topping = item.toppings
-      const priceTopping = topping && topping.length && topping.reduce((acc, item) => item.price + acc, 0)
-      quantity = +item.quantity === 1 && action === 'decreamentQuantity' ? 0 : quantity
-      return updateCartDbFn({
-        quantity,
-        _id: product._id as string,
-        id: item._id as string,
-        total: quantity * item.price + quantity * priceTopping
-      })
+      // Only update database if we have valid IDs
+      if (product._id && item._id) {
+        // item.quantity--
+        let quantity: number = item.quantity
+        action === 'decreamentQuantity' && quantity--
+        action === 'increamentQuantity' && quantity++
+        const topping = item.toppings
+        const priceTopping = topping && topping.length && topping.reduce((acc, item) => item.price + acc, 0)
+        quantity = +item.quantity === 1 && action === 'decreamentQuantity' ? 0 : quantity
+        return updateCartDbFn({
+          quantity,
+          _id: product._id,
+          id: item._id,
+          total: quantity * item.price + quantity * priceTopping
+        })
+      } else {
+        // If missing IDs, update local cart
+        if (action === 'decreamentQuantity') {
+          return dispatch(
+            decreamentQuantity({
+              index: index,
+              name: product.name,
+              quantity: item.quantity,
+              size: item.size,
+              toppings: item.toppings,
+              product: item.product,
+              sale: item.sale || 0
+            })
+          )
+        } else if (action === 'increamentQuantity') {
+          return dispatch(
+            increamentQuantity({
+              index,
+              name: product.name,
+              quantity: item.quantity,
+              size: item.size,
+              toppings: item.toppings,
+              product: item.product,
+              sale: item.sale || 0
+            })
+          )
+        }
+      }
     }
-  }
-
-  const dataSize = products.docs && products.docs.find((item) => item.name === product.name)?.sizes
-
-  const handleChange = (value: string, item: CartItemState, index: number) => {
-    const a = dataSize?.find((item) => item._id === value)
-
-    dispatch(
-      updateCart({
-        index: index,
-        name: product.name,
-        quantity: item.quantity,
-        size: a!,
-        toppings: item.toppings,
-        product: item.product,
-        sale: item.sale || 0
-      })
-    )
   }
 
   return (
@@ -180,16 +189,44 @@ const CardOrder = ({ product }: CardOrderProps) => {
                             }))
                           }
                         }
-                      } else {
+                      } else if (product._id && item._id) {
                         // Update DB cart
                         const topping = item.toppings
                         const priceTopping = topping && topping.length && topping.reduce((acc, item) => item.price + acc, 0)
                         updateCartDbFn({
                           quantity: validQuantity,
-                          _id: product._id as string,
-                          id: item._id as string,
+                          _id: product._id,
+                          id: item._id,
                           total: validQuantity * item.price + validQuantity * priceTopping
                         })
+                      } else {
+                        // Update local cart if missing IDs
+                        const diff = validQuantity - item.quantity
+                        if (diff > 0) {
+                          for (let i = 0; i < diff; i++) {
+                            dispatch(increamentQuantity({
+                              index,
+                              name: product.name,
+                              quantity: item.quantity,
+                              size: item.size,
+                              toppings: item.toppings,
+                              product: item.product,
+                              sale: item.sale || 0
+                            }))
+                          }
+                        } else if (diff < 0) {
+                          for (let i = 0; i < Math.abs(diff); i++) {
+                            dispatch(decreamentQuantity({
+                              index,
+                              name: product.name,
+                              quantity: item.quantity,
+                              size: item.size,
+                              toppings: item.toppings,
+                              product: item.product,
+                              sale: item.sale || 0
+                            }))
+                          }
+                        }
                       }
                     }, 600)
                   }}
@@ -220,15 +257,30 @@ const CardOrder = ({ product }: CardOrderProps) => {
                             }))
                           }
                         }
-                      } else {
+                      } else if (product._id && item._id) {
                         const topping = item.toppings
                         const priceTopping = topping && topping.length && topping.reduce((acc, item) => item.price + acc, 0)
                         updateCartDbFn({
                           quantity: 1,
-                          _id: product._id as string,
-                          id: item._id as string,
+                          _id: product._id,
+                          id: item._id,
                           total: 1 * item.price + 1 * priceTopping
                         })
+                      } else {
+                        const diff = 1 - item.quantity
+                        if (diff < 0) {
+                          for (let i = 0; i < Math.abs(diff); i++) {
+                            dispatch(decreamentQuantity({
+                              index,
+                              name: product.name,
+                              quantity: item.quantity,
+                              size: item.size,
+                              toppings: item.toppings,
+                              product: item.product,
+                              sale: item.sale || 0
+                            }))
+                          }
+                        }
                       }
                     }
                   }}

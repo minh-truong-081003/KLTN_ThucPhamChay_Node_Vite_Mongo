@@ -41,7 +41,7 @@ export const CartDBAPI = createApi({
     deleteCartDB: builder.mutation({
       query: (id: string) => ({
         url: `/api/cart/${id}`,
-        method: 'DElETE'
+        method: 'DELETE'
       }),
       invalidatesTags: () => [{ type: 'CartDB', id: 'LIST' }]
     })

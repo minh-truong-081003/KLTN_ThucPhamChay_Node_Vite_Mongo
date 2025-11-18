@@ -2,17 +2,25 @@
   display: none;
 }
 
+.vf-autocomplete-input,
 .mapboxgl-ctrl-geocoder--input[name='address'] {
   left: 0;
   border: 1px solid rgb(212, 211, 211);
   font-size: 14px;
-  color: black;
+  color: #111827;
   border-radius: 8px;
-  padding: 18px !important;
+  padding: 10px 12px !important;
+  width: 100%;
 }
 
+.vf-autocomplete-input::placeholder {
+  color: #9ca3af;
+}
+
+.vf-autocomplete-input:focus,
 .mapboxgl-ctrl-geocoder--input:focus {
-  background-color: #f9fafb;
-  box-shadow: none;
-  color: black;
+  background-color: #ffffff;
+  box-shadow: none !important;
+  outline: none !important;
+  border-color: #d1d5db;
 }

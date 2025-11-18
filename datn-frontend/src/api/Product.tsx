@@ -1,4 +1,4 @@
-import { IProduct, IProductDocs } from '../interfaces/products.type'
+import { IProduct, IProductDocs, IRecommendationsResponse } from '../interfaces/products.type'
 
 import { IResImage } from '../interfaces/image.type'
 import { baseQueryWithReauth } from './Auth'
@@ -78,7 +78,11 @@ export const ApiProducts = createApi({
         method: 'DELETE',
         body: publicId
       })
-    })
+    }),
+
+    getRecommendations: builder.query<IRecommendationsResponse, { limit?: number }>({
+      query: ({ limit = 10 }) => `/api/products/recommendations?limit=${limit}`
+    }),
   })
 })
 
@@ -91,5 +95,6 @@ export const {
   useDeleteRealProductMutation,
   useUpdateProductMutation,
   useFetchProductByIdQuery,
-  useRestoreProductMutation
+  useRestoreProductMutation,
+  useGetRecommendationsQuery
 } = ApiProducts

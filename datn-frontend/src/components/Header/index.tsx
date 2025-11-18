@@ -7,23 +7,20 @@ import { RootState } from '../../store/store'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../store/hooks'
 import useQueryConfig from '../../hook/useQueryConfig'
-import { getAllProducts } from '../../store/services/product.service'
 import { useForm } from 'react-hook-form'
-import { RoleSchema } from '../../validate/Form'
-import { yupResolver } from '@hookform/resolvers/yup'
 import './Header.scss'
 import { ClientSocket } from '../../socket'
 import { useUpdateNotifitoReadByidMutation } from '../../api/notifications'
 import http from '../../api/instance'
 
 const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
-  const dispatch = useAppDispatch()
+  const _dispatch = useAppDispatch()
   const queryConfig = useQueryConfig()
   const location = useLocation()
   const [notification, setNotification] = useState<any[]>([])
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [showDropdown, setShowDropdown] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [_searchQuery, _setSearchQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
   const { user } = useSelector((state: RootState) => state.persistedReducer.auth)

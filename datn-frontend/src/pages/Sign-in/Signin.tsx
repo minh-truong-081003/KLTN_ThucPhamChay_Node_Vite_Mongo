@@ -58,7 +58,7 @@ const Signin = () => {
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               const { sale, _id, ...rest } = item
               await addCartDbFn({
-                name: cart.name,
+                name: 'Cart',
                 items: [
                   {
                     ...rest,

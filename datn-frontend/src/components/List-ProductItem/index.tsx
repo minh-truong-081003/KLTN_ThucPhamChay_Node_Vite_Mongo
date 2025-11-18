@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { addToCart } from '../../store/slices/cart.slice'
 import { CartItem } from '../../store/slices/types/cart.type'
 import { message } from 'antd'
+import { useGetAllCartDBQuery } from '../../api/cartDB'
 
 interface ListProductItemProps {
   product: IProduct
@@ -13,16 +14,19 @@ interface ListProductItemProps {
 }
 
 const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) => {
-  const [addCartDbFn] = useCreateCartDBMutation()
+  const [createCartDbFn] = useCreateCartDBMutation()
   const dispatch = useAppDispatch()
   const { user } = useAppSelector((state) => state.persistedReducer.auth)
+  const { refetch: refetchCart } = useGetAllCartDBQuery(undefined, {
+    skip: !user?.accessToken
+  })
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation() // Ngăn không cho click vào popup detail
     
     const data = {
       name: product.name,
-      size: product.sizes?.[0],
+      size: product.sizes && product.sizes.length > 0 ? product.sizes[0] : undefined,
       toppings: [],
       quantity: 1,
       image: product.images[0]?.url ?? '',
@@ -34,17 +38,17 @@ const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) =>
 
     if (user._id !== '' && user.accessToken !== '') {
       const { sale, name, ...rest } = data
-      addCartDbFn({
-        name: name,
+      createCartDbFn({
+        name: product.name,
         items: [
           {
             ...rest,
             image: rest.image,
-            size: data.size?._id as string,
             toppings: []
           }
         ]
       })
+      // Do not dispatch local add, let refetch update
       message.success('Đã thêm vào giỏ hàng!')
     } else {
       dispatch(addToCart(data as CartItem))

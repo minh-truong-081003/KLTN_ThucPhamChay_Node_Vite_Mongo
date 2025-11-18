@@ -1,10 +1,10 @@
-import About from '../../components/About'
+// About component not used here
 import ButtonDelivery from '../../components/Button-Delivery'
 import FooterHomePage from '../../components/Footer-HomePage'
 import HeaderHomePage from '../../components/Header-HomePage'
 import Loader from '../../components/Loader'
 import NewProducts from '../../components/New-Products'
-import News from '../../components/News'
+// News component not used here
 import Popup from '../../components/Popup'
 import Sliders from '../../components/Slider'
 import ServiceInfo from '../../components/ServiceInfo'

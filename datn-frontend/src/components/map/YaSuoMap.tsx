@@ -108,10 +108,13 @@ const YaSuoMap = ({ setValue, setGapStore, setPickGapStore }: Props) => {
         { signal: controller.signal }
       )
       .then(({ data: { results } }) => {
-        setValue('shippingLocation', results[0].formatted_address)
-        ;(document.querySelector<HTMLInputElement>('.mapboxgl-ctrl-geocoder--input')!.value =
-          results[0].formatted_address),
-          controller.abort()
+        const address = results && results[0] && results[0].formatted_address
+        if (address) {
+          setValue('shippingLocation', address)
+          const input = document.querySelector<HTMLInputElement>('.mapboxgl-ctrl-geocoder--input')
+          if (input) input.value = address
+        }
+        controller.abort()
       })
     if (!locate) {
       await getDistance()
@@ -123,26 +126,83 @@ const YaSuoMap = ({ setValue, setGapStore, setPickGapStore }: Props) => {
       localStorage.removeItem('location')
     }
 
-    document.querySelector('.mapboxgl-ctrl-geocoder--icon-search')?.remove()
-    document.querySelector('.mapboxgl-ctrl-geocoder--input')?.setAttribute('placeholder', 'Địa chỉ người nhận')
-    document.querySelector('.mapboxgl-ctrl-geocoder--input')?.setAttribute('name', 'shippingLocation')
-    document.querySelector('.mapboxgl-ctrl-geocoder--input')?.setAttribute('autoComplete', 'off')
-    document
-      .querySelectorAll('.mapboxgl-ctrl-top-right .mapboxgl-ctrl-group')[1]
-      ?.addEventListener('click', async () => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(async (position) => {
-            await getDistance({ lng: position.coords.longitude, lat: position.coords.latitude })
-            await fillAddress({ lng: position.coords.longitude, lat: position.coords.latitude })
-          })
-        }
+    // The geocoder control may not be available immediately after script injection.
+    // Poll for the input element and then attach attributes and listeners.
+    const waitFor = async (selector: string, timeout = 3000) => {
+      const start = Date.now()
+      return new Promise<HTMLElement | null>((resolve) => {
+        const i = setInterval(() => {
+          const el = document.querySelector(selector) as HTMLElement | null
+          if (el) {
+            clearInterval(i)
+            resolve(el)
+          } else if (Date.now() - start > timeout) {
+            clearInterval(i)
+            resolve(null)
+          }
+        }, 200)
       })
-    document.querySelector('.mapboxgl-ctrl-geocoder--input')?.addEventListener('change', async (e: any) => {
-      if (setValue) {
-        setValue('shippingLocation', e.target.value)
+    }
+
+    ;(async () => {
+      // Accept either Mapbox or Goong geocoder input classes
+      const selector = '.mapboxgl-ctrl-geocoder--input, .goongjs-ctrl-geocoder--input, .goongjs-ctrl-geocoder__input'
+      const inputEl = (await waitFor(selector, 5000)) as HTMLInputElement | null
+      // Remove common icon elements inserted by different geocoder libs
+      const iconSelectors = [
+        '.mapboxgl-ctrl-geocoder--icon-search',
+        '.mapboxgl-ctrl-geocoder--icon',
+        '.goongjs-ctrl-geocoder--icon',
+        '.goongjs-ctrl-geocoder--icon-search',
+        '.goongjs-ctrl-geocoder__icon'
+      ]
+      iconSelectors.forEach((s) => {
+        const el = document.querySelector(s)
+        if (el && el.parentNode) el.parentNode.removeChild(el)
+      })
+
+      if (inputEl) {
+        // Normalize placeholder and clear stray leading characters
+        inputEl.setAttribute('placeholder', 'Địa chỉ người nhận')
+        inputEl.setAttribute('name', 'shippingLocation')
+        inputEl.setAttribute('autoComplete', 'off')
+        inputEl.classList.add('yasuo-search')
+        // Force padding via inline style so it wins over external CSS
+        // Use 48px to leave room for the icon/pseudo-element
+        inputEl.style.paddingLeft = inputEl.style.paddingLeft || '48px'
+        inputEl.style.position = inputEl.style.position || 'relative'
+        // If input contains stray single-letter prefix (seen in some browsers), trim it
+        if (inputEl.value && inputEl.value.length === 1 && inputEl.value.toLowerCase() === 's') {
+          inputEl.value = ''
+        }
+        
+        inputEl.addEventListener('input', (e: any) => {
+          // keep form in sync as user types
+          if (setValue) setValue('shippingLocation', e.target.value)
+        })
+
+        inputEl.addEventListener('change', async (e: any) => {
+          if (setValue) {
+            setValue('shippingLocation', e.target.value)
+          }
+          await getDistance()
+        })
       }
-      await getDistance()
-    })
+      
+
+      const groups = document.querySelectorAll('.mapboxgl-ctrl-top-right .mapboxgl-ctrl-group')
+      const geoBtn = groups && groups[1]
+      if (geoBtn) {
+        geoBtn.addEventListener('click', async () => {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async (position) => {
+              await getDistance({ lng: position.coords.longitude, lat: position.coords.latitude })
+              await fillAddress({ lng: position.coords.longitude, lat: position.coords.latitude })
+            })
+          }
+        })
+      }
+    })()
 
     if (navigator.geolocation) {
       map.current.innerHTML = `
@@ -161,21 +221,27 @@ const YaSuoMap = ({ setValue, setGapStore, setPickGapStore }: Props) => {
         geocoder.addTo('#geocoderCheckout');
 
         // Add geocoder result to container.
-        geocoder.on('result', function ({result:{result:{geometry:{location}}}}) {
-          marker.remove();
-          localStorage.setItem("location",JSON.stringify(location))
-          marker
-          .setLngLat([location.lng,
-            location.lat])
-          .addTo(map)
-            map.flyTo({
-              center: [
-                location.lng,
-                location.lat
-              ],
-              essential: true // this animation is considered essential with respect to prefers-reduced-motion
-            })
-        });
+        geocoder.on('result', function (e) {
+            try {
+              // Normalize different possible payload shapes from geocoder
+              const result = e?.result || e
+              const geometry = result.geometry || result?.result?.geometry
+              const location = geometry?.location
+              if (!location) return
+
+              marker.remove();
+              localStorage.setItem('location', JSON.stringify(location))
+              marker
+                .setLngLat([location.lng, location.lat])
+                .addTo(map)
+              map.flyTo({
+                center: [location.lng, location.lat],
+                essential: true // this animation is considered essential with respect to prefers-reduced-motion
+              })
+            } catch (err) {
+              console.error('Error handling geocoder result', err)
+            }
+          });
 
         // Clear results container when search is cleared.
         geocoder.on('clear', function () {

@@ -7,8 +7,8 @@ import { IProduct } from '../../interfaces/products.type'
 import { addToCart } from '../../store/slices/cart.slice'
 import { formatCurrency } from '../../utils/formatCurrency'
 import styles from './PopupDetailProduct.module.scss'
-import { useCreateCartDBMutation } from '../../api/cartDB'
-import { v4 as uuidv4 } from 'uuid'
+import { useCreateCartDBMutation, useGetAllCartDBQuery } from '../../api/cartDB'
+// uuid not needed currently
 import ProductReviews from '../ProductReviews'
 import { useGetReviewsByProductQuery } from '../../api/Review'
 
@@ -23,9 +23,13 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
   /* set state trạng thái */
   const [price, setPrice] = useState<number>(0)
   const [quantity, setQuantity] = useState<number>(1)
-  const [totalToppingPrice, setTotalToppingPrice] = useState<number>(0)
+  const [_totalToppingPrice, _setTotalToppingPrice] = useState<number>(0)
   const [addCartDbFn] = useCreateCartDBMutation()
-  const [sizes, setSizes] = useState<{ name: string; price: number }[]>([])
+  const { user } = useAppSelector((state) => state.persistedReducer.auth)
+  const { refetch: refetchCart } = useGetAllCartDBQuery(undefined, {
+    skip: !user._id || !user.accessToken
+  })
+  const [_sizes, _setSizes] = useState<{ name: string; price: number }[]>([])
 
   // const [nameRadioInput, setNameRadioInput] = useState<string>(product.sizes[0].name);
   const [nameRadioInput, setNameRadioInput] = useState<{
@@ -35,8 +39,6 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
   }>()
   const [checkedToppings, setCheckedToppings] = useState<{ name: string; price: number; _id: string }[]>([])
   const [showReviews, setShowReviews] = useState(false)
-
-  const { user } = useAppSelector((state) => state.persistedReducer.auth)
 
   // Lấy tất cả reviews để tính rating chính xác
   const { data: allReviewsData } = useGetReviewsByProductQuery({
@@ -65,18 +67,18 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
 
   const { averageRating, totalReviews } = calculateRating()
   /* xử lý sự kiện check box phân topping */
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const _handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const toppingPrice = Number(event.target.value)
     const toppingName = event.target.name
     const _idTopping = event.target.getAttribute('data-items') as string
 
     const data = { name: toppingName, price: toppingPrice, _id: _idTopping }
     if (event.target.checked) {
-      setTotalToppingPrice((prev) => prev + toppingPrice)
+      _setTotalToppingPrice((prev) => prev + toppingPrice)
       setPrice((prev) => prev + toppingPrice)
       setCheckedToppings((prev) => [...prev, data])
     } else {
-      setTotalToppingPrice((prev) => prev - toppingPrice)
+      _setTotalToppingPrice((prev) => prev - toppingPrice)
       setPrice((prev) => prev - toppingPrice)
       setCheckedToppings((prev) => {
         return prev.filter((topping) => topping.name !== toppingName)
@@ -86,16 +88,14 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
   // const handleGetInfoPrd = (data: any) => {
 
   // }
-  console.log(product,'productproductproduct')
   useEffect(() => {
     if (product.sizes) {
-      console.log(product?.sale,'product?.sale')
       setPrice(product?.sale ?? 0)
       setNameRadioInput(product?.sizes[0] ?? { name: '', price: 0 })
-      setSizes([...product.sizes])
+      _setSizes([...product.sizes])
     }
     setQuantity(1)
-    setTotalToppingPrice(0)
+    _setTotalToppingPrice(0)
     setCheckedToppings([])
     // setNameRadioInput(product.sizes[0].name);
 
@@ -121,7 +121,7 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
     if (user._id !== '' && user.accessToken !== '') {
       const { sale, name, ...rest } = data
       addCartDbFn({
-        name: name,
+        name: product.name,
         items: [
           {
             ...rest,

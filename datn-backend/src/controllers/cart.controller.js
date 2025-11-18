@@ -27,6 +27,7 @@ export const cartController = {
         });
       }
 
+      // Try to find a cart document for this user that matches the provided name (group by product name)
       const cart = await Cart.findOne({ user: _id, name: req.body.name }).populate([
         {
           path: 'items.toppings',
@@ -39,71 +40,32 @@ export const cartController = {
       ]);
 
       if (cart) {
-        let cartItemFound = false;
-        let toppingMatch = false;
-
-        for (let i = 0; i < cart.items.length; i++) {
-          for (let j = 0; j < req.body.items.length; j++) {
-            if (cart.items[i].size?._id.toString() === req.body.items[j].size) {
-
-              toppingMatch = true;
-
-              if (req.body.items[j].toppings.length === cart.items[i].toppings.length) {
-                for (let k = 0; k < cart.items[i].toppings.length; k++) {
-                  if (cart.items[i].toppings[k]._id.toString() !== req.body.items[j].toppings[k]) {
-                    toppingMatch = false;
-                    break;
-                  }
-                }
-              } else {
-                toppingMatch = false;
-              }
-
-              if (toppingMatch) {
-                cart.items[i].quantity += req.body.items[j].quantity;
-                cart.items[i].total = cart.items[i].price * cart.items[i].quantity;
-                cartItemFound = true;
-                break;
-              }
+        for (let j = 0; j < req.body.items.length; j++) {
+          const newItem = req.body.items[j];
+          const existingItem = cart.items.find((item) => {
+            try {
+              return String(item.product) === String(newItem.product);
+            } catch (e) {
+              return item.product === newItem.product;
             }
-          }
-
-          if (cartItemFound) {
-            break;
-          }
-        }
-
-        if (!cartItemFound) {
-          const newItem = req.body.items[0];
-          const existingItem = cart.items.find(
-            (item) => item.name === newItem.name && item.size?._id.toString() === newItem.size
-          );
+          });
 
           if (existingItem) {
-            const matchingToppings = cart.items.filter(
-              (item) =>
-                item.name === newItem.name &&
-                item.size?._id.toString() === newItem.size &&
-                !arraysEqual(item.toppings, newItem.toppings)
-            );
-
-            if (matchingToppings.length > 0) {
-              cart.items.push(newItem);
-            } else {
-              existingItem.quantity += newItem.quantity;
-              existingItem.total = existingItem.price * existingItem.quantity;
-            }
+            // merge quantities and totals
+            existingItem.quantity += newItem.quantity;
+            // prefer adding newItem.total to preserve toppings/size calculations
+            existingItem.total = (existingItem.total || 0) + (newItem.total || newItem.price * newItem.quantity || 0);
           } else {
             cart.items.push(newItem);
           }
         }
 
         await cart.save();
-
       } else {
+        // use provided name if available, fallback to 'Cart'
         await new Cart({
           user: _id,
-          name: req.body.name,
+          name: req.body.name || 'Cart',
           items: req.body.items,
         }).save();
       }
