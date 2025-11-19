@@ -53,7 +53,7 @@ export const FormSliders = ({ open }: FormSlidersProps) => {
   }
 
   return (
-    <Drawer title={'Thêm danh size mới'} width={500} destroyOnClose onClose={onClose} getContainer={false} open={open}>
+    <Drawer title={'Thêm danh size mới'} width={500} destroyOnHidden onClose={onClose} getContainer={false} open={open}>
       <Form
         name='basic'
         autoComplete='off'

@@ -120,7 +120,7 @@ export const FormCustomer = ({ open }: FormCustomerProps) => {
       className='dark:!text-white dark:bg-black'
       title={userData._id ? 'Cập nhật thông tin khách hàng' : 'Thêm khách hàng mới'}
       size='large'
-      destroyOnClose
+      destroyOnHidden
       onClose={() => {
         onClose()
       }}

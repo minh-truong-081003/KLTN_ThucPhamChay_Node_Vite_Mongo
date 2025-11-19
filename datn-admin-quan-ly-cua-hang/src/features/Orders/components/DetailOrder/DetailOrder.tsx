@@ -158,7 +158,7 @@ const DetailOrder = ({ open }: DetailOrderProps) => {
       title={<h1 className='text-2xl'>Chi tiết đơn hàng</h1>}
       placement='top'
       size='large'
-      destroyOnClose
+      destroyOnHidden
       getContainer={false}
       onClose={onClose}
       open={open}

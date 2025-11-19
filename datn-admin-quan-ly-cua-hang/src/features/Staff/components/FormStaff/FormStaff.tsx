@@ -121,7 +121,7 @@ export const FormStaff = ({ open }: FormStaffProps) => {
       className='dark:!text-white dark:bg-black'
       title={userData._id ? 'Cập nhật thông tin nhân viên' : 'Thêm người nhân viên mới'}
       size='large'
-      destroyOnClose
+      destroyOnHidden
       onClose={() => {
         onClose()
         dispatch(setToppingId(null))

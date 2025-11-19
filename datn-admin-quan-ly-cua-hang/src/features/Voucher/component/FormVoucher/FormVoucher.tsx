@@ -155,7 +155,7 @@ const VoucherAdd = ({ open }: VoucherAddProps) => {
     <Drawer
       title={voucherData._id ? 'Cập nhật voucher' : 'Thêm voucher mới'}
       width={476}
-      destroyOnClose
+      destroyOnHidden
       onClose={onClose}
       getContainer={false}
       open={open}

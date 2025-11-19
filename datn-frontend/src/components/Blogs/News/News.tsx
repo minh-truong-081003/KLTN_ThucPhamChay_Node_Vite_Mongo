@@ -31,8 +31,8 @@ const News = () => {
       <div className='flex items-center justify-center w-full py-4'>
         <Empty
           className='flex items-center flex-col'
-          image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
-          imageStyle={{ height: 200 }}
+          image={'https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'}
+          styles={{ image: { height: 200 } }}
           description={<span>Hiện tại chưa có bài viết nào!</span>}
         />
       </div>

@@ -24,3 +24,116 @@
   outline: none !important;
   border-color: #d1d5db;
 }
+
+/* Normalize Goong/Mapbox control wrappers so the geocoder input looks like other form inputs */
+#geocoder,
+.mapboxgl-ctrl-geocoder,
+.goongjs-ctrl-geocoder,
+.goongjs-ctrl-geocoder__control {
+  width: 100%;
+  flex: 1 1 auto;
+  height: 2.25rem; /* align with other inputs */
+  display: flex;
+  align-items: center;
+  box-shadow: none !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* Make the actual input match our standard input style */
+.goongjs-ctrl-geocoder--input,
+.goongjs-ctrl-geocoder__input,
+.mapboxgl-ctrl-geocoder--input,
+.vf-autocomplete-input {
+  /* Match other form inputs which use h-[2.25rem] (36px) in layout wrappers */
+  height: 2.25rem; /* 36px */
+  min-height: 2.25rem;
+  max-height: 2.25rem;
+  display: block;
+  width: 100%;
+  padding: 0 12px !important;
+  border-radius: 8px !important;
+  border: 1px solid #d4d3d3 !important;
+  font-size: 14px !important;
+  color: #111827 !important;
+  box-shadow: none !important;
+  background: #fff !important;
+  box-sizing: border-box !important;
+  line-height: 1.2 !important;
+}
+
+/* ensure the input visually lines up with surrounding form fields */
+.goongjs-ctrl-geocoder--input::placeholder,
+.goongjs-ctrl-geocoder__input::placeholder,
+.mapboxgl-ctrl-geocoder--input::placeholder {
+  color: #9ca3af;
+  font-size: 14px !important;
+}
+
+/* hide any built-in icons that may create extra padding/visual boxes */
+.goongjs-ctrl-geocoder--icon,
+.goongjs-ctrl-geocoder--icon-search,
+.goongjs-ctrl-geocoder__icon,
+.mapboxgl-ctrl-geocoder--icon-search {
+  display: none !important;
+}
+
+/* Ensure geocoder wrapper does not add extra padding/visual box */
+#geocoder,
+.mapboxgl-ctrl-geocoder,
+.goongjs-ctrl-geocoder,
+.goongjs-ctrl-geocoder__control {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+}
+
+/* If there is an extra inner wrapper, make it full width but not taller */
+#geocoder > div,
+.mapboxgl-ctrl-geocoder__control,
+.goongjs-ctrl-geocoder__control {
+  height: 2.25rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+/* Strong overrides for #geocoder container (profile/other pages) */
+#geocoder {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  flex: 1 1 auto !important;
+}
+
+#geocoder .mapboxgl-ctrl-geocoder,
+#geocoder .goongjs-ctrl-geocoder,
+#geocoder .goongjs-ctrl-geocoder__control {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  flex: 1 1 auto !important;
+}
+
+#geocoder .mapboxgl-ctrl-geocoder--input,
+#geocoder .goongjs-ctrl-geocoder--input,
+#geocoder .goongjs-ctrl-geocoder__input,
+#geocoder .vf-autocomplete-input {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  padding: 10px 12px !important;
+}

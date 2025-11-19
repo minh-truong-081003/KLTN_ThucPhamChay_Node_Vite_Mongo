@@ -193,7 +193,7 @@ const MyInfor = () => {
                     <span className='text-red-500'>{errors.account && errors.account.message}</span>
                   </div>
                   <div className='item-profile w-[50%] my-3'>
-                    <label className='block py-2 text-[#959393]'>Giới tính</label>
+                    <h2 className='block py-2 text-[#959393]'>Giới tính</h2>
                     <div className='w-full h-[2.25rem] flex justify-center items-center gap-4 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none'>
                       <label htmlFor='' className='flex items-center gap-x-1'>
                         <input
@@ -232,9 +232,14 @@ const MyInfor = () => {
                     <span className='text-red-500'>{errors.gender && errors.gender.message}</span>
                   </div>
                   <div className='item-profile w-[50%] my-3'>
-                    <label className='block py-2 text-[#959393]'>Địa chỉ mặc định</label>
+                    <h1 className='block py-2 text-[#959393]'>Địa chỉ mặc định</h1>
                     <div id='geocoder' className='flex flex-row gap-3'></div>
-                    <span className='text-red-500'>{errors.address && errors.address.message}</span>
+                      <div>
+                        <Autocomplete setValue={setValue} address={defaultAddress} />
+                        <div id='map'></div>
+                        <input type='hidden' {...register('address')} name='address' />
+                        <span className='text-red-500'>{errors.address && errors.address.message}</span>
+                      </div>
                   </div>
                   <div>
                     <Autocomplete setValue={setValue} address={defaultAddress} />

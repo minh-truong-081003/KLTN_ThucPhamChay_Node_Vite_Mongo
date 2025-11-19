@@ -134,7 +134,7 @@ const FormProduct = () => {
       title={`${productId === null ? 'Thêm' : 'Cập nhật'} sản phẩm`}
       placement='right'
       width={800}
-      destroyOnClose
+      destroyOnHidden
       classNames={{ wrapper: 'custom-drawer' }}
       onClose={() => {
         dispatch(setOpenDrawer(false))

@@ -56,7 +56,7 @@ export const FormSIze = ({ open }: FormFormSIzeSIzeProps) => {
     <Drawer
       title={sizeData._id ? 'Cập nhật size' : 'Thêm size mới'}
       width={376}
-      destroyOnClose
+      destroyOnHidden
       onClose={onClose}
       getContainer={false}
       open={open}

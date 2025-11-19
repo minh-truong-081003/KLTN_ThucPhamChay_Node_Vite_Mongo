@@ -122,8 +122,8 @@ const ModalListVouchers = ({ isOpen, toggleModal, setVoucherChecked, totallPrice
           <div className='flex items-center justify-center w-full py-4'>
             <Empty
               className='flex items-center flex-col'
-              image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
-              imageStyle={{ height: 200 }}
+              image={'https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'}
+              styles={{ image: { height: 200 } }}
               description={<span>Rất tiếc hiện tại không có mã khuyến mại nào 😥</span>}
             />
           </div>

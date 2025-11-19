@@ -128,7 +128,7 @@ const FormBlog = ({ open }: BlogFormProps) => {
     <Drawer
       title={blogData?._id ? 'Chỉnh sửa bài viết' : 'Thêm bài viết mới'}
       width={776}
-      destroyOnClose
+      destroyOnHidden
       onClose={onClose}
       getContainer={false}
       open={blogId ? false : open}

@@ -144,11 +144,13 @@ export const UpdateAddress = ({ isUpdate, setIsUpdate, address }: Props) => {
                   <div>
                     <div className='item-profile w-full'>
                       <div id='geocoder' className='flex flex-row gap-3'></div>
-                      <span className='text-red-500'>{errors.address && errors.address.message}</span>
-                    </div>
-                    <div>
-                      <Autocomplete setValue={setValue} address={address?.address} />
-                      <div id='map'></div>
+                      <div>
+                        <Autocomplete setValue={setValue} address={address?.address} />
+                        <div id='map'></div>
+                        {/* register hidden input so react-hook-form knows about 'address' field */}
+                        <input type='hidden' {...register('address')} name='address' />
+                        <span className='text-red-500'>{errors.address && errors.address.message}</span>
+                      </div>
                     </div>
                   </div>
                 </Form.Item>

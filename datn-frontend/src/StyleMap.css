@@ -115,16 +115,133 @@
   background-position: left center;
 }
 
-/* Remove browser-specific clear/search decorations */
-.mapboxgl-ctrl-geocoder--input::-webkit-search-decoration,
-.mapboxgl-ctrl-geocoder--input::-webkit-search-cancel-button,
-.mapboxgl-ctrl-geocoder--input::-webkit-search-results-button,
-.mapboxgl-ctrl-geocoder--input::-webkit-search-results-decoration {
-  display: none;
+/* Strong overrides for checkout geocoder container to ensure full width */
+#geocoderCheckout .mapboxgl-ctrl-geocoder,
+#geocoderCheckout .goongjs-ctrl-geocoder,
+#geocoderCheckout .goongjs-ctrl-geocoder__control {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  display: block !important;
+  box-sizing: border-box !important;
 }
 
-/* Ensure the input font renders crisply and placeholder does not overlap */
-.mapboxgl-ctrl-geocoder--input,
-.yasuo-search {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+#geocoderCheckout .mapboxgl-ctrl-geocoder--input,
+#geocoderCheckout .goongjs-ctrl-geocoder--input,
+#geocoderCheckout .goongjs-ctrl-geocoder__input,
+#geocoderCheckout .yasuo-search {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  padding-left: 0px !important;
+}
+
+/* Ensure geocoder input is visible in checkout container by default. */
+#geocoderCheckout .mapboxgl-ctrl-geocoder--input,
+#geocoderCheckout .goongjs-ctrl-geocoder--input,
+#geocoderCheckout .goongjs-ctrl-geocoder__input,
+#geocoderCheckout .yasuo-search {
+  display: block !important;
+}
+
+/* Make geocoder input look identical to other form fields (name/phone) */
+#geocoderCheckout {
+  display: flex;
+  align-items: center;
+}
+
+#geocoderCheckout .mapboxgl-ctrl-geocoder--input,
+#geocoderCheckout .goongjs-ctrl-geocoder--input,
+#geocoderCheckout .goongjs-ctrl-geocoder__input,
+#geocoderCheckout .yasuo-search {
+  height: 44px !important;
+  /* Match the project's Input padding: top/right/bottom/left = 0 24px 0 8px */
+  padding: 0 24px 0 8px !important;
+  border-radius: 12px !important;
+  border: 2px solid #e5e7eb !important;
+  box-sizing: border-box !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  background: #ffffff !important;
+  transition: all 0.15s ease-in-out !important;
+  outline: none !important;
+}
+
+/* Clean, opinionated checkout geocoder styling to match other inputs.
+   This block intentionally sets font, height and padding so the
+   external geocoder input appears identical to our `Input` component. */
+#geocoderCheckout {
+  display: flex;
+  align-items: center;
+}
+
+#geocoderCheckout .mapboxgl-ctrl-geocoder,
+#geocoderCheckout .goongjs-ctrl-geocoder,
+#geocoderCheckout .goongjs-ctrl-geocoder__control {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Make the geocoder input match the project's Input exactly */
+#geocoderCheckout .mapboxgl-ctrl-geocoder--input,
+#geocoderCheckout .goongjs-ctrl-geocoder--input,
+#geocoderCheckout .goongjs-ctrl-geocoder__input,
+#geocoderCheckout .yasuo-search {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  /* reduce size to better match phone input */
+  height: 40px !important;
+  padding: 0 18px 0 0px !important; /* align placeholder with phone input, shift slightly left */
+  border-radius: 8px !important;
+  border: 0 !important;
+  background: #ffffff !important; /* use white background like phone input */
+  font-size: 14px !important;
+  color: #111827 !important;
+  line-height: 20px !important;
+  font-weight: 400 !important;
+  outline: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+#geocoderCheckout .mapboxgl-ctrl-geocoder--input:focus,
+#geocoderCheckout .goongjs-ctrl-geocoder--input:focus,
+#geocoderCheckout .goongjs-ctrl-geocoder__input:focus,
+#geocoderCheckout .yasuo-search:focus {
+  background: #f8fafc !important; /* keep subtle gray on focus */
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* placeholder and font-family should match the app */
+#geocoderCheckout .mapboxgl-ctrl-geocoder--input::placeholder,
+#geocoderCheckout .yasuo-search::placeholder {
+  color: #6b7280 !important; /* slightly darker placeholder to match note input */
+  font-weight: 400 !important;
+}
+
+#geocoderCheckout .mapboxgl-ctrl-geocoder--input,
+#geocoderCheckout .yasuo-search {
+  font-family: inherit !important;
+}
+
+/* hide any internal icons enforced by the geocoder lib */
+.mapboxgl-ctrl-geocoder--icon-search,
+.mapboxgl-ctrl-geocoder--clear,
+.goongjs-ctrl-geocoder--icon,
+.goongjs-ctrl-geocoder--icon-search,
+.goongjs-ctrl-geocoder__icon {
+  display: none !important;
 }

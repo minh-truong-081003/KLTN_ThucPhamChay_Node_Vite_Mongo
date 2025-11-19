@@ -126,14 +126,14 @@ const AccountLayout = () => {
                     />
                   </div>
                   <div className="item-profile w-[50%] my-3">
-                    <label className="block py-2 text-[#959393]">Giới tính</label>
+                    <h2 className="block py-2 text-[#959393]">Giới tính</h2>
                     <input
                       className="g-gray-50 focus:outline-none w-full text-sm text-gray-900 border border-gray-300 rounded-lg"
                       type="text"
                     />
                   </div>
                   <div className="item-profile w-[50%] my-3">
-                    <label className="block py-2 text-[#959393]">Địa chỉ mặc định</label>
+                    <h1 className="block py-2 text-[#959393]">Địa chỉ mặc định</h1>
                     <input
                       className="g-gray-50 focus:outline-none w-full text-sm text-gray-900 border border-gray-300 rounded-lg"
                       type="text"

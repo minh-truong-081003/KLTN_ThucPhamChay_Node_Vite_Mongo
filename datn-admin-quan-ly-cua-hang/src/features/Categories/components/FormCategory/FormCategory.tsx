@@ -51,7 +51,7 @@ const FormCategory = ({ open }: FormCategoryProps) => {
     <Drawer
       title={cateData._id ? 'Cập nhật danh mục' : 'Thêm danh mục mới'}
       width={376}
-      destroyOnClose
+      destroyOnHidden
       onClose={onClose}
       getContainer={false}
       open={open}

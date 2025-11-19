@@ -228,7 +228,7 @@ const MyOrder = () => {
       <Modal
         title='Lý do hủy đơn hàng?'
         open={isModalOpen}
-        destroyOnClose
+        destroyOnHidden
         onCancel={handleCancel}
         footer={[
           <ButtonAnt hidden={!reason} key='cancel' onClick={handleCancel}>

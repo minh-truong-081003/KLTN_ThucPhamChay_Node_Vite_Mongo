@@ -300,8 +300,8 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
                   ) : (
                     <Empty
                       className="flex items-center flex-col"
-                      image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-                      imageStyle={{ height: 200 }}
+                      image={'https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'}
+                      styles={{ image: { height: 200 } }}
                       description={<span>Hiện tại bạn không có thông báo nào!</span>}
                     />
                   )}

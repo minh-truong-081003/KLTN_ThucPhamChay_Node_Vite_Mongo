@@ -1,4 +1,5 @@
 import { Button, Col, Form, Modal, Row, message } from 'antd'
+import axios from 'axios'
 import { RootState, useAppSelector, useCreateAddressMutation } from '../../../store'
 import { handleCancel, handleOk } from '../utils'
 
@@ -23,7 +24,8 @@ export const CreateAddress = ({ isModalOpen, setIsModalOpen }: Props) => {
     handleSubmit,
     formState: { errors },
     reset,
-    setValue
+    setValue,
+    getValues
   } = useForm<InforAddressForm>({
     mode: 'onSubmit',
     resolver: yupResolver(InforAddressSchema)
@@ -34,7 +36,47 @@ export const CreateAddress = ({ isModalOpen, setIsModalOpen }: Props) => {
   }
 
   const handleSubmitAddress = async (data: InforAddressForm) => {
-    const geo = JSON.parse(localStorage.getItem('addressDefault') as string)
+    let geoString = localStorage.getItem('addressDefault')
+    let geo: { lat: number; lng: number } | null = null
+
+    if (geoString) {
+      try {
+        geo = JSON.parse(geoString)
+      } catch (err) {
+        geo = null
+      }
+    }
+
+    // If localStorage doesn't contain coordinates, try forward-geocoding the address
+    if (!geo) {
+      const addressValue = data.address || getValues('address')
+      if (!addressValue) {
+        message.error('Vui lòng chọn một địa chỉ từ danh sách gợi ý.')
+        return
+      }
+
+      try {
+        const res = await axios.get(
+          `https://rsapi.goong.io/Geocode?address=${encodeURIComponent(addressValue)}&api_key=BCLZh27rb6GtYXaozPyS16xbZoYw3E1STP7Ckg2P`
+        )
+        const results = res?.data?.results
+        if (results && results.length > 0) {
+          const location = results[0]?.geometry?.location
+          if (location && location.lat && location.lng) {
+            geo = { lat: location.lat, lng: location.lng }
+            // cache for other components
+            localStorage.setItem('addressDefault', JSON.stringify(geo))
+          }
+        }
+      } catch (err) {
+        // ignore and fall through to error handling below
+      }
+
+      if (!geo) {
+        message.error('Không lấy được tọa độ từ địa chỉ đã nhập. Vui lòng chọn từ danh sách gợi ý.')
+        return
+      }
+    }
 
     try {
       const response = await createAddress({
@@ -100,13 +142,15 @@ export const CreateAddress = ({ isModalOpen, setIsModalOpen }: Props) => {
                 <Form.Item>
                   <div>
                     <div className='item-profile w-full my-3'>
-                      <label className='block py-2 text-[#959393]'>Địa chỉ mặc định</label>
+                      <h1 className='block py-2 text-[#959393]'>Địa chỉ mặc định</h1>
                       <div id='geocoder' className='flex flex-row gap-3'></div>
-                      <span className='text-red-500'>{errors.address && errors.address.message}</span>
-                    </div>
-                    <div>
-                      <Autocomplete setValue={setValue} />
-                      <div id='map'></div>
+                      <div>
+                        <Autocomplete setValue={setValue} />
+                        <div id='map'></div>
+                        {/* register hidden input so react-hook-form knows about 'address' field */}
+                        <input type='hidden' {...register('address')} name='address' />
+                        <span className='text-red-500'>{errors.address && errors.address.message}</span>
+                      </div>
                     </div>
                   </div>
                 </Form.Item>

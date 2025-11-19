@@ -66,7 +66,7 @@ const ModalCancelReason = () => {
       <Modal
         open={openModal}
         title='Lý do hủy đơn hàng?'
-        destroyOnClose
+        destroyOnHidden
         centered
         onCancel={onCancel}
         footer={[

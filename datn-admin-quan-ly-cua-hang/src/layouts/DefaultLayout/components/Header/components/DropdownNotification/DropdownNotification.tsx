@@ -115,8 +115,8 @@ const DropdownNotification = () => {
           ) : (
             <Empty
               className='flex items-center flex-col mb-2'
-              image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
-              imageStyle={{ height: 200 }}
+              image={'https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'}
+              styles={{ image: { height: 200 } }}
               description={<span>Hiện tại không có thông báo nào!</span>}
             />
           )}
