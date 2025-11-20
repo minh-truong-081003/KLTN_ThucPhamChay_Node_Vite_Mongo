@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai'
+import { AiOutlineSearch, AiOutlineClose, AiFillHeart } from 'react-icons/ai'
 import { FaBell } from 'react-icons/fa'
 import { Tooltip, Popover, Empty } from 'antd'
 import { Link, createSearchParams, useNavigate, useLocation } from 'react-router-dom'
@@ -154,7 +154,7 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
       )}
 
       {/* Search Form */}
-      <form onSubmit={onSubmitSearch} className="search lg:flex items-center justify-center w-full">
+      <form onSubmit={onSubmitSearch} className="search lg:flex items-center justify-center w-full-1">
         <div ref={searchRef} className="relative w-full">
           <div className="relative">
             <input
@@ -317,6 +317,11 @@ const Header = ({ hideLogo = false, bgColor = 'bg-white' }) => {
                 <FaBell className={`text-xl ${bgColor === 'transparent' ? 'text-white' : 'text-gray-800'}`} />
               </div>
             </Popover>
+          </Tooltip>
+          <Tooltip title="Danh sách yêu thích" arrow={false}>
+            <Link to="/account-layout/my-favorites">
+              <AiFillHeart className={`text-xl ${bgColor === 'transparent' ? 'text-white' : 'text-red-500'} hover:text-red-500 transition-colors`} />
+            </Link>
           </Tooltip>
           <Tooltip title="Tài khoản" arrow={false}>
             <Link to="/account-layout">

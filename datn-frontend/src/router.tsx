@@ -1,5 +1,5 @@
 import { GuardAccount, GuardSign } from './guardRoute'
-import { MyAddress, MyInfor, MyOrder, MyOrderDetail, MyVoucher } from './components'
+import { MyAddress, MyInfor, MyOrder, MyOrderDetail, MyVoucher, MyFavorites } from './components'
 
 import AccountLayout from './layouts/AccountLayout/accountLayout'
 import Achievement from './components/Achievement/Achievement'
@@ -130,7 +130,8 @@ const routes = createBrowserRouter([
       { path: 'my-order/:id', element: <MyOrderDetail /> },
       { path: 'my-voucher', element: <MyVoucher /> },
       { path: 'my-address', element: <MyAddress /> },
-      { path: 'change-password', element: <ChangePassword /> }
+      { path: 'change-password', element: <ChangePassword /> },
+      { path: 'my-favorites', element: <MyFavorites /> }
     ]
   },
 

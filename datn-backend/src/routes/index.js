@@ -6,6 +6,7 @@ import cartRouter from './cart.routes.js';
 import categoryBlogRoutes from './category-blog.routes.js';
 import categoryRoutes from './category.routes.js';
 import express from 'express';
+import favoriteRoutes from './favorite.routes.js';
 import newBlogRouter from './newsBlogs.routes.js';
 import orderRoutes from './order.routes.js';
 import productRoutes from './product.routes.js';
@@ -43,6 +44,7 @@ const rootRoutes = [
   vnpayRoutes,
   reviewRoutes,
   messageRoutes,
+  favoriteRoutes,
 ];
 
 rootRoutes.map((route) => {

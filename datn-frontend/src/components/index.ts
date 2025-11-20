@@ -3,6 +3,7 @@ import Header from './Header'
 import Input from './Input'
 import ListProducts from './List-Products'
 import MyCart from './My-cart'
+import MyFavorites from './My-Favorites'
 import MyInfor from './My-Infor'
 import MyOrder from './My-order'
 import MyOrderDetail from './My-OrderDetail'
@@ -25,5 +26,6 @@ export {
   MyVoucher,
   SupporterBtn,
   MyOrderDetail,
-  ProductFilter
+  ProductFilter,
+  MyFavorites
 }

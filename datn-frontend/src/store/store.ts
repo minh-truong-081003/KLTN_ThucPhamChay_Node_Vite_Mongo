@@ -2,6 +2,7 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, pers
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import AnalyticsApi from '../api/analytics'
+import { ApiFavorites } from '../api/favorite.api'
 import { ApiProducts } from '../api/Product'
 import { ApiUser } from '../api/User'
 import ApiVoucher from '../api/voucher'
@@ -66,7 +67,8 @@ const middleware = [
   addressApi.middleware,
   VnpayApi.middleware,
   ApiNotifications.middleware,
-  ApiReview.middleware
+  ApiReview.middleware,
+  ApiFavorites.middleware
 ]
 
 export const store = configureStore({
@@ -89,7 +91,8 @@ export const store = configureStore({
     [addressApi.reducerPath]: addressApi.reducer,
     [VnpayApi.reducerPath]: VnpayApi.reducer,
     [ApiNotifications.reducerPath]: ApiNotifications.reducer,
-    [ApiReview.reducerPath]: ApiReview.reducer
+    [ApiReview.reducerPath]: ApiReview.reducer,
+    [ApiFavorites.reducerPath]: ApiFavorites.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

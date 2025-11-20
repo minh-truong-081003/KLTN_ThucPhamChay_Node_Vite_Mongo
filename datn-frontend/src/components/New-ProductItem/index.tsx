@@ -2,6 +2,10 @@ import { Button } from '..'
 import { IProduct } from '../../interfaces/products.type'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { useNavigate } from 'react-router-dom'
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import { useAppSelector } from '../../store/hooks'
+import { useAddToFavoritesMutation, useRemoveFromFavoritesMutation, useCheckFavoriteQuery } from '../../api/favorite.api'
+import { message } from 'antd'
 
 interface NewProductItemProps {
   product: IProduct
@@ -9,8 +13,38 @@ interface NewProductItemProps {
 
 const NewProductItem = ({ product }: NewProductItemProps) => {
   const navigate = useNavigate()
+  const { user } = useAppSelector((state) => state.persistedReducer.auth)
+  
+  const [addToFavorites, { isLoading: isAdding }] = useAddToFavoritesMutation()
+  const [removeFromFavorites, { isLoading: isRemoving }] = useRemoveFromFavoritesMutation()
+  const { data: favoriteData } = useCheckFavoriteQuery(product._id, {
+    skip: !user?.accessToken
+  })
+  const isFavorite = favoriteData?.isFavorite || false
+
   const redirectToDetailPage = (dataProduct: IProduct) => {
     navigate(`/products`, { state: dataProduct })
+  }
+
+  const handleToggleFavorite = async (e: React.MouseEvent) => {
+    e.stopPropagation() // Ngăn không cho click vào popup detail
+    
+    if (!user?.accessToken) {
+      message.warning('Vui lòng đăng nhập để sử dụng tính năng này')
+      return
+    }
+
+    try {
+      if (isFavorite) {
+        await removeFromFavorites(product._id).unwrap()
+        message.success('Đã bỏ khỏi danh sách yêu thích')
+      } else {
+        await addToFavorites({ productId: product._id }).unwrap()
+        message.success('Đã thêm vào danh sách yêu thích')
+      }
+    } catch (error) {
+      message.error('Có lỗi xảy ra, vui lòng thử lại')
+    }
   }
 
   return (
@@ -22,6 +56,17 @@ const NewProductItem = ({ product }: NewProductItemProps) => {
         <span className='-rotate-12 bg-[#d3b673] rounded-[50%] flex justify-center items-center text-white w-10 h-10 text-sm font-bold '>
           new
         </span>
+        {/* Favorite Icon */}
+        <div 
+          onClick={handleToggleFavorite}
+          className={`w-8 h-8 bg-white bg-opacity-80 rounded-full flex justify-center items-center cursor-pointer hover:bg-opacity-100 transition-all duration-200 ${isAdding || isRemoving ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          {isFavorite ? (
+            <AiFillHeart className='text-red-500 text-lg' />
+          ) : (
+            <AiOutlineHeart className='text-gray-600 text-lg' />
+          )}
+        </div>
         {/* {product?.sale !== 0 && product.sizes && (
           <span
             className='flex items-center justify-center h-10 w-10 font-bold
@@ -34,8 +79,11 @@ const NewProductItem = ({ product }: NewProductItemProps) => {
       <div className='img md:h-[255px] md:w-[255px]'>
         <img
           className='transition-all group-hover:scale-[1.2] h-full w-full object-cover'
-          src={product?.images[0]?.url}
+          src={product?.images?.[0]?.url || '/placeholder-image.png'}
           alt={product?.name}
+          onError={(e) => {
+            e.currentTarget.src = '/placeholder-image.png'
+          }}
         />
       </div>
       <div className='product-content relative top-[50px] flex flex-col items-center transition-all bg-[#f5f5f5] group-hover:top-0'>

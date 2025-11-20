@@ -1,4 +1,4 @@
-import { AiFillCreditCard, AiOutlineUser } from 'react-icons/ai'
+import { AiFillCreditCard, AiOutlineUser, AiFillHeart } from 'react-icons/ai'
 
 import type { MenuProps } from 'antd'
 import { GrLogout } from 'react-icons/gr'
@@ -37,6 +37,7 @@ export const items = ({ onLogout }: Props): MenuItem[] => {
     ]),
     getItem(<Link to='my-order'>Đơn hàng của tôi</Link>, 'sub3', <MdShoppingCart className='text-[14px] mr-2 ' />),
     getItem(<Link to='my-voucher'>Mã khuyến mại</Link>, 'sub4', <AiFillCreditCard className='text-[14px] mr-2 ' />),
+    getItem(<Link to='my-favorites'>Danh sách yêu thích</Link>, 'sub6', <AiFillHeart className='text-[14px] mr-2 ' />),
     getItem(
       <p onClick={onLogout} className='cursor-pointer'>
         Đăng xuất
@@ -60,4 +61,4 @@ export const items = ({ onLogout }: Props): MenuItem[] => {
 // ]
 
 // submenu keys of first level
-export const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5']
+export const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5', 'sub6']
