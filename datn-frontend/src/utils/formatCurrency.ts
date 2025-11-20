@@ -10,8 +10,8 @@ export const formatPriceCompact = (price: number) => {
     Compact.split('.').length === 1
       ? formatCurrency(Number(Compact.split('.')[0]))
       : Compact.split('.').length === 2
-      ? `${Compact.split('.')[0]}K`
-      : `${Compact.split('.')[0]}Tr`
+        ? `${Compact.split('.')[0]}K`
+        : `${Compact.split('.')[0]}Tr`
   return Compact
 }
 

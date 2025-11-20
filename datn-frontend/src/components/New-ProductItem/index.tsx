@@ -4,7 +4,11 @@ import { formatCurrency } from '../../utils/formatCurrency'
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { useAppSelector } from '../../store/hooks'
-import { useAddToFavoritesMutation, useRemoveFromFavoritesMutation, useCheckFavoriteQuery } from '../../api/favorite.api'
+import {
+  useAddToFavoritesMutation,
+  useRemoveFromFavoritesMutation,
+  useCheckFavoriteQuery
+} from '../../api/favorite.api'
 import { message } from 'antd'
 
 interface NewProductItemProps {
@@ -14,7 +18,7 @@ interface NewProductItemProps {
 const NewProductItem = ({ product }: NewProductItemProps) => {
   const navigate = useNavigate()
   const { user } = useAppSelector((state) => state.persistedReducer.auth)
-  
+
   const [addToFavorites, { isLoading: isAdding }] = useAddToFavoritesMutation()
   const [removeFromFavorites, { isLoading: isRemoving }] = useRemoveFromFavoritesMutation()
   const { data: favoriteData } = useCheckFavoriteQuery(product._id, {
@@ -28,7 +32,7 @@ const NewProductItem = ({ product }: NewProductItemProps) => {
 
   const handleToggleFavorite = async (e: React.MouseEvent) => {
     e.stopPropagation() // Ngăn không cho click vào popup detail
-    
+
     if (!user?.accessToken) {
       message.warning('Vui lòng đăng nhập để sử dụng tính năng này')
       return
@@ -57,7 +61,7 @@ const NewProductItem = ({ product }: NewProductItemProps) => {
           new
         </span>
         {/* Favorite Icon */}
-        <div 
+        <div
           onClick={handleToggleFavorite}
           className={`w-8 h-8 bg-white bg-opacity-80 rounded-full flex justify-center items-center cursor-pointer hover:bg-opacity-100 transition-all duration-200 ${isAdding || isRemoving ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
@@ -92,11 +96,9 @@ const NewProductItem = ({ product }: NewProductItemProps) => {
         </div>
         <div className='flex items-center mt-6 item-price gap-x-2'>
           <span className='text-[#8a733f] text-sm font-[700] '>
-            {product.sale
-              ? formatCurrency(product.sale)
-              : formatCurrency(product.sale)}
+            {product.sale ? formatCurrency(product.sale) : formatCurrency(product.sale)}
           </span>
-         {/*  {product?.sale !== 0 && (
+          {/*  {product?.sale !== 0 && (
             <span className='text-[#bebebe] text-sm line-through'>
               {product.sale < 100 ? formatCurrency(product.sizes && product.sizes[0]?.price) : ''}
               {product.sizes && formatCurrency(product?.sizes[0]?.price)}

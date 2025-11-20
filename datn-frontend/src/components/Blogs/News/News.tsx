@@ -11,9 +11,9 @@ const News = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const { data: dataBlog } = useGetAllBlogsQuery()
-  
+
   // If no category ID, show all blogs, otherwise filter by category
-  const listBlogsByIdCate = id 
+  const listBlogsByIdCate = id
     ? dataBlog && dataBlog?.docs?.filter((item) => item?.category?._id === id)
     : dataBlog?.docs
 
@@ -42,12 +42,10 @@ const News = () => {
     <>
       {!id && (
         <div className='bg-gradient-to-r from-green-50 to-yellow-50 rounded-lg p-6 mb-8 border-l-4 border-[#d3b673]'>
-          <h2 className='text-2xl font-bold text-[#8a733f] mb-3'>
-            📰 Tin Tức Thực Phẩm Chay
-          </h2>
+          <h2 className='text-2xl font-bold text-[#8a733f] mb-3'>📰 Tin Tức Thực Phẩm Chay</h2>
           <p className='text-gray-700 leading-relaxed mb-2'>
-            Khám phá những câu chuyện, kiến thức và xu hướng mới nhất về ẩm thực chay. 
-            Từ các chính sách đổi trả, câu chuyện thương hiệu, đến những sự kiện và khuyến mãi hấp dẫn.
+            Khám phá những câu chuyện, kiến thức và xu hướng mới nhất về ẩm thực chay. Từ các chính sách đổi trả, câu
+            chuyện thương hiệu, đến những sự kiện và khuyến mãi hấp dẫn.
           </p>
           <p className='text-gray-600 text-sm italic'>
             ✨ Cùng ViFood lan tỏa lối sống lành mạnh và yêu thương thiên nhiên!

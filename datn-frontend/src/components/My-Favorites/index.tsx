@@ -23,7 +23,9 @@ const MyFavorites = () => {
 
   console.log('Favorites data:', favorites)
 
-  const filteredFavorites = favorites.filter(favorite => favorite.product && !favorite.product.is_deleted && favorite.product.is_active)
+  const filteredFavorites = favorites.filter(
+    (favorite) => favorite.product && !favorite.product.is_deleted && favorite.product.is_active
+  )
 
   console.log('Filtered favorites:', filteredFavorites)
 
@@ -49,7 +51,7 @@ const MyFavorites = () => {
         <div className='bg-top-account'></div>
         <div className='account-content relative -top-5 bg-[#fff] mx-4 rounded-md p-8'>
           <h2 className='text-xl font-semibold mb-6'>Danh sách yêu thích</h2>
-          
+
           {isLoading ? (
             <div className='text-center py-8'>
               <p>Đang tải...</p>

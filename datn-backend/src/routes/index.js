@@ -20,6 +20,7 @@ import notificationRoutes from './notification.routes.js';
 import vnpayRoutes from './vnpay.rotues.js';
 import reviewRoutes from './review.routes.js';
 import messageRoutes from './message.routes.js';
+import contactRouter from './contact.routes.js';
 
 const router = express.Router();
 
@@ -44,6 +45,7 @@ const rootRoutes = [
   vnpayRoutes,
   reviewRoutes,
   messageRoutes,
+  contactRouter,
   favoriteRoutes,
 ];
 

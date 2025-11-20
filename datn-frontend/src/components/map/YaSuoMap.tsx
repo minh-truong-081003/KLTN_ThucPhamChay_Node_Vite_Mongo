@@ -16,12 +16,11 @@ const List: ListStore[] = [
     highName: 'Trường Sư phạm Kỹ thuật TP HCM',
     name: 'Trường Sư phạm Kỹ thuật TP HCM, Khu phố 6, Linh Trung, Thủ Đức, TP Hồ Chí Minh',
     geoLocation: {
-      lat: 10.854528,  // Vĩ độ mới
-      lng: 106.789888  // Kinh độ mới
+      lat: 10.854528, // Vĩ độ mới
+      lng: 106.789888 // Kinh độ mới
     }
   }
-];
-
+]
 
 interface Props {
   setGapStore?: React.Dispatch<React.SetStateAction<ListStore[]>>
@@ -175,7 +174,7 @@ const YaSuoMap = ({ setValue, setGapStore, setPickGapStore }: Props) => {
         if (inputEl.value && inputEl.value.length === 1 && inputEl.value.toLowerCase() === 's') {
           inputEl.value = ''
         }
-        
+
         inputEl.addEventListener('input', (e: any) => {
           // keep form in sync as user types
           if (setValue) setValue('shippingLocation', e.target.value)
@@ -188,7 +187,6 @@ const YaSuoMap = ({ setValue, setGapStore, setPickGapStore }: Props) => {
           await getDistance()
         })
       }
-      
 
       const groups = document.querySelectorAll('.mapboxgl-ctrl-top-right .mapboxgl-ctrl-group')
       const geoBtn = groups && groups[1]

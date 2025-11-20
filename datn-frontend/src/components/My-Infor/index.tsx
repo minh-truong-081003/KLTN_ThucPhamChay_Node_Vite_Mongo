@@ -234,12 +234,12 @@ const MyInfor = () => {
                   <div className='item-profile w-[50%] my-3'>
                     <h1 className='block py-2 text-[#959393]'>Địa chỉ mặc định</h1>
                     <div id='geocoder' className='flex flex-row gap-3'></div>
-                      <div>
-                        <Autocomplete setValue={setValue} address={defaultAddress} />
-                        <div id='map'></div>
-                        <input type='hidden' {...register('address')} name='address' />
-                        <span className='text-red-500'>{errors.address && errors.address.message}</span>
-                      </div>
+                    <div>
+                      <Autocomplete setValue={setValue} address={defaultAddress} />
+                      <div id='map'></div>
+                      <input type='hidden' {...register('address')} name='address' />
+                      <span className='text-red-500'>{errors.address && errors.address.message}</span>
+                    </div>
                   </div>
                   <div>
                     <Autocomplete setValue={setValue} address={defaultAddress} />

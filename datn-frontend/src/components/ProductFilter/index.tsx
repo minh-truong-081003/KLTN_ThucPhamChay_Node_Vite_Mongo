@@ -55,11 +55,11 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
 
       if (queryConfig.c && queryConfig.c !== 'all') params.c = queryConfig.c
       if (queryConfig.searchName) params.searchName = queryConfig.searchName
-      
+
       if (minPrice > 0 || maxPrice < 1000000) {
         params.priceRange = `${minPrice}-${maxPrice}`
       }
-      
+
       if (rating > 0) params.rating = rating.toString()
       if (sortBy) params.sortBy = sortBy
 
@@ -78,9 +78,9 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
     if (newMin <= newMax && newMax >= newMin) {
       setMinPrice(newMin)
       setMaxPrice(newMax)
-      
+
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
-      
+
       const updateFn = () => {
         const params: any = {
           _page: '1',
@@ -91,10 +91,10 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
         if (newMin > 0 || newMax < 1000000) params.priceRange = `${newMin}-${newMax}`
         if (rating > 0) params.rating = rating.toString()
         if (sortBy) params.sortBy = sortBy
-        
+
         navigate(`/products?${new URLSearchParams(params).toString()}`)
       }
-      
+
       if (immediate) {
         updateFn()
       } else {
@@ -105,9 +105,9 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
 
   const handleRatingChange = (val: number) => {
     setRating(val)
-    
+
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    
+
     const params: any = {
       _page: '1',
       limit: queryConfig.limit || '6'
@@ -117,7 +117,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
     if (minPrice > 0 || maxPrice < 1000000) params.priceRange = `${minPrice}-${maxPrice}`
     if (val > 0) params.rating = val.toString()
     if (sortBy) params.sortBy = sortBy
-    
+
     timeoutRef.current = setTimeout(() => {
       navigate(`/products?${new URLSearchParams(params).toString()}`)
     }, 300)
@@ -125,7 +125,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
 
   const handleSortChange = (val: string) => {
     setSortBy(val)
-    
+
     const params: any = {
       _page: '1',
       limit: queryConfig.limit || '6'
@@ -135,7 +135,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
     if (minPrice > 0 || maxPrice < 1000000) params.priceRange = `${minPrice}-${maxPrice}`
     if (rating > 0) params.rating = rating.toString()
     if (val) params.sortBy = val
-    
+
     navigate(`/products?${new URLSearchParams(params).toString()}`)
   }
 
@@ -144,7 +144,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
     setMaxPrice(1000000)
     setRating(0)
     setSortBy('')
-    
+
     const params: any = {
       _page: '1',
       limit: queryConfig.limit || '6'
@@ -156,19 +156,19 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
     navigate(`/products?${searchParams}`)
   }
 
-  const hasActiveFilters = (minPrice > 0 || maxPrice < 1000000) || rating > 0 || sortBy
+  const hasActiveFilters = minPrice > 0 || maxPrice < 1000000 || rating > 0 || sortBy
 
   return (
-    <div className="bg-white rounded-sm p-3 shadow-sm">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <FaFilter className="text-[#d3b673]" size={14} />
-          <h3 className="font-semibold text-gray-800 text-sm">Bộ lọc</h3>
+    <div className='bg-white rounded-sm p-3 shadow-sm'>
+      <div className='flex items-center justify-between mb-3'>
+        <div className='flex items-center gap-2'>
+          <FaFilter className='text-[#d3b673]' size={14} />
+          <h3 className='font-semibold text-gray-800 text-sm'>Bộ lọc</h3>
         </div>
         {hasActiveFilters && (
           <button
             onClick={clearFilters}
-            className="text-xs text-red-500 hover:text-red-700 flex items-center gap-1 transition-colors"
+            className='text-xs text-red-500 hover:text-red-700 flex items-center gap-1 transition-colors'
           >
             <FaTimes size={10} />
             Xóa
@@ -177,11 +177,12 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
       </div>
 
       {/* Sort By */}
-      <div className="mb-3 pb-3 border-b border-gray-200">
-        <label className="block text-xs font-medium text-gray-700 mb-2">
-          Sắp xếp {sortBy && <span className="text-[#d3b673]">({sortOptions.find(o => o.value === sortBy)?.label})</span>}
+      <div className='mb-3 pb-3 border-b border-gray-200'>
+        <label className='block text-xs font-medium text-gray-700 mb-2'>
+          Sắp xếp{' '}
+          {sortBy && <span className='text-[#d3b673]'>({sortOptions.find((o) => o.value === sortBy)?.label})</span>}
         </label>
-        <div className="grid grid-cols-2 gap-1.5">
+        <div className='grid grid-cols-2 gap-1.5'>
           {sortOptions.map((option) => (
             <button
               key={option.value}
@@ -199,13 +200,16 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
       </div>
 
       {/* Price Range Slider */}
-      <div className="mb-3 pb-3 border-b border-gray-200">
-        <label className="block text-xs font-medium text-gray-700 mb-2">
-          Khoảng giá: <span className="text-[#d3b673] font-semibold">{formatPrice(minPrice)}đ - {formatPrice(maxPrice)}đ</span>
+      <div className='mb-3 pb-3 border-b border-gray-200'>
+        <label className='block text-xs font-medium text-gray-700 mb-2'>
+          Khoảng giá:{' '}
+          <span className='text-[#d3b673] font-semibold'>
+            {formatPrice(minPrice)}đ - {formatPrice(maxPrice)}đ
+          </span>
         </label>
-        
+
         {/* Quick Price Selection Buttons */}
-        <div className="grid grid-cols-3 gap-1.5 mb-3">
+        <div className='grid grid-cols-3 gap-1.5 mb-3'>
           <button
             onClick={() => handlePriceChange(0, 100000, true)}
             className={`text-xs py-1.5 px-1 rounded border transition-all ${
@@ -239,14 +243,14 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
         </div>
 
         {/* Dual Range Slider Container */}
-        <div className="relative pt-1 pb-6">
-          <div className="relative h-1.5">
+        <div className='relative pt-1 pb-6'>
+          <div className='relative h-1.5'>
             {/* Background Track */}
-            <div className="absolute w-full h-1.5 bg-gray-200 rounded-lg"></div>
-            
+            <div className='absolute w-full h-1.5 bg-gray-200 rounded-lg'></div>
+
             {/* Active Range Track */}
-            <div 
-              className="absolute h-1.5 bg-[#d3b673] rounded-lg"
+            <div
+              className='absolute h-1.5 bg-[#d3b673] rounded-lg'
               style={{
                 left: `${(minPrice / 1000000) * 100}%`,
                 right: `${100 - (maxPrice / 1000000) * 100}%`
@@ -255,57 +259,58 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
 
             {/* Min Range Input */}
             <input
-              type="range"
-              min="0"
-              max="1000000"
-              step="10000"
+              type='range'
+              min='0'
+              max='1000000'
+              step='10000'
               value={minPrice}
               onChange={(e) => handlePriceChange(Number(e.target.value), maxPrice)}
-              className="absolute w-full h-1.5 bg-transparent appearance-none cursor-pointer pointer-events-none dual-range-min"
+              className='absolute w-full h-1.5 bg-transparent appearance-none cursor-pointer pointer-events-none dual-range-min'
             />
 
             {/* Max Range Input */}
             <input
-              type="range"
-              min="0"
-              max="1000000"
-              step="10000"
+              type='range'
+              min='0'
+              max='1000000'
+              step='10000'
               value={maxPrice}
               onChange={(e) => handlePriceChange(minPrice, Number(e.target.value))}
-              className="absolute w-full h-1.5 bg-transparent appearance-none cursor-pointer pointer-events-none dual-range-max"
+              className='absolute w-full h-1.5 bg-transparent appearance-none cursor-pointer pointer-events-none dual-range-max'
             />
           </div>
 
           {/* Price Labels */}
-          <div className="flex justify-between text-[10px] text-gray-500 mt-3">
-            <span className="font-medium text-gray-700">{formatPrice(minPrice)}đ</span>
-            <span className="font-medium text-gray-700">{formatPrice(maxPrice)}đ</span>
+          <div className='flex justify-between text-[10px] text-gray-500 mt-3'>
+            <span className='font-medium text-gray-700'>{formatPrice(minPrice)}đ</span>
+            <span className='font-medium text-gray-700'>{formatPrice(maxPrice)}đ</span>
           </div>
         </div>
       </div>
 
       {/* Rating Slider */}
-      <div className="mb-1">
-        <label className="block text-xs font-medium text-gray-700 mb-2">
-          Đánh giá: {rating > 0 ? (
-            <span className="text-[#d3b673] font-semibold">{rating}★+</span>
+      <div className='mb-1'>
+        <label className='block text-xs font-medium text-gray-700 mb-2'>
+          Đánh giá:{' '}
+          {rating > 0 ? (
+            <span className='text-[#d3b673] font-semibold'>{rating}★+</span>
           ) : (
-            <span className="text-gray-500">Tất cả</span>
+            <span className='text-gray-500'>Tất cả</span>
           )}
         </label>
         <input
-          type="range"
-          min="0"
-          max="5"
-          step="1"
+          type='range'
+          min='0'
+          max='5'
+          step='1'
           value={rating}
           onChange={(e) => handleRatingChange(Number(e.target.value))}
-          className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer slider-thumb"
+          className='w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer slider-thumb'
           style={{
             background: `linear-gradient(to right, #d3b673 0%, #d3b673 ${(rating / 5) * 100}%, #e5e7eb ${(rating / 5) * 100}%, #e5e7eb 100%)`
           }}
         />
-        <div className="flex justify-between mt-2 px-1">
+        <div className='flex justify-between mt-2 px-1'>
           {[0, 1, 2, 3, 4, 5].map((star) => (
             <button
               key={star}
@@ -314,7 +319,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
                 star <= rating && star > 0 ? 'scale-110' : 'opacity-60 hover:opacity-100'
               }`}
             >
-              <FaStar 
+              <FaStar
                 className={`transition-colors duration-200 ${
                   star <= rating && star > 0 ? 'text-yellow-400' : 'text-gray-300'
                 }`}

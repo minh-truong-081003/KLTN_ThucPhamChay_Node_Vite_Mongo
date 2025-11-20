@@ -16,7 +16,7 @@ const ClientLayout = () => {
     <>
       <Loader />
       <HeaderHomePage />
-      <main className="mt-[80px]">
+      <main className='mt-[80px]'>
         <Outlet />
       </main>
       <FooterHomePage />

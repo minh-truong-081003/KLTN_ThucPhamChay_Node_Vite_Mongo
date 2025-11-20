@@ -6,9 +6,7 @@ const ServiceInfo = () => {
     <section className='py-16 bg-gradient-to-b from-white to-gray-50'>
       <div className='max-w-[1140px] mx-auto px-5'>
         <div className='text-center mb-12'>
-          <h2 className='text-3xl md:text-4xl font-bold text-[#282828] mb-4'>
-            Dịch Vụ Của Chúng Tôi
-          </h2>
+          <h2 className='text-3xl md:text-4xl font-bold text-[#282828] mb-4'>Dịch Vụ Của Chúng Tôi</h2>
           <div className='w-24 h-1 bg-[#d3b673] mx-auto'></div>
         </div>
 
@@ -25,9 +23,7 @@ const ServiceInfo = () => {
               <p className='text-gray-600 text-sm leading-relaxed'>
                 Chuyển khoản ngân hàng, thanh toán khi nhận hàng (COD), ví điện tử MoMo, ZaloPay
               </p>
-              <div className='mt-4 text-[#d3b673] font-semibold group-hover:underline'>
-                Xem chi tiết →
-              </div>
+              <div className='mt-4 text-[#d3b673] font-semibold group-hover:underline'>Xem chi tiết →</div>
             </div>
           </Link>
 
@@ -43,9 +39,7 @@ const ServiceInfo = () => {
               <p className='text-gray-600 text-sm leading-relaxed'>
                 Giao hàng nhanh trong 2-4 giờ khu vực nội thành, miễn phí ship đơn từ 300.000đ
               </p>
-              <div className='mt-4 text-[#d3b673] font-semibold group-hover:underline'>
-                Xem chi tiết →
-              </div>
+              <div className='mt-4 text-[#d3b673] font-semibold group-hover:underline'>Xem chi tiết →</div>
             </div>
           </Link>
 
@@ -61,9 +55,7 @@ const ServiceInfo = () => {
               <p className='text-gray-600 text-sm leading-relaxed'>
                 Đổi trả trong 7 ngày nếu sản phẩm lỗi, bảo quản đúng cách, cam kết chất lượng 100%
               </p>
-              <div className='mt-4 text-[#d3b673] font-semibold group-hover:underline'>
-                Xem chi tiết →
-              </div>
+              <div className='mt-4 text-[#d3b673] font-semibold group-hover:underline'>Xem chi tiết →</div>
             </div>
           </Link>
         </div>
@@ -71,8 +63,8 @@ const ServiceInfo = () => {
         {/* Thông tin bổ sung */}
         <div className='mt-12 text-center'>
           <p className='text-gray-600 max-w-3xl mx-auto'>
-            Chúng tôi cam kết mang đến cho bạn trải nghiệm mua sắm thuận tiện và an tâm nhất. 
-            Mọi thắc mắc xin liên hệ <span className='text-[#d3b673] font-semibold'>1900.111.111</span> để được hỗ trợ 24/7.
+            Chúng tôi cam kết mang đến cho bạn trải nghiệm mua sắm thuận tiện và an tâm nhất. Mọi thắc mắc xin liên hệ{' '}
+            <span className='text-[#d3b673] font-semibold'>1900.111.111</span> để được hỗ trợ 24/7.
           </p>
         </div>
       </div>

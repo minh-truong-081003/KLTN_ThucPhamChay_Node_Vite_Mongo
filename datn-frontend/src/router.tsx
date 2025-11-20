@@ -25,6 +25,7 @@ import AboutPage from './pages/About/AboutPage'
 import PaymentMethodsPage from './pages/Policy/PaymentMethodsPage'
 import ShippingPolicyPage from './pages/Policy/ShippingPolicyPage'
 import WarrantyPolicyPage from './pages/Policy/WarrantyPolicyPage'
+import ContactPage from './pages/Contact/ContactPage'
 import { createBrowserRouter } from 'react-router-dom'
 
 const routes = createBrowserRouter([
@@ -74,6 +75,10 @@ const routes = createBrowserRouter([
   {
     path: 'about',
     element: <AboutPage />
+  },
+  {
+    path: 'contact',
+    element: <ContactPage />
   },
   {
     path: 'achievement',

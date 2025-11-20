@@ -27,7 +27,7 @@ const ButtonDelivery = () => {
 
   // Kiểm tra trang hiện tại
   const isProductsPage = location.pathname.startsWith('/products')
-  
+
   // Hiển thị giỏ hàng: Trang chủ và các trang khác (trừ trang sản phẩm)
   const showCartButton = !isProductsPage
 
@@ -46,7 +46,7 @@ const ButtonDelivery = () => {
           </button>
           {openAI && <SupportBot showDrawer={showDrawer} />}
         </div>
-        
+
         {/* Giỏ hàng - Chỉ hiện khi không phải trang sản phẩm */}
         {showCartButton && (
           <a href='/products'>
@@ -54,7 +54,7 @@ const ButtonDelivery = () => {
           </a>
         )}
       </div>
-      
+
       {/* Chat thường (CustomerChat) - Component này tự quản lý vị trí */}
       <ChatWidget isOpen={openChat} onToggle={handleChatToggle} />
     </>

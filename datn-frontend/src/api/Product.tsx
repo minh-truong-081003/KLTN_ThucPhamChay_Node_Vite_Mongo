@@ -82,7 +82,7 @@ export const ApiProducts = createApi({
 
     getRecommendations: builder.query<IRecommendationsResponse, { limit?: number }>({
       query: ({ limit = 10 }) => `/api/products/recommendations?limit=${limit}`
-    }),
+    })
   })
 })
 

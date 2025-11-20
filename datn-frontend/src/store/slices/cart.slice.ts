@@ -100,7 +100,8 @@ const cartSlice = createSlice({
             return (total += item.price)
           }, 0)
           state.items[productIndex].items[payload.index].quantity++
-          state.items[productIndex].items[payload.index].total += totalTopping + (payload.size?.price || payload.quantity) - payload.sale
+          state.items[productIndex].items[payload.index].total +=
+            totalTopping + (payload.size?.price || payload.quantity) - payload.sale
         }
       }
     },
@@ -138,7 +139,8 @@ const cartSlice = createSlice({
             return (total += item.price)
           }, 0)
           state.items[productIndex].items[result.index].quantity--
-          state.items[productIndex].items[result.index].total -= totalTopping + (result.size?.price || result.quantity) - result.sale
+          state.items[productIndex].items[result.index].total -=
+            totalTopping + (result.size?.price || result.quantity) - result.sale
           if (state.items[productIndex].items[result.index].quantity === 0) {
             state.items[productIndex].items.splice(result.index, 1)
             if (state.items[productIndex].items.length === 0) {

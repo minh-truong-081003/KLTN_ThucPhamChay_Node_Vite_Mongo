@@ -7,7 +7,11 @@ import { addToCart } from '../../store/slices/cart.slice'
 import { CartItem } from '../../store/slices/types/cart.type'
 import { message } from 'antd'
 import { useGetAllCartDBQuery } from '../../api/cartDB'
-import { useAddToFavoritesMutation, useRemoveFromFavoritesMutation, useCheckFavoriteQuery } from '../../api/favorite.api'
+import {
+  useAddToFavoritesMutation,
+  useRemoveFromFavoritesMutation,
+  useCheckFavoriteQuery
+} from '../../api/favorite.api'
 
 interface ListProductItemProps {
   product: IProduct
@@ -31,7 +35,7 @@ const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) =>
 
   const handleToggleFavorite = async (e: React.MouseEvent) => {
     e.stopPropagation() // Ngăn không cho click vào popup detail
-    
+
     if (!user?.accessToken) {
       message.warning('Vui lòng đăng nhập để sử dụng tính năng này')
       return
@@ -52,7 +56,7 @@ const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) =>
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation() // Ngăn không cho click vào popup detail
-    
+
     const data = {
       name: product.name,
       size: product.sizes && product.sizes.length > 0 ? product.sizes[0] : undefined,
@@ -98,9 +102,9 @@ const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) =>
           e.currentTarget.src = '/placeholder-image.png'
         }}
       />
-      
+
       {/* Favorite Icon */}
-      <div 
+      <div
         onClick={handleToggleFavorite}
         className={`absolute top-[10px] right-[10px] w-[24px] h-[24px] bg-white bg-opacity-80 rounded-full flex justify-center items-center cursor-pointer hover:bg-opacity-100 transition-all duration-200 ${isAdding || isRemoving ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
@@ -110,16 +114,12 @@ const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) =>
           <AiOutlineHeart className='text-gray-600 text-[16px]' />
         )}
       </div>
-      
+
       <div className='flex flex-col'>
         <div className='product-name  mt-[20px] mb-[10px] min-h-[42px] flex-1 line-clamp-2'>{product?.name}</div>
         <div className='product-price flex  flex-shrink-0 gap-3 mt-auto'>
           <p className='product-origin-price text-[#8a733f] mb-[20px]'>
-            {product?.sale !== 0 && product.sizes
-              ? formatCurrency(
-                  product.sale
-                )
-              : formatCurrency(product.sale)}
+            {product?.sale !== 0 && product.sizes ? formatCurrency(product.sale) : formatCurrency(product.sale)}
           </p>
           {/* {product?.sale !== 0 && (
             <span className='text-[#bebebe] text-[13px] line-through'>
@@ -128,7 +128,7 @@ const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) =>
           )} */}
         </div>
       </div>
-      <div 
+      <div
         onClick={handleAddToCart}
         className='quantity w-[28px] h-[28px] bg-[#799dd9] rounded-full text-white absolute right-[15px] bottom-[15px] flex justify-around items-center cursor-pointer hover:bg-[#4ade80] hover:scale-110 transition-all duration-200 active:scale-95'
       >

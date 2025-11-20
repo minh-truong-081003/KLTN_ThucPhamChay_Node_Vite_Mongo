@@ -25,7 +25,7 @@ const MyOrderDetail = () => {
   })
   const [createReview, { isLoading: isSubmitting }] = useCreateReviewMutation()
   const [showReviewSection, setShowReviewSection] = useState(false)
-  
+
   // Modal đánh giá
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<any>(null)
@@ -36,7 +36,7 @@ const MyOrderDetail = () => {
   // Tạo map các sản phẩm đã được đánh giá
   const reviewedProductIds = useMemo(() => {
     if (!reviewsData?.data) return new Set<string>()
-    return new Set(reviewsData.data.map(review => review.product._id || review.product))
+    return new Set(reviewsData.data.map((review) => review.product._id || review.product))
   }, [reviewsData])
 
   useEffect(() => {
@@ -80,18 +80,17 @@ const MyOrderDetail = () => {
         order: id!,
         rating,
         comment: comment.trim(),
-        images: fileList.map(file => ({
+        images: fileList.map((file) => ({
           url: file.url || file.thumbUrl || '',
           publicId: file.uid,
           filename: file.name
         }))
       }
-      
+
       await createReview(reviewData).unwrap()
-      
+
       message.success('Cảm ơn bạn đã đánh giá! Đánh giá của bạn rất có ý nghĩa với chúng tôi.')
       handleCloseReviewModal()
-      
     } catch (error: any) {
       console.error('Error submitting review:', error)
       const errorMessage = error?.data?.err || error?.data?.message || 'Có lỗi xảy ra khi gửi đánh giá!'
@@ -309,12 +308,15 @@ const MyOrderDetail = () => {
 
           {/* Phần đánh giá sản phẩm - chỉ hiển thị khi đơn hàng đã hoàn thành */}
           {orderData?.order?.status === 'done' && (
-            <div id='review-section' className='review-section mt-8 p-6 bg-[#fffcf5] rounded-lg border border-[#D8B979]'>
+            <div
+              id='review-section'
+              className='review-section mt-8 p-6 bg-[#fffcf5] rounded-lg border border-[#D8B979]'
+            >
               <div className='flex items-center justify-between mb-4'>
                 <h2 className='text-xl text-[#866312] font-semibold'>🌟 Đánh giá sản phẩm</h2>
                 {!showReviewSection && (
-                  <AntButton 
-                    type='primary' 
+                  <AntButton
+                    type='primary'
                     size='large'
                     style={{ background: '#D8B979' }}
                     onClick={() => setShowReviewSection(!showReviewSection)}
@@ -323,17 +325,21 @@ const MyOrderDetail = () => {
                   </AntButton>
                 )}
               </div>
-              
+
               {showReviewSection && (
                 <div className='space-y-4'>
                   <p className='text-sm text-gray-600 mb-4'>
-                    Cảm ơn bạn đã sử dụng sản phẩm của chúng tôi! Hãy chia sẻ trải nghiệm của bạn để giúp chúng tôi phục vụ bạn tốt hơn.
+                    Cảm ơn bạn đã sử dụng sản phẩm của chúng tôi! Hãy chia sẻ trải nghiệm của bạn để giúp chúng tôi phục
+                    vụ bạn tốt hơn.
                   </p>
                   {orderData?.order?.items?.map((item, index) => {
                     const isReviewed = reviewedProductIds.has(item.product._id)
-                    
+
                     return (
-                      <div key={index} className='review-item flex items-center justify-between p-4 bg-white rounded shadow-sm hover:shadow-md transition-shadow'>
+                      <div
+                        key={index}
+                        className='review-item flex items-center justify-between p-4 bg-white rounded shadow-sm hover:shadow-md transition-shadow'
+                      >
                         <div className='flex items-center gap-x-3 flex-1'>
                           <img src={item?.image} alt='' className='w-[60px] h-[60px] object-cover rounded' />
                           <div>
@@ -347,7 +353,7 @@ const MyOrderDetail = () => {
                           </div>
                         </div>
                         {!isReviewed && (
-                          <AntButton 
+                          <AntButton
                             type='primary'
                             size='middle'
                             style={{ background: '#D8B979' }}
@@ -380,7 +386,7 @@ const MyOrderDetail = () => {
         cancelText='Hủy'
         width={600}
         confirmLoading={isSubmitting}
-        okButtonProps={{ 
+        okButtonProps={{
           style: { background: '#D8B979', borderColor: '#D8B979' },
           disabled: isSubmitting
         }}
@@ -389,11 +395,7 @@ const MyOrderDetail = () => {
           <div className='space-y-4 py-4'>
             {/* Thông tin sản phẩm */}
             <div className='flex items-center gap-x-3 p-3 bg-gray-50 rounded'>
-              <img 
-                src={selectedProduct?.image} 
-                alt='' 
-                className='w-[80px] h-[80px] object-cover rounded' 
-              />
+              <img src={selectedProduct?.image} alt='' className='w-[80px] h-[80px] object-cover rounded' />
               <div>
                 <h4 className='font-medium text-[#333]'>{selectedProduct?.product.name}</h4>
                 <span className='text-sm text-gray-500'>Số lượng: x{selectedProduct?.quantity}</span>
@@ -405,11 +407,7 @@ const MyOrderDetail = () => {
               <label className='block text-sm font-medium text-gray-700'>
                 Đánh giá của bạn <span className='text-red-500'>*</span>
               </label>
-              <Rate 
-                value={rating} 
-                onChange={setRating}
-                style={{ fontSize: 32, color: '#D8B979' }}
-              />
+              <Rate value={rating} onChange={setRating} style={{ fontSize: 32, color: '#D8B979' }} />
               <p className='text-xs text-gray-500'>
                 {rating === 1 && 'Rất không hài lòng'}
                 {rating === 2 && 'Không hài lòng'}
@@ -421,9 +419,7 @@ const MyOrderDetail = () => {
 
             {/* Nhận xét */}
             <div className='space-y-2'>
-              <label className='block text-sm font-medium text-gray-700'>
-                Nhận xét của bạn
-              </label>
+              <label className='block text-sm font-medium text-gray-700'>Nhận xét của bạn</label>
               <Input.TextArea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
@@ -436,9 +432,7 @@ const MyOrderDetail = () => {
 
             {/* Upload ảnh */}
             <div className='space-y-2'>
-              <label className='block text-sm font-medium text-gray-700'>
-                Thêm hình ảnh (tùy chọn)
-              </label>
+              <label className='block text-sm font-medium text-gray-700'>Thêm hình ảnh (tùy chọn)</label>
               <Upload
                 listType='picture-card'
                 fileList={fileList}

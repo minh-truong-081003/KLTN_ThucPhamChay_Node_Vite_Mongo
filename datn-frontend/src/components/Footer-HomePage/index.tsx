@@ -74,19 +74,29 @@ const FooterHomePage = () => {
             <div className='content'>
               <ul>
                 <li className='mb-2 text-sm'>
-                  <Link to='/about' className='hover:text-[#d3b673] transition-colors'>Giới thiệu</Link>
+                  <Link to='/about' className='hover:text-[#d3b673] transition-colors'>
+                    Giới thiệu
+                  </Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/products' className='hover:text-[#d3b673] transition-colors'>Sản phẩm</Link>
+                  <Link to='/products' className='hover:text-[#d3b673] transition-colors'>
+                    Sản phẩm
+                  </Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/blogs' className='hover:text-[#d3b673] transition-colors'>Tin tức</Link>
+                  <Link to='/blogs' className='hover:text-[#d3b673] transition-colors'>
+                    Tin tức
+                  </Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/account-layout/my-voucher' className='hover:text-[#d3b673] transition-colors'>Khuyến mãi</Link>
+                  <Link to='/account-layout/my-voucher' className='hover:text-[#d3b673] transition-colors'>
+                    Khuyến mãi
+                  </Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/account-layout/my-order' className='hover:text-[#d3b673] transition-colors'>Đơn hàng</Link>
+                  <Link to='/account-layout/my-order' className='hover:text-[#d3b673] transition-colors'>
+                    Đơn hàng
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -98,19 +108,29 @@ const FooterHomePage = () => {
             <div className='content'>
               <ul>
                 <li className='mb-2 text-sm'>
-                  <Link to='/account-layout' className='hover:text-[#d3b673] transition-colors'>Chính sách thành viên</Link>
+                  <Link to='/account-layout' className='hover:text-[#d3b673] transition-colors'>
+                    Chính sách thành viên
+                  </Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/payment-methods' className='hover:text-[#d3b673] transition-colors'>Hình thức thanh toán</Link>
+                  <Link to='/payment-methods' className='hover:text-[#d3b673] transition-colors'>
+                    Hình thức thanh toán
+                  </Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/shipping-policy' className='hover:text-[#d3b673] transition-colors'>Vận chuyển giao nhận</Link>
+                  <Link to='/shipping-policy' className='hover:text-[#d3b673] transition-colors'>
+                    Vận chuyển giao nhận
+                  </Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/warranty-policy' className='hover:text-[#d3b673] transition-colors'>Đổi trả và bảo hành</Link>
+                  <Link to='/warranty-policy' className='hover:text-[#d3b673] transition-colors'>
+                    Đổi trả và bảo hành
+                  </Link>
                 </li>
                 <li className='mb-2 text-sm'>
-                  <Link to='/account-layout' className='hover:text-[#d3b673] transition-colors'>Bảo vệ thông tin cá nhân</Link>
+                  <Link to='/account-layout' className='hover:text-[#d3b673] transition-colors'>
+                    Bảo vệ thông tin cá nhân
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -118,7 +138,7 @@ const FooterHomePage = () => {
         </div>
         <div className='footer-bottom border-t-white sm:flex-row flex flex-col justify-between border border-transparent'>
           <div className='font-[700] text-center my-5 mx-1'>
-            Thương hiệu tiên phong sử dụng nguồn nông sản sạch và chất lượng Việt Nam 
+            Thương hiệu tiên phong sử dụng nguồn nông sản sạch và chất lượng Việt Nam
           </div>
           <div className='mx-1 my-5 text-sm text-center'>Copyrights © 2024 by TD. All rights reserved.</div>
         </div>

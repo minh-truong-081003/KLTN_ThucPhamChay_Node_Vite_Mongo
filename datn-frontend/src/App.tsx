@@ -18,10 +18,10 @@ const App = () => {
   }, [user._id])
   return (
     <Flowbite theme={{ theme }}>
-      <RouterProvider 
-        router={routes} 
+      <RouterProvider
+        router={routes}
         future={{
-          v7_startTransition: true,
+          v7_startTransition: true
         }}
       />
       <ToastContainer theme='colored' />

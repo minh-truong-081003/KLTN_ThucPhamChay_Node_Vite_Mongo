@@ -12,7 +12,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen: controlledIsOpen, onTog
   const { user } = useAppSelector((state) => state.persistedReducer.auth)
   const [internalIsOpen, setInternalIsOpen] = useState(false)
   const [unreadCount, setUnreadCount] = useState(0)
-  
+
   // Sử dụng controlled hoặc uncontrolled state
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen
   const setIsOpen = (value: boolean) => {

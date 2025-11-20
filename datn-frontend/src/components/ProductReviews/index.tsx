@@ -7,7 +7,7 @@ import {
   useCreateReviewMutation,
   useUpdateReviewMutation,
   useDeleteReviewMutation,
-  useToggleReviewVisibilityMutation,
+  useToggleReviewVisibilityMutation
 } from '../../api/Review'
 import { useReviewSocket } from '../../hook/useReviewSocket'
 import { IProduct } from '../../interfaces/products.type'
@@ -29,12 +29,12 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
   const {
     data: reviewsData,
     isLoading: isLoadingReviews,
-    refetch: refetchReviews,
+    refetch: refetchReviews
   } = useGetReviewsByProductQuery({
     productId: product._id,
     page,
     limit: 5,
-    rating: ratingFilter,
+    rating: ratingFilter
   })
 
   // Lấy tất cả reviews (không filter) để đếm số lượng theo từng rating
@@ -42,17 +42,17 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
     productId: product._id,
     page: 1,
     limit: 1000, // Lấy nhiều để đếm
-    rating: undefined,
+    rating: undefined
   })
 
   // Kiểm tra user đã mua sản phẩm chưa
   const { data: purchaseData, isLoading: isLoadingPurchase } = useCheckUserPurchasedProductQuery(product._id, {
-    skip: !user._id,
+    skip: !user._id
   })
 
   // Lấy đánh giá của user cho sản phẩm này
   const { data: userReviewData, refetch: refetchUserReview } = useGetUserReviewForProductQuery(product._id, {
-    skip: !user._id,
+    skip: !user._id
   })
 
   const [createReview, { isLoading: isCreating }] = useCreateReviewMutation()
@@ -89,9 +89,8 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
     onReviewRestored: () => {
       refetchReviews()
       refetchUserReview()
-    },
+    }
   })
-
 
   const handleCreateReview = async (data: { rating: number; comment: string; order: string; images?: IImage[] }) => {
     try {
@@ -100,11 +99,13 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
         order: data.order,
         rating: data.rating,
         comment: data.comment,
-        images: (data.images || []).filter(img => img.url).map(img => ({
-          url: img.url!,
-          publicId: img.publicId || '',
-          filename: img.filename || ''
-        })),
+        images: (data.images || [])
+          .filter((img) => img.url)
+          .map((img) => ({
+            url: img.url!,
+            publicId: img.publicId || '',
+            filename: img.filename || ''
+          }))
       }).unwrap()
       toast.success('Đánh giá của bạn đã được gửi thành công!')
       refetchReviews()
@@ -120,8 +121,8 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
         reviewId,
         data: {
           rating: data.rating,
-          comment: data.comment,
-        },
+          comment: data.comment
+        }
       }).unwrap()
       toast.success('Đánh giá đã được cập nhật!')
       refetchReviews()
@@ -157,9 +158,9 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
 
   // Lấy danh sách reviews (backend đã tự động thêm đánh giá ẩn của user)
   const reviews = reviewsData?.docs || []
-  
+
   const totalReviews = allReviewsData?.totalDocs || 0
-  
+
   // Tính lại averageRating từ tất cả reviews (không filter) để đảm bảo chính xác
   const calculateAverageRating = () => {
     const allReviews = allReviewsData?.docs || []
@@ -167,23 +168,24 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
     const totalRating = allReviews.reduce((sum, review) => sum + (review.rating || 0), 0)
     return parseFloat((totalRating / allReviews.length).toFixed(1))
   }
-  
+
   // Sử dụng rating từ reviews thực tế, nếu không có thì dùng từ product
-  const averageRating = allReviewsData?.docs && allReviewsData.docs.length > 0 
-    ? calculateAverageRating() 
-    : (product.averageRating || 0)
+  const averageRating =
+    allReviewsData?.docs && allReviewsData.docs.length > 0 ? calculateAverageRating() : product.averageRating || 0
 
   return (
     <div className='product-reviews'>
       <div className='reviews-header mb-6'>
         <h3 className='text-2xl font-bold text-gray-900 mb-6'>Đánh giá sản phẩm</h3>
-        
+
         {/* Rating Summary - Đẹp hơn */}
         <div className='bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 mb-6 border border-yellow-100'>
           <div className='flex items-center gap-6 flex-wrap'>
             <div className='flex items-center gap-3'>
               <div className='text-center'>
-                <div className='text-5xl font-bold text-gray-900'>{averageRating > 0 ? averageRating.toFixed(1) : '0.0'}</div>
+                <div className='text-5xl font-bold text-gray-900'>
+                  {averageRating > 0 ? averageRating.toFixed(1) : '0.0'}
+                </div>
                 <div className='flex items-center justify-center mt-2'>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <svg
@@ -247,9 +249,7 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
               </svg>
               <span>Tất cả</span>
               {ratingFilter === undefined && (
-                <span className='ml-1 px-2 py-0.5 bg-white/20 rounded-full text-xs'>
-                  {totalReviews}
-                </span>
+                <span className='ml-1 px-2 py-0.5 bg-white/20 rounded-full text-xs'>{totalReviews}</span>
               )}
             </button>
             {[5, 4, 3, 2, 1].map((rating) => {
@@ -277,11 +277,11 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
                     <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
                   </svg>
                   {ratingCount > 0 && (
-                    <span className={`ml-1 px-2 py-0.5 rounded-full text-xs ${
-                      ratingFilter === rating 
-                        ? 'bg-white/20 text-white' 
-                        : 'bg-gray-100 text-gray-600'
-                    }`}>
+                    <span
+                      className={`ml-1 px-2 py-0.5 rounded-full text-xs ${
+                        ratingFilter === rating ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600'
+                      }`}
+                    >
                       {ratingCount}
                     </span>
                   )}
@@ -293,9 +293,13 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
             <div className='mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg'>
               <p className='text-sm text-blue-800 flex items-center gap-2'>
                 <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
-                  <path fillRule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z' clipRule='evenodd' />
+                  <path
+                    fillRule='evenodd'
+                    d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z'
+                    clipRule='evenodd'
+                  />
                 </svg>
-                Đang hiển thị đánh giá <strong>{ratingFilter} sao</strong>. 
+                Đang hiển thị đánh giá <strong>{ratingFilter} sao</strong>.
                 <button
                   onClick={() => {
                     setRatingFilter(undefined)
@@ -313,11 +317,7 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
 
       {/* Form đánh giá - chỉ hiện cho user đã mua */}
       {user._id && canReview && !userReview && (
-        <ReviewForm
-          onSubmit={handleCreateReview}
-          isLoading={isCreating}
-          orderId={purchaseData?.data?.orderId}
-        />
+        <ReviewForm onSubmit={handleCreateReview} isLoading={isCreating} orderId={purchaseData?.data?.orderId} />
       )}
 
       {/* Thông báo nhẹ nhàng khi chưa mua hàng - chỉ hiện khi đã đăng nhập */}
@@ -326,7 +326,11 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
           <div className='flex items-start gap-3'>
             <div className='flex-shrink-0 mt-0.5'>
               <svg className='w-5 h-5 text-blue-500' fill='currentColor' viewBox='0 0 20 20'>
-                <path fillRule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z' clipRule='evenodd' />
+                <path
+                  fillRule='evenodd'
+                  d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z'
+                  clipRule='evenodd'
+                />
               </svg>
             </div>
             <div className='flex-1'>
@@ -370,4 +374,3 @@ const ProductReviews = ({ product }: ProductReviewsProps) => {
 }
 
 export default ProductReviews
-

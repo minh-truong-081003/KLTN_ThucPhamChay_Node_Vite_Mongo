@@ -92,7 +92,7 @@ class MessageService {
   async uploadImages(formData: FormData, onUploadProgress?: (progressEvent: any) => void) {
     const response = await http.post('/uploadImages', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      onUploadProgress,
+      onUploadProgress
     })
     return response.data
   }

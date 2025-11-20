@@ -17,7 +17,10 @@ const Bot = () => {
       if (!response.ok) {
         const text = await response.text().catch(() => null)
         console.error('Bot /ask non-OK response', response.status, text)
-        setMessages((prevMessages) => [...prevMessages, { user: inputMessage, bot: 'Đã có lỗi khi gọi bot (mã ' + response.status + ')' }])
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { user: inputMessage, bot: 'Đã có lỗi khi gọi bot (mã ' + response.status + ')' }
+        ])
         setInputMessage('')
         return
       }
@@ -28,7 +31,10 @@ const Bot = () => {
       } catch (err) {
         const text = await response.text().catch(() => null)
         console.error('Bot /ask returned non-JSON body', text)
-        setMessages((prevMessages) => [...prevMessages, { user: inputMessage, bot: text || 'Lỗi: phản hồi không hợp lệ' }])
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { user: inputMessage, bot: text || 'Lỗi: phản hồi không hợp lệ' }
+        ])
         setInputMessage('')
         return
       }

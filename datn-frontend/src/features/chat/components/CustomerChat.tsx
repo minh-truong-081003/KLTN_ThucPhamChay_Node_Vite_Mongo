@@ -87,7 +87,7 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
           if (data.conversationId === convId) {
             setMessages((prev) => {
               // Check xem message đã tồn tại chưa để tránh duplicate
-              const exists = prev.some(msg => msg._id === data.message._id)
+              const exists = prev.some((msg) => msg._id === data.message._id)
               if (exists) {
                 return prev
               }
@@ -184,9 +184,13 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
 
           ctx.drawImage(img, 0, 0, width, height)
 
-          canvas.toBlob((blob) => {
-            resolve(blob || file)
-          }, 'image/jpeg', quality)
+          canvas.toBlob(
+            (blob) => {
+              resolve(blob || file)
+            },
+            'image/jpeg',
+            quality
+          )
         }
 
         reader.readAsDataURL(file)
@@ -199,10 +203,13 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
       setUploadProgress(0)
 
       const processedFiles = await Promise.all(
-        fileArray.slice(0, 5).map(async (file) => { // Limit to 5 files max
+        fileArray.slice(0, 5).map(async (file) => {
+          // Limit to 5 files max
           try {
             const blob = await resizeImage(file)
-            return blob instanceof File ? blob : new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), { type: blob.type })
+            return blob instanceof File
+              ? blob
+              : new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), { type: blob.type })
           } catch (err) {
             return file
           }
@@ -226,7 +233,7 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
         await messageService.sendMessage({
           conversationId: conversation._id,
           text: ' ',
-          attachments: urls,
+          attachments: urls
         })
       }
     } catch (error) {
@@ -278,25 +285,18 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
       const isMyMessage = message.sender._id === user?._id
 
       return (
-        <div
-          key={message._id}
-          className={`flex ${isMyMessage ? 'justify-end' : 'justify-start'}`}
-        >
-          <div
-            className={`flex max-w-[80%] gap-2 ${isMyMessage ? 'flex-row-reverse' : 'flex-row'}`}
-          >
+        <div key={message._id} className={`flex ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
+          <div className={`flex max-w-[80%] gap-2 ${isMyMessage ? 'flex-row-reverse' : 'flex-row'}`}>
             <img
               src={message.sender.avatar || `https://ui-avatars.com/api/?name=${message.sender.username}`}
               alt={message.sender.username}
               className='h-8 w-8 flex-shrink-0 rounded-full object-cover'
-              loading="lazy"
+              loading='lazy'
             />
             <div className='flex flex-col gap-1'>
               <div
                 className={`rounded-lg px-4 py-2 shadow-md ${
-                  isMyMessage
-                    ? 'bg-[#D7B978] text-white'
-                    : 'bg-gray-100 text-gray-900 border border-gray-200'
+                  isMyMessage ? 'bg-[#D7B978] text-white' : 'bg-gray-100 text-gray-900 border border-gray-200'
                 }`}
               >
                 <p className='whitespace-pre-wrap break-words text-sm'>{message.text}</p>
@@ -309,15 +309,13 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
                         alt={`attachment-${idx}`}
                         onClick={() => openImage(att)}
                         className='h-28 w-28 cursor-pointer rounded-md object-cover shadow-sm'
-                        loading="lazy"
+                        loading='lazy'
                       />
                     ))}
                   </div>
                 )}
               </div>
-              <span
-                className={`text-xs text-gray-400 ${isMyMessage ? 'text-right' : 'text-left'}`}
-              >
+              <span className={`text-xs text-gray-400 ${isMyMessage ? 'text-right' : 'text-left'}`}>
                 {formatTime(message.createdAt)}
               </span>
             </div>
@@ -332,11 +330,7 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
       {/* Header */}
       <div className='flex items-center justify-between border-b bg-[#D7B978] px-4 py-3 text-white'>
         <h3 className='text-lg font-semibold'>Chat với chúng tôi</h3>
-        <button
-          onClick={onClose}
-          className='rounded-full p-1 hover:bg-white/20'
-          title='Đóng chat'
-        >
+        <button onClick={onClose} className='rounded-full p-1 hover:bg-white/20' title='Đóng chat'>
           <svg className='h-5 w-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
           </svg>
@@ -370,8 +364,14 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
                   <div className='rounded-lg bg-gray-100 px-4 py-2 border border-gray-200'>
                     <div className='flex space-x-1'>
                       <div className='h-2 w-2 animate-bounce rounded-full bg-gray-400'></div>
-                      <div className='h-2 w-2 animate-bounce rounded-full bg-gray-400' style={{ animationDelay: '0.1s' }}></div>
-                      <div className='h-2 w-2 animate-bounce rounded-full bg-gray-400' style={{ animationDelay: '0.2s' }}></div>
+                      <div
+                        className='h-2 w-2 animate-bounce rounded-full bg-gray-400'
+                        style={{ animationDelay: '0.1s' }}
+                      ></div>
+                      <div
+                        className='h-2 w-2 animate-bounce rounded-full bg-gray-400'
+                        style={{ animationDelay: '0.2s' }}
+                      ></div>
                     </div>
                   </div>
                 </div>
@@ -385,7 +385,14 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
       {/* Input */}
       <div className='border-t bg-white p-4'>
         <form onSubmit={handleSendMessage} className='flex gap-2 items-end'>
-          <input ref={fileInputRef} type='file' accept='image/*' multiple onChange={handleFileChange} className='hidden' />
+          <input
+            ref={fileInputRef}
+            type='file'
+            accept='image/*'
+            multiple
+            onChange={handleFileChange}
+            className='hidden'
+          />
           <button
             type='button'
             onClick={() => fileInputRef.current?.click()}
@@ -397,7 +404,14 @@ const CustomerChat: React.FC<CustomerChatProps> = ({ onClose }) => {
               <span className='text-sm'>Đang tải{uploadProgress ? ` ${uploadProgress}%` : '...'}</span>
             ) : (
               // image SVG icon
-              <svg xmlns='http://www.w3.org/2000/svg' className='h-5 w-5' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.5'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                className='h-5 w-5'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.5'
+              >
                 <rect x='3' y='3' width='18' height='18' rx='2' ry='2' className='stroke-current' />
                 <circle cx='8.5' cy='8.5' r='1.5' className='stroke-current' />
                 <path d='M21 15l-5-5L5 21' className='stroke-current' strokeLinecap='round' strokeLinejoin='round' />

@@ -75,7 +75,7 @@ const MyCart = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Đúng!'
     }).then((result) => {
-        if (result.isConfirmed) {
+      if (result.isConfirmed) {
         Swal.fire('Xóa!', 'Đã xóa xong.', 'success')
         // Nếu người dùng chưa đăng nhập (không có accessToken) thì reset local cart
         if (!user?.accessToken) {
@@ -110,7 +110,7 @@ const MyCart = () => {
       })
       return
     }
-    
+
     // Người dùng đã đăng nhập, chuyển đến checkout
     navigate('/products/checkout')
   }
@@ -237,7 +237,7 @@ const MyCart = () => {
                           size='small'
                           onClick={(e) => {
                             e.stopPropagation()
-                              handleAddToCart(product)
+                            handleAddToCart(product)
                           }}
                           onFocus={(e) => {
                             // Prevent focus on hidden slides

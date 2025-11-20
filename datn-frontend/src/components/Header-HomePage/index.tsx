@@ -16,10 +16,10 @@ const HeaderHomePage = () => {
   const { user } = useSelector((state: RootState) => state.persistedReducer.auth)
   const { data: blogCategories } = useGetAllBlogCategoryQuery()
   const location = useLocation()
-  
+
   // Kiểm tra xem có phải trang chủ không
   const isHomePage = location.pathname === '/'
-  
+
   // Hàm kiểm tra menu có active không
   const isActive = (path: string) => {
     if (path === '/') {
@@ -54,13 +54,13 @@ const HeaderHomePage = () => {
     overlayRef.current?.classList.toggle('hidden')
   }
 
-  
-
   return (
     <header
       className={`w-full z-[99] py-3 px-5 md:px-10 lg:px-0  top-0 transition-all ${
         isHomePage
-          ? (isHeaderFixed ? `fixed bg-[#282828] ${styles.animation_slide_down}` : 'absolute bg-transparent')
+          ? isHeaderFixed
+            ? `fixed bg-[#282828] ${styles.animation_slide_down}`
+            : 'absolute bg-transparent'
           : 'fixed bg-[#282828]'
       } `}
     >
@@ -81,13 +81,11 @@ const HeaderHomePage = () => {
             </div>
             <ul className='flex flex-col mx-10 lg:mx-0 lg:flex-row justify-center  gap-x-5 uppercase'>
               <li className='font-[700] py-2 text-sm '>
-                <Link 
-                  to='/' 
+                <Link
+                  to='/'
                   onClick={toggleMenu}
                   className={`transition-colors ${
-                    isActive('/') 
-                      ? 'text-[#d3b673] border-b-2 border-[#d3b673] pb-1' 
-                      : 'hover:text-[#d3b673]'
+                    isActive('/') ? 'text-[#d3b673] border-b-2 border-[#d3b673] pb-1' : 'hover:text-[#d3b673]'
                   }`}
                 >
                   Trang chủ
@@ -115,13 +113,11 @@ const HeaderHomePage = () => {
               </li> */}
 
               <li className='font-[700] py-2 text-sm '>
-                <Link 
-                  to='/products' 
+                <Link
+                  to='/products'
                   onClick={toggleMenu}
                   className={`transition-colors ${
-                    isActive('/products') 
-                      ? 'text-[#d3b673] border-b-2 border-[#d3b673] pb-1' 
-                      : 'hover:text-[#d3b673]'
+                    isActive('/products') ? 'text-[#d3b673] border-b-2 border-[#d3b673] pb-1' : 'hover:text-[#d3b673]'
                   }`}
                 >
                   Sản phẩm
@@ -129,63 +125,27 @@ const HeaderHomePage = () => {
               </li>
 
               <li className='font-[700] py-2 text-sm '>
-                <div className='menu_item relative group'>
-                  <div 
-                    onClick={toggleMenu} 
-                    className={`flex cursor-default transition-colors ${
-                      isActive('/blogs') 
-                        ? 'text-[#d3b673]' 
-                        : ''
-                    }`}
-                  >
-                    <p className={`mr-1 hover:underline ${
-                      isActive('/blogs') 
-                        ? 'border-b-2 border-[#d3b673] pb-1' 
-                        : ''
-                    }`}>Tin tức</p>
-                    <MdKeyboardArrowDown className='text-[20px]' />
-                  </div>
-                  <ul className='sub-menu absolute w-0 hidden bg-gray-800 text-white py-2 px-4 transition duration-300 group-hover:block group-hover:w-[200px] '>
-                    {blogCategories &&
-                      blogCategories?.docs.length > 0 &&
-                      blogCategories?.docs?.map((item: any, index: number) => {
-                        return (
-                          <div key={index}>
-                            <li>
-                              <Link
-                                to={`/blogs/category/${item?._id}`}
-                                className='block py-1 max-w-[500px] hover:text-[#d3b673]'
-                              >
-                                {item?.name}
-                              </Link>
-                            </li>
-                            <hr
-                              className={`bg-current mt-[5px] mb-[5px] ${
-                                blogCategories && blogCategories?.docs[blogCategories.docs.length - 1]._id === item._id
-                                  ? 'hidden'
-                                  : ''
-                              } `}
-                            />
-                          </div>
-                        )
-                      })}
+                <Link
+                  to='/blogs'
+                  onClick={toggleMenu}
+                  className={`transition-colors ${
+                    isActive('/blogs') ? 'text-[#d3b673] border-b-2 border-[#d3b673] pb-1' : 'hover:text-[#d3b673]'
+                  }`}
+                >
+                  Tin tức
+                </Link>
+              </li>
 
-                    {/* <li>
-                      <Link
-                        to='/blogs/cau-chuyen-thuong-hieu'
-                        className='block py-1 max-w-[500px] hover:text-[#d3b673]'
-                      >
-                        CÂU CHUYỆN THƯƠNG HIỆU
-                      </Link>
-                    </li>
-                    <hr className='bg-current mt-[5px] mb-[5px]' />
-                    <li>
-                      <Link to='/blogs/su-kien' className='block py-1 max-w-[500px] hover:text-[#d3b673]'>
-                        SỰ KIỆN
-                      </Link>
-                    </li> */}
-                  </ul>
-                </div>
+              <li className='font-[700] py-2 text-sm '>
+                <Link
+                  to='/contact'
+                  onClick={toggleMenu}
+                  className={`transition-colors ${
+                    isActive('/contact') ? 'text-[#d3b673] border-b-2 border-[#d3b673] pb-1' : 'hover:text-[#d3b673]'
+                  }`}
+                >
+                  Liên hệ
+                </Link>
               </li>
 
               {/* <li className='font-[700] py-2 text-sm '>
@@ -215,10 +175,9 @@ const HeaderHomePage = () => {
         </div>
         <div className='right '>
           {user?.avatar ? (
-           <>
-          <Header hideLogo={true} bgColor="transparent" />
-
-           </>
+            <>
+              <Header hideLogo={true} bgColor='transparent' />
+            </>
           ) : (
             <Link
               to='/signin'
@@ -226,8 +185,7 @@ const HeaderHomePage = () => {
             >
               Đăng nhập
             </Link>
-          )} 
-         
+          )}
 
           <div className='block md:hidden text-white text-2xl cursor-pointer' onClick={toggleMenu}>
             <FaBars />

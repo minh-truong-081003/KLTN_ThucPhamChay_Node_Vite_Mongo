@@ -30,7 +30,7 @@ const ProductsPage = () => {
       rating: queryConfig.rating || '',
       sortBy: queryConfig.sortBy || ''
     }
-    
+
     dispatch(getAllProducts(params))
   }, [
     dispatch,
@@ -49,7 +49,7 @@ const ProductsPage = () => {
         <div className='container pt-3 mx-auto'>
           <div className='content md:flex-row flex flex-col justify-between gap-4'>
             {/* Sidebar với Category và Filter */}
-            <div className="shrink-0 w-[300px] hidden lg:block space-y-4">
+            <div className='shrink-0 w-[300px] hidden lg:block space-y-4'>
               <SidebarCate
                 queryConfig={queryConfig}
                 categories={categories}

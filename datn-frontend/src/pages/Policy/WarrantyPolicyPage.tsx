@@ -9,13 +9,11 @@ const WarrantyPolicyPage = () => {
     <>
       <Loader />
       <HeaderHomePage />
-      
+
       <main className='mt-[80px] py-16 px-5 bg-gray-50'>
         <div className='max-w-[1140px] mx-auto'>
           <div className='text-center mb-12'>
-            <h1 className='text-4xl font-bold text-[#282828] mb-4'>
-              Chính Sách Đổi Trả & Bảo Hành
-            </h1>
+            <h1 className='text-4xl font-bold text-[#282828] mb-4'>Chính Sách Đổi Trả & Bảo Hành</h1>
             <div className='w-24 h-1 bg-[#d3b673] mx-auto mb-4'></div>
             <p className='text-gray-600 max-w-2xl mx-auto'>
               VIFOOD cam kết đổi trả 100% sản phẩm lỗi, đảm bảo quyền lợi khách hàng
@@ -28,11 +26,9 @@ const WarrantyPolicyPage = () => {
               <div className='w-16 h-16 bg-gradient-to-br from-[#d3b673] to-[#b8945d] rounded-full flex items-center justify-center mr-4'>
                 <FaExchangeAlt className='text-3xl text-white' />
               </div>
-              <h2 className='text-2xl font-bold text-[#282828]'>
-                Điều Kiện Đổi Trả
-              </h2>
+              <h2 className='text-2xl font-bold text-[#282828]'>Điều Kiện Đổi Trả</h2>
             </div>
-            
+
             <div className='grid md:grid-cols-2 gap-8'>
               <div>
                 <h3 className='font-bold text-lg mb-4 text-green-600'>✓ Được chấp nhận đổi trả:</h3>
@@ -59,7 +55,7 @@ const WarrantyPolicyPage = () => {
                   </li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className='font-bold text-lg mb-4 text-red-600'>✗ Không chấp nhận đổi trả:</h3>
                 <ul className='space-y-3 text-gray-700'>
@@ -94,11 +90,9 @@ const WarrantyPolicyPage = () => {
               <div className='w-16 h-16 bg-gradient-to-br from-[#d3b673] to-[#b8945d] rounded-full flex items-center justify-center mr-4'>
                 <FaCheckCircle className='text-3xl text-white' />
               </div>
-              <h2 className='text-2xl font-bold text-[#282828]'>
-                Quy Trình Đổi Trả
-              </h2>
+              <h2 className='text-2xl font-bold text-[#282828]'>Quy Trình Đổi Trả</h2>
             </div>
-            
+
             <div className='space-y-6'>
               <div className='flex items-start'>
                 <div className='w-12 h-12 bg-[#d3b673] text-white rounded-full flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0'>
@@ -107,13 +101,13 @@ const WarrantyPolicyPage = () => {
                 <div className='flex-1'>
                   <h3 className='font-bold text-lg mb-2'>Liên hệ bộ phận CSKH</h3>
                   <p className='text-gray-700 mb-2'>
-                    Gọi hotline <strong className='text-[#d3b673]'>1900.111.111</strong> hoặc 
-                    nhắn tin qua Facebook/Zalo trong vòng <strong>7 ngày</strong> kể từ ngày nhận hàng
+                    Gọi hotline <strong className='text-[#d3b673]'>1900.111.111</strong> hoặc nhắn tin qua Facebook/Zalo
+                    trong vòng <strong>7 ngày</strong> kể từ ngày nhận hàng
                   </p>
                   <p className='text-sm text-gray-500'>Thời gian hỗ trợ: 8:00 - 21:00 hàng ngày</p>
                 </div>
               </div>
-              
+
               <div className='flex items-start'>
                 <div className='w-12 h-12 bg-[#d3b673] text-white rounded-full flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0'>
                   2
@@ -128,7 +122,7 @@ const WarrantyPolicyPage = () => {
                   </ul>
                 </div>
               </div>
-              
+
               <div className='flex items-start'>
                 <div className='w-12 h-12 bg-[#d3b673] text-white rounded-full flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0'>
                   3
@@ -136,12 +130,12 @@ const WarrantyPolicyPage = () => {
                 <div className='flex-1'>
                   <h3 className='font-bold text-lg mb-2'>Xác nhận và xử lý</h3>
                   <p className='text-gray-700'>
-                    VIFOOD kiểm tra và phản hồi trong <strong>2 giờ</strong>. 
-                    Nếu đủ điều kiện, chúng tôi sẽ thu hồi sản phẩm lỗi và giao sản phẩm mới trong <strong>24 giờ</strong>
+                    VIFOOD kiểm tra và phản hồi trong <strong>2 giờ</strong>. Nếu đủ điều kiện, chúng tôi sẽ thu hồi sản
+                    phẩm lỗi và giao sản phẩm mới trong <strong>24 giờ</strong>
                   </p>
                 </div>
               </div>
-              
+
               <div className='flex items-start'>
                 <div className='w-12 h-12 bg-[#d3b673] text-white rounded-full flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0'>
                   4
@@ -149,8 +143,8 @@ const WarrantyPolicyPage = () => {
                 <div className='flex-1'>
                   <h3 className='font-bold text-lg mb-2'>Hoàn tất đổi trả</h3>
                   <p className='text-gray-700'>
-                    Nhận sản phẩm mới hoặc hoàn tiền 100% (nếu không còn hàng). 
-                    Chi phí vận chuyển đổi trả do VIFOOD chịu.
+                    Nhận sản phẩm mới hoặc hoàn tiền 100% (nếu không còn hàng). Chi phí vận chuyển đổi trả do VIFOOD
+                    chịu.
                   </p>
                 </div>
               </div>
@@ -163,24 +157,22 @@ const WarrantyPolicyPage = () => {
               <div className='w-16 h-16 bg-gradient-to-br from-[#d3b673] to-[#b8945d] rounded-full flex items-center justify-center mr-4'>
                 <FaShieldAlt className='text-3xl text-white' />
               </div>
-              <h2 className='text-2xl font-bold text-[#282828]'>
-                Cam Kết Chất Lượng
-              </h2>
+              <h2 className='text-2xl font-bold text-[#282828]'>Cam Kết Chất Lượng</h2>
             </div>
-            
+
             <div className='grid md:grid-cols-3 gap-6'>
               <div className='text-center p-6 bg-green-50 rounded-lg'>
                 <div className='text-5xl font-bold text-[#d3b673] mb-2'>100%</div>
                 <p className='font-semibold'>Đổi trả nếu lỗi</p>
                 <p className='text-sm text-gray-600 mt-2'>Hoàn tiền hoặc đổi sản phẩm mới</p>
               </div>
-              
+
               <div className='text-center p-6 bg-green-50 rounded-lg'>
                 <div className='text-5xl font-bold text-[#d3b673] mb-2'>24h</div>
                 <p className='font-semibold'>Xử lý nhanh chóng</p>
                 <p className='text-sm text-gray-600 mt-2'>Phản hồi và giải quyết trong 1 ngày</p>
               </div>
-              
+
               <div className='text-center p-6 bg-green-50 rounded-lg'>
                 <div className='text-5xl font-bold text-[#d3b673] mb-2'>0đ</div>
                 <p className='font-semibold'>Miễn phí vận chuyển</p>
@@ -191,10 +183,8 @@ const WarrantyPolicyPage = () => {
 
           {/* Hướng dẫn bảo quản */}
           <div className='bg-white rounded-xl shadow-lg p-8 mb-8'>
-            <h2 className='text-2xl font-bold text-[#282828] mb-6'>
-              Hướng Dẫn Bảo Quản Sản Phẩm Đông Lạnh
-            </h2>
-            
+            <h2 className='text-2xl font-bold text-[#282828] mb-6'>Hướng Dẫn Bảo Quản Sản Phẩm Đông Lạnh</h2>
+
             <div className='grid md:grid-cols-2 gap-6'>
               <div>
                 <h3 className='font-bold mb-3 text-[#d3b673]'>Bảo quản đúng cách:</h3>
@@ -205,7 +195,7 @@ const WarrantyPolicyPage = () => {
                   <li>✓ Sử dụng trong thời hạn ghi trên bao bì (3-6 tháng)</li>
                 </ul>
               </div>
-              
+
               <div>
                 <h3 className='font-bold mb-3 text-[#d3b673]'>Khi sử dụng:</h3>
                 <ul className='space-y-2 text-gray-700'>
@@ -221,19 +211,11 @@ const WarrantyPolicyPage = () => {
           {/* Liên hệ hỗ trợ */}
           <div className='bg-gradient-to-r from-[#d3b673] to-[#b8945d] rounded-xl shadow-lg p-8 text-white text-center'>
             <FaPhoneAlt className='text-5xl mx-auto mb-4' />
-            <h2 className='text-2xl font-bold mb-4'>
-              Cần Hỗ Trợ Đổi Trả?
-            </h2>
-            <p className='text-lg mb-6'>
-              Liên hệ ngay với chúng tôi để được giải quyết nhanh chóng
-            </p>
+            <h2 className='text-2xl font-bold mb-4'>Cần Hỗ Trợ Đổi Trả?</h2>
+            <p className='text-lg mb-6'>Liên hệ ngay với chúng tôi để được giải quyết nhanh chóng</p>
             <div className='flex flex-col md:flex-row gap-4 justify-center items-center'>
-              <div className='bg-white text-[#282828] px-8 py-3 rounded-lg font-bold'>
-                Hotline: 1900.111.111
-              </div>
-              <div className='bg-white text-[#282828] px-8 py-3 rounded-lg font-bold'>
-                Email: support@vifood.vn
-              </div>
+              <div className='bg-white text-[#282828] px-8 py-3 rounded-lg font-bold'>Hotline: 1900.111.111</div>
+              <div className='bg-white text-[#282828] px-8 py-3 rounded-lg font-bold'>Email: support@vifood.vn</div>
             </div>
           </div>
         </div>

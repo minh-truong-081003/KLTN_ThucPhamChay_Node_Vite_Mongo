@@ -9,15 +9,13 @@ const AboutPage = () => {
     <>
       <Loader />
       <HeaderHomePage />
-      
+
       {/* Hero Section với Slider-like effect */}
       <section className='relative h-[400px] md:h-[500px] bg-gradient-to-r from-green-800 to-green-600 overflow-hidden mt-[80px]'>
         <div className='absolute inset-0 bg-black opacity-30'></div>
         <div className='absolute inset-0 flex items-center justify-center'>
           <div className='text-center text-white z-10 px-4'>
-            <h1 className='text-4xl md:text-6xl font-bold mb-4 animate-fade-in'>
-              VIFOOD - Siêu Thị Chay Sạch
-            </h1>
+            <h1 className='text-4xl md:text-6xl font-bold mb-4 animate-fade-in'>VIFOOD - Siêu Thị Chay Sạch</h1>
             <p className='text-xl md:text-2xl mb-6'>
               Thương hiệu tiên phong sử dụng nguồn nông sản sạch chất lượng Việt Nam
             </p>
@@ -38,28 +36,28 @@ const AboutPage = () => {
           <section className='mb-16'>
             <div className='grid md:grid-cols-2 gap-12 items-center'>
               <div>
-                <h2 className='text-3xl font-bold text-[#282828] mb-6'>
-                  Về Chúng Tôi
-                </h2>
+                <h2 className='text-3xl font-bold text-[#282828] mb-6'>Về Chúng Tôi</h2>
                 <div className='w-24 h-1 bg-[#d3b673] mb-6'></div>
                 <p className='text-gray-700 leading-relaxed mb-4'>
-                  <strong className='text-[#d3b673]'>VIFOOD</strong> là cửa hàng chuyên cung cấp các sản phẩm thực phẩm chay đóng gói, 
-                  hàng đông lạnh chất lượng cao với công nghệ <strong>IQF (Individual Quick Frozen)</strong> - 
-                  bảo quản ở nhiệt độ -18°C để giữ trọn dinh dưỡng và hương vị tự nhiên.
+                  <strong className='text-[#d3b673]'>VIFOOD</strong> là cửa hàng chuyên cung cấp các sản phẩm thực phẩm
+                  chay đóng gói, hàng đông lạnh chất lượng cao với công nghệ{' '}
+                  <strong>IQF (Individual Quick Frozen)</strong> - bảo quản ở nhiệt độ -18°C để giữ trọn dinh dưỡng và
+                  hương vị tự nhiên.
                 </p>
                 <p className='text-gray-700 leading-relaxed mb-4'>
-                  Với sứ mệnh mang đến cho người tiêu dùng những sản phẩm chay <strong>sạch - an toàn - dinh dưỡng</strong>, 
-                  chúng tôi cam kết 100% nguồn gốc rõ ràng, không chất bảo quản độc hại.
+                  Với sứ mệnh mang đến cho người tiêu dùng những sản phẩm chay{' '}
+                  <strong>sạch - an toàn - dinh dưỡng</strong>, chúng tôi cam kết 100% nguồn gốc rõ ràng, không chất bảo
+                  quản độc hại.
                 </p>
                 <p className='text-gray-700 leading-relaxed'>
-                  Thời hạn sử dụng từ <strong>3-6 tháng</strong>, giúp bạn luôn có sẵn thực phẩm chất lượng 
-                  cho bữa ăn gia đình mọi lúc mọi nơi.
+                  Thời hạn sử dụng từ <strong>3-6 tháng</strong>, giúp bạn luôn có sẵn thực phẩm chất lượng cho bữa ăn
+                  gia đình mọi lúc mọi nơi.
                 </p>
               </div>
               <div className='rounded-xl overflow-hidden shadow-2xl'>
-                <img 
-                  src='https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800' 
-                  alt='Thực phẩm chay' 
+                <img
+                  src='https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800'
+                  alt='Thực phẩm chay'
                   className='w-full h-full object-cover hover:scale-110 transition-transform duration-500'
                 />
               </div>
@@ -68,20 +66,16 @@ const AboutPage = () => {
 
           {/* Giá trị cốt lõi */}
           <section className='mb-16 bg-gradient-to-br from-green-50 to-yellow-50 rounded-2xl p-8 md:p-12'>
-            <h2 className='text-3xl font-bold text-center text-[#282828] mb-3'>
-              Giá Trị Cốt Lõi
-            </h2>
+            <h2 className='text-3xl font-bold text-center text-[#282828] mb-3'>Giá Trị Cốt Lõi</h2>
             <div className='w-24 h-1 bg-[#d3b673] mx-auto mb-12'></div>
-            
+
             <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8'>
               <div className='text-center'>
                 <div className='w-16 h-16 bg-[#d3b673] rounded-full flex items-center justify-center mx-auto mb-4'>
                   <FaLeaf className='text-3xl text-white' />
                 </div>
                 <h3 className='font-bold text-lg mb-2'>100% Chay Sạch</h3>
-                <p className='text-gray-600 text-sm'>
-                  Không chất bảo quản độc hại, nguồn gốc rõ ràng
-                </p>
+                <p className='text-gray-600 text-sm'>Không chất bảo quản độc hại, nguồn gốc rõ ràng</p>
               </div>
 
               <div className='text-center'>
@@ -89,9 +83,7 @@ const AboutPage = () => {
                   <FaCheckCircle className='text-3xl text-white' />
                 </div>
                 <h3 className='font-bold text-lg mb-2'>Chất Lượng Cao</h3>
-                <p className='text-gray-600 text-sm'>
-                  Công nghệ IQF giữ trọn dinh dưỡng
-                </p>
+                <p className='text-gray-600 text-sm'>Công nghệ IQF giữ trọn dinh dưỡng</p>
               </div>
 
               <div className='text-center'>
@@ -99,9 +91,7 @@ const AboutPage = () => {
                   <FaShoppingBag className='text-3xl text-white' />
                 </div>
                 <h3 className='font-bold text-lg mb-2'>Đa Dạng Sản Phẩm</h3>
-                <p className='text-gray-600 text-sm'>
-                  Hơn 100+ sản phẩm chay đóng gói, đông lạnh
-                </p>
+                <p className='text-gray-600 text-sm'>Hơn 100+ sản phẩm chay đóng gói, đông lạnh</p>
               </div>
 
               <div className='text-center'>
@@ -109,9 +99,7 @@ const AboutPage = () => {
                   <FaStar className='text-3xl text-white' />
                 </div>
                 <h3 className='font-bold text-lg mb-2'>Uy Tín Hàng Đầu</h3>
-                <p className='text-gray-600 text-sm'>
-                  Được hàng nghìn khách hàng tin tưởng
-                </p>
+                <p className='text-gray-600 text-sm'>Được hàng nghìn khách hàng tin tưởng</p>
               </div>
             </div>
           </section>
@@ -120,22 +108,18 @@ const AboutPage = () => {
           <section className='mb-16'>
             <div className='grid md:grid-cols-2 gap-8'>
               <div className='bg-white rounded-xl shadow-lg p-8 border-t-4 border-[#d3b673]'>
-                <h3 className='text-2xl font-bold text-[#282828] mb-4'>
-                  Sứ Mệnh
-                </h3>
+                <h3 className='text-2xl font-bold text-[#282828] mb-4'>Sứ Mệnh</h3>
                 <p className='text-gray-700 leading-relaxed'>
-                  Cung cấp thực phẩm chay chất lượng cao, an toàn và tiện lợi cho mọi gia đình Việt Nam. 
-                  Góp phần thúc đẩy lối sống lành mạnh, bảo vệ môi trường và phát triển bền vững.
+                  Cung cấp thực phẩm chay chất lượng cao, an toàn và tiện lợi cho mọi gia đình Việt Nam. Góp phần thúc
+                  đẩy lối sống lành mạnh, bảo vệ môi trường và phát triển bền vững.
                 </p>
               </div>
 
               <div className='bg-white rounded-xl shadow-lg p-8 border-t-4 border-[#d3b673]'>
-                <h3 className='text-2xl font-bold text-[#282828] mb-4'>
-                  Tầm Nhìn
-                </h3>
+                <h3 className='text-2xl font-bold text-[#282828] mb-4'>Tầm Nhìn</h3>
                 <p className='text-gray-700 leading-relaxed'>
-                  Trở thành thương hiệu thực phẩm chay hàng đầu Việt Nam, mở rộng mạng lưới phân phối 
-                  toàn quốc và xuất khẩu quốc tế, mang văn hóa ẩm thực chay Việt ra thế giới.
+                  Trở thành thương hiệu thực phẩm chay hàng đầu Việt Nam, mở rộng mạng lưới phân phối toàn quốc và xuất
+                  khẩu quốc tế, mang văn hóa ẩm thực chay Việt ra thế giới.
                 </p>
               </div>
             </div>
@@ -143,9 +127,7 @@ const AboutPage = () => {
 
           {/* Cam kết */}
           <section className='bg-[#282828] text-white rounded-2xl p-8 md:p-12 text-center'>
-            <h2 className='text-3xl font-bold mb-6'>
-              Cam Kết Của VIFOOD
-            </h2>
+            <h2 className='text-3xl font-bold mb-6'>Cam Kết Của VIFOOD</h2>
             <div className='grid md:grid-cols-3 gap-6 mt-8'>
               <div>
                 <div className='text-5xl font-bold text-[#d3b673] mb-2'>100%</div>

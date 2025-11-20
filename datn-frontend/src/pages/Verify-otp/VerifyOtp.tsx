@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import Loader from '../../components/Loader'
 
 const otpSchema = Yup.object({
-  otp: Yup.string().required('Vui lòng nhập mã OTP').length(6, 'Mã OTP phải có 6 chữ số'),
+  otp: Yup.string().required('Vui lòng nhập mã OTP').length(6, 'Mã OTP phải có 6 chữ số')
 })
 
 type OtpForm = Yup.InferType<typeof otpSchema>
@@ -28,9 +28,9 @@ const VerifyOtp = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<OtpForm>({
-    resolver: yupResolver(otpSchema),
+    resolver: yupResolver(otpSchema)
   })
 
   useEffect(() => {
@@ -99,7 +99,7 @@ const VerifyOtp = () => {
     resendOtp({ account })
       .unwrap()
       .then(() => {
-        setResendCount(prev => prev + 1)
+        setResendCount((prev) => prev + 1)
         toast.success('Mã OTP đã được gửi lại. Vui lòng kiểm tra email.', {
           position: toast.POSITION.TOP_RIGHT
         })
@@ -146,7 +146,7 @@ const VerifyOtp = () => {
               <button
                 onClick={onResend}
                 disabled={resendCount >= 3 || isResending}
-                className={`text-[#028336] ${(resendCount >= 3 || isResending) ? 'opacity-50 cursor-not-allowed' : 'hover:underline'}`}
+                className={`text-[#028336] ${resendCount >= 3 || isResending ? 'opacity-50 cursor-not-allowed' : 'hover:underline'}`}
               >
                 {isResending ? 'Đang gửi...' : `Gửi lại mã (${resendCount}/3)`}
               </button>

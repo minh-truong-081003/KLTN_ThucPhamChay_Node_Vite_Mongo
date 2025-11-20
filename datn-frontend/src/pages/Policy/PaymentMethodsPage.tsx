@@ -9,13 +9,11 @@ const PaymentMethodsPage = () => {
     <>
       <Loader />
       <HeaderHomePage />
-      
+
       <main className='mt-[80px] py-16 px-5 bg-gray-50'>
         <div className='max-w-[1140px] mx-auto'>
           <div className='text-center mb-12'>
-            <h1 className='text-4xl font-bold text-[#282828] mb-4'>
-              Hình Thức Thanh Toán
-            </h1>
+            <h1 className='text-4xl font-bold text-[#282828] mb-4'>Hình Thức Thanh Toán</h1>
             <div className='w-24 h-1 bg-[#d3b673] mx-auto mb-4'></div>
             <p className='text-gray-600 max-w-2xl mx-auto'>
               VIFOOD hỗ trợ đa dạng phương thức thanh toán để bạn có trải nghiệm mua sắm thuận tiện nhất
@@ -29,9 +27,7 @@ const PaymentMethodsPage = () => {
                 <div className='w-16 h-16 bg-gradient-to-br from-[#d3b673] to-[#b8945d] rounded-full flex items-center justify-center mr-4'>
                   <FaWallet className='text-3xl text-white' />
                 </div>
-                <h2 className='text-2xl font-bold text-[#282828]'>
-                  Thanh Toán Khi Nhận Hàng (COD)
-                </h2>
+                <h2 className='text-2xl font-bold text-[#282828]'>Thanh Toán Khi Nhận Hàng (COD)</h2>
               </div>
               <ul className='space-y-3 text-gray-700'>
                 <li className='flex items-start'>
@@ -59,16 +55,22 @@ const PaymentMethodsPage = () => {
                 <div className='w-16 h-16 bg-gradient-to-br from-[#d3b673] to-[#b8945d] rounded-full flex items-center justify-center mr-4'>
                   <FaUniversity className='text-3xl text-white' />
                 </div>
-                <h2 className='text-2xl font-bold text-[#282828]'>
-                  Chuyển Khoản Ngân Hàng
-                </h2>
+                <h2 className='text-2xl font-bold text-[#282828]'>Chuyển Khoản Ngân Hàng</h2>
               </div>
               <div className='bg-gray-50 rounded-lg p-4 mb-4'>
                 <p className='font-semibold mb-2'>Thông tin tài khoản:</p>
-                <p className='text-sm'><strong>Ngân hàng:</strong> Vietcombank</p>
-                <p className='text-sm'><strong>Số TK:</strong> 0123456789</p>
-                <p className='text-sm'><strong>Chủ TK:</strong> CONG TY VIFOOD</p>
-                <p className='text-sm'><strong>Chi nhánh:</strong> Thủ Đức, TP.HCM</p>
+                <p className='text-sm'>
+                  <strong>Ngân hàng:</strong> Vietcombank
+                </p>
+                <p className='text-sm'>
+                  <strong>Số TK:</strong> 0123456789
+                </p>
+                <p className='text-sm'>
+                  <strong>Chủ TK:</strong> CONG TY VIFOOD
+                </p>
+                <p className='text-sm'>
+                  <strong>Chi nhánh:</strong> Thủ Đức, TP.HCM
+                </p>
               </div>
               <ul className='space-y-3 text-gray-700'>
                 <li className='flex items-start'>
@@ -88,13 +90,15 @@ const PaymentMethodsPage = () => {
                 <div className='w-16 h-16 bg-gradient-to-br from-[#d3b673] to-[#b8945d] rounded-full flex items-center justify-center mr-4'>
                   <FaMobileAlt className='text-3xl text-white' />
                 </div>
-                <h2 className='text-2xl font-bold text-[#282828]'>
-                  Ví Điện Tử
-                </h2>
+                <h2 className='text-2xl font-bold text-[#282828]'>Ví Điện Tử</h2>
               </div>
               <div className='flex gap-4 mb-6'>
                 <img src='https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png' alt='MoMo' className='h-12' />
-                <img src='https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay.png' alt='ZaloPay' className='h-12' />
+                <img
+                  src='https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay.png'
+                  alt='ZaloPay'
+                  className='h-12'
+                />
               </div>
               <ul className='space-y-3 text-gray-700'>
                 <li className='flex items-start'>
@@ -118,9 +122,7 @@ const PaymentMethodsPage = () => {
                 <div className='w-16 h-16 bg-gradient-to-br from-[#d3b673] to-[#b8945d] rounded-full flex items-center justify-center mr-4'>
                   <FaCreditCard className='text-3xl text-white' />
                 </div>
-                <h2 className='text-2xl font-bold text-[#282828]'>
-                  Thẻ ATM / Credit Card
-                </h2>
+                <h2 className='text-2xl font-bold text-[#282828]'>Thẻ ATM / Credit Card</h2>
               </div>
               <ul className='space-y-3 text-gray-700'>
                 <li className='flex items-start'>
@@ -146,7 +148,9 @@ const PaymentMethodsPage = () => {
               <li>• Vui lòng kiểm tra kỹ thông tin đơn hàng trước khi thanh toán</li>
               <li>• Với chuyển khoản, vui lòng ghi rõ nội dung: "Mã đơn hàng + Số điện thoại"</li>
               <li>• Đơn hàng được xử lý sau khi xác nhận thanh toán thành công</li>
-              <li>• Liên hệ <strong className='text-[#d3b673]'>1900.111.111</strong> nếu cần hỗ trợ</li>
+              <li>
+                • Liên hệ <strong className='text-[#d3b673]'>1900.111.111</strong> nếu cần hỗ trợ
+              </li>
             </ul>
           </div>
         </div>

@@ -110,10 +110,10 @@ const ListProducts = ({ products, isLoading, queryConfig }: ListProductsProps) =
           </div>
           <div className='text-center'>
             {filteredProducts && filteredProducts.totalPages > 1 && (
-              <Pagination 
+              <Pagination
                 current={filteredProducts.page}
                 pageSize={filteredProducts.limit}
-                onChange={onChange} 
+                onChange={onChange}
                 total={filteredProducts.totalDocs}
                 showSizeChanger={false}
               />
@@ -148,7 +148,11 @@ const ListProducts = ({ products, isLoading, queryConfig }: ListProductsProps) =
             className='cart-group-bottom flex flex-row justify-between items-center  shadow-[0_-2px_5px_0px_rgba(0,0,0,0.06)] cursor-pointer'
           >
             <div className='cart-ss2 flex items-center my-4 px-5 text-[#8a733f] text-[14px]'>
-              <img className='h-[35px]' src='https://png.pngtree.com/png-clipart/20230801/original/pngtree-vegan-icon-picture-image_7816412.png' alt='' />
+              <img
+                className='h-[35px]'
+                src='https://png.pngtree.com/png-clipart/20230801/original/pngtree-vegan-icon-picture-image_7816412.png'
+                alt=''
+              />
               <span className='cart-ss2-one px-1'>x</span>
               <span className='cart-ss2-two px-1'>0</span>
               <span className='cart-ss2-three px-1'> = </span>

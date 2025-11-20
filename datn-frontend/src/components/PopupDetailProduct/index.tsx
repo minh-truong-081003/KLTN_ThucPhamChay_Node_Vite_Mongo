@@ -45,7 +45,7 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
     productId: product._id,
     page: 1,
     limit: 1000,
-    rating: undefined,
+    rating: undefined
   })
 
   // Tính lại averageRating từ reviews thực tế
@@ -54,14 +54,14 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
     if (allReviews.length === 0) {
       return {
         averageRating: product.averageRating || 0,
-        totalReviews: product.totalReviews || 0,
+        totalReviews: product.totalReviews || 0
       }
     }
     const totalRating = allReviews.reduce((sum, review) => sum + (review.rating || 0), 0)
     const averageRating = parseFloat((totalRating / allReviews.length).toFixed(1))
     return {
       averageRating,
-      totalReviews: allReviews.length,
+      totalReviews: allReviews.length
     }
   }
 
@@ -112,10 +112,10 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
       toppings: checkedToppings,
       quantity,
       image: product.images[0]?.url ?? '',
-      price: (product.sale) as number,
+      price: product.sale as number,
       total: product.sale * quantity,
       product: product._id,
-      sale:  0
+      sale: 0
     }
 
     if (user._id !== '' && user.accessToken !== '') {
@@ -161,7 +161,9 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
               </div>
               <div className='right md:flex-none flex-1 ml-4'>
                 <div className='title mr-4'>
-                  <h4 className='line-clamp-2 text-lg font-semibold'>{product.name?.length > 35 ? product.name?.slice(0,35) +'...' :product.name }</h4>
+                  <h4 className='line-clamp-2 text-lg font-semibold'>
+                    {product.name?.length > 35 ? product.name?.slice(0, 35) + '...' : product.name}
+                  </h4>
                 </div>
                 {/* Rating display */}
                 <div className='rating flex items-center gap-2 mt-2'>
@@ -240,7 +242,7 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
                       ? formatCurrency(
                           product.sale &&
                             // ? price * ((100 - product.sale) / 100) * quantity
-                            (price ) * quantity
+                            price * quantity
                         )
                       : formatCurrency(price * quantity)}
                   </button>

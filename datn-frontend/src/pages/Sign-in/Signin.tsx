@@ -82,7 +82,7 @@ const Signin = () => {
         <div className='flex items-center justify-center h-full'>
           <div className='content background-content bg-white w-[90vw] md:w-[500px] h-[600px] mx-6 md:px-[100px] py-6 flex justify-center items-center flex-col rounded'>
             <div className='logo'>
-              <img src="/logo_th.png" alt='' className='w-[230px] mb-5' />
+              <img src='/logo_th.png' alt='' className='w-[230px] mb-5' />
             </div>
             <form action='' className='flex flex-col w-full' onSubmit={handleSubmit(onLogin)}>
               <Input
@@ -104,7 +104,7 @@ const Signin = () => {
               <div className='text-right mt-4 font-bold text-[#028336] text-sm'>
                 <Link to={'/forgot-password'}>Quên mật khẩu?</Link>
               </div>
-              <Button type='auth' size='large' shape='circle' >
+              <Button type='auth' size='large' shape='circle'>
                 Đăng nhập
               </Button>
               <div className='flex justify-center gap-1'>

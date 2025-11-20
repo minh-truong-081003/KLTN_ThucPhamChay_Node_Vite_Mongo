@@ -242,8 +242,9 @@ const PaymentResult = () => {
               } else {
                 dispatch(resetAllCart())
                 ClientSocket.sendNotificationToAdmin(
-                  `Đơn hàng "${res.order.orderNew._id.toUpperCase()}" vừa được tạo bởi khách hàng "${res.order.orderNew
-                    ?.inforOrderShipping?.name}" và đang chờ xác nhận.`
+                  `Đơn hàng "${res.order.orderNew._id.toUpperCase()}" vừa được tạo bởi khách hàng "${
+                    res.order.orderNew?.inforOrderShipping?.name
+                  }" và đang chờ xác nhận.`
                 )
                 ClientSocket.createOrder(res.order.orderNew.user)
                 localStorage.removeItem('storeNote')

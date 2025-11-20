@@ -64,4 +64,3 @@ export interface ICheckPurchase {
   canReview: boolean
   orderId?: string
 }
-

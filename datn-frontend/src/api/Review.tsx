@@ -11,11 +11,14 @@ export const ApiReview = createApi({
   refetchOnFocus: false, // Tắt vì socket đã xử lý realtime
   endpoints: (builder) => ({
     // Lấy tất cả đánh giá của một sản phẩm
-    getReviewsByProduct: builder.query<IReviewDocs, { productId: string; page?: number; limit?: number; rating?: number }>({
+    getReviewsByProduct: builder.query<
+      IReviewDocs,
+      { productId: string; page?: number; limit?: number; rating?: number }
+    >({
       query: ({ productId, page = 1, limit = 10, rating }) => {
         const params = new URLSearchParams({
           _page: page.toString(),
-          _limit: limit.toString(),
+          _limit: limit.toString()
         })
         if (rating) params.append('rating', rating.toString())
         return `/api/reviews/product/${productId}?${params.toString()}`
@@ -24,22 +27,22 @@ export const ApiReview = createApi({
         result?.docs
           ? [
               ...result.docs.map(({ _id }) => ({ type: 'review' as const, id: _id })),
-              { type: 'review', id: `product-${productId}` },
+              { type: 'review', id: `product-${productId}` }
             ]
           : [{ type: 'review', id: `product-${productId}` }],
       // Cache ngắn hơn cho dữ liệu realtime
-      keepUnusedDataFor: 10, // Cache 10s thay vì 30s
+      keepUnusedDataFor: 10 // Cache 10s thay vì 30s
     }),
 
     // Kiểm tra user đã mua sản phẩm chưa
     checkUserPurchasedProduct: builder.query<{ message: string; data: ICheckPurchase }, string>({
-      query: (productId) => `/api/reviews/check-purchase/${productId}`,
+      query: (productId) => `/api/reviews/check-purchase/${productId}`
     }),
 
     // Lấy đánh giá của user cho một sản phẩm
     getUserReviewForProduct: builder.query<{ message: string; data: IReview | null }, string>({
       query: (productId) => `/api/reviews/user/product/${productId}`,
-      providesTags: (result, error, productId) => [{ type: 'review', id: `user-product-${productId}` }],
+      providesTags: (result, error, productId) => [{ type: 'review', id: `user-product-${productId}` }]
     }),
 
     // Lấy danh sách reviews theo order ID
@@ -47,8 +50,8 @@ export const ApiReview = createApi({
       query: (orderId) => `/api/reviews/order/${orderId}`,
       providesTags: (result, error, orderId) => [
         { type: 'review', id: `order-${orderId}` },
-        ...(result?.data?.map(review => ({ type: 'review' as const, id: review._id })) || [])
-      ],
+        ...(result?.data?.map((review) => ({ type: 'review' as const, id: review._id })) || [])
+      ]
     }),
 
     // Tạo đánh giá mới
@@ -56,7 +59,7 @@ export const ApiReview = createApi({
       query: (body) => ({
         url: '/api/review',
         method: 'POST',
-        body,
+        body
       }),
       invalidatesTags: (result, error, { product, order }) => [
         { type: 'review', id: `product-${product}` },
@@ -65,8 +68,8 @@ export const ApiReview = createApi({
         { type: 'review', id: `order-${order}` },
         { type: 'review', id: 'List' },
         { type: 'product', id: product },
-        { type: 'product', id: 'List' },
-      ],
+        { type: 'product', id: 'List' }
+      ]
     }),
 
     // Cập nhật đánh giá
@@ -74,7 +77,7 @@ export const ApiReview = createApi({
       query: ({ reviewId, data }) => ({
         url: `/api/review/${reviewId}`,
         method: 'PUT',
-        body: data,
+        body: data
       }),
       invalidatesTags: (result, error, { reviewId }) => {
         if (result?.data) {
@@ -82,21 +85,21 @@ export const ApiReview = createApi({
             { type: 'review', id: reviewId },
             { type: 'review', id: 'List' },
             { type: 'review', id: `product-${result.data.product}` },
-            { type: 'review', id: `user-product-${result.data.product}` },
+            { type: 'review', id: `user-product-${result.data.product}` }
           ]
         }
         return [
           { type: 'review', id: reviewId },
-          { type: 'review', id: 'List' },
+          { type: 'review', id: 'List' }
         ]
-      },
+      }
     }),
 
     // Xóa đánh giá
     deleteReview: builder.mutation<{ message: string; data: IReview }, string>({
       query: (reviewId) => ({
         url: `/api/review/${reviewId}`,
-        method: 'DELETE',
+        method: 'DELETE'
       }),
       invalidatesTags: (result, error, reviewId) => {
         if (result?.data) {
@@ -104,21 +107,21 @@ export const ApiReview = createApi({
             { type: 'review', id: reviewId },
             { type: 'review', id: 'List' },
             { type: 'review', id: `product-${result.data.product}` },
-            { type: 'review', id: `user-product-${result.data.product}` },
+            { type: 'review', id: `user-product-${result.data.product}` }
           ]
         }
         return [
           { type: 'review', id: reviewId },
-          { type: 'review', id: 'List' },
+          { type: 'review', id: 'List' }
         ]
-      },
+      }
     }),
 
     // Ẩn/Hiện đánh giá (toggle visibility)
     toggleReviewVisibility: builder.mutation<{ message: string; data: IReview; status: string }, string>({
       query: (reviewId) => ({
         url: `/api/review/${reviewId}/toggle-visibility`,
-        method: 'PATCH',
+        method: 'PATCH'
       }),
       invalidatesTags: (result, error, reviewId) => {
         if (result?.data) {
@@ -126,16 +129,16 @@ export const ApiReview = createApi({
             { type: 'review', id: reviewId },
             { type: 'review', id: 'List' },
             { type: 'review', id: `product-${result.data.product}` },
-            { type: 'review', id: `user-product-${result.data.product}` },
+            { type: 'review', id: `user-product-${result.data.product}` }
           ]
         }
         return [
           { type: 'review', id: reviewId },
-          { type: 'review', id: 'List' },
+          { type: 'review', id: 'List' }
         ]
-      },
-    }),
-  }),
+      }
+    })
+  })
 })
 
 export const {
@@ -146,6 +149,5 @@ export const {
   useCreateReviewMutation,
   useUpdateReviewMutation,
   useDeleteReviewMutation,
-  useToggleReviewVisibilityMutation,
+  useToggleReviewVisibilityMutation
 } = ApiReview
-

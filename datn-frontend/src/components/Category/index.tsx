@@ -10,7 +10,7 @@ import NotFound from '../../pages/Not-Found/NotFound'
 import { getIdCate } from '../../store/slices/categories'
 import { savePage } from '../../store/slices/product.slice'
 import SKProduct from '../Skeleton/SKProduct'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface SidebarCateProps {
   categories: ICategory[] | undefined
@@ -30,7 +30,13 @@ const SidebarCate = ({ categories, error, isLoading, queryConfig }: SidebarCateP
 
   // Lưu tổng số sản phẩm ban đầu (khi không có filter)
   useEffect(() => {
-    if (products?.totalDocs && !queryConfig?.c && !queryConfig?.priceRange && !queryConfig?.rating && !queryConfig?.sortBy) {
+    if (
+      products?.totalDocs &&
+      !queryConfig?.c &&
+      !queryConfig?.priceRange &&
+      !queryConfig?.rating &&
+      !queryConfig?.sortBy
+    ) {
       setTotalProductsCount(products.totalDocs)
     }
   }, [products?.totalDocs, queryConfig])
@@ -45,18 +51,22 @@ const SidebarCate = ({ categories, error, isLoading, queryConfig }: SidebarCateP
 
   // Hàm reload lại trang, sẽ reset lại danh mục và sản phẩm và XÓA HẾT BỘ LỌC
   const handleReload = () => {
-    dispatch(getIdCate(''))  // Reset danh mục
-    setSelectedCategory('')  // Reset selectedCategory
-    dispatch(savePage(1))  // Reset lại trang đầu tiên
+    dispatch(getIdCate('')) // Reset danh mục
+    setSelectedCategory('') // Reset selectedCategory
+    dispatch(savePage(1)) // Reset lại trang đầu tiên
     // Chuyển hướng về trang sản phẩm với params - CHỈ GIỮ LẠI _page và limit, XÓA HẾT CÁC FILTER
     navigate('/products?_page=1&limit=6')
   }
-  
+
   const handleCategoryClick = (categoryId: string) => {
-    dispatch(getIdCate(categoryId ? { idCate: categoryId, nameCate: categories?.find(c => c._id === categoryId)?.name || '' } : ''))
+    dispatch(
+      getIdCate(
+        categoryId ? { idCate: categoryId, nameCate: categories?.find((c) => c._id === categoryId)?.name || '' } : ''
+      )
+    )
     dispatch(savePage(1))
     setSelectedCategory(categoryId)
-    
+
     // Build URL với category param
     const params: any = {
       _page: '1',
@@ -67,7 +77,7 @@ const SidebarCate = ({ categories, error, isLoading, queryConfig }: SidebarCateP
     if (queryConfig?.priceRange) params.priceRange = queryConfig.priceRange
     if (queryConfig?.rating) params.rating = queryConfig.rating
     if (queryConfig?.sortBy) params.sortBy = queryConfig.sortBy
-    
+
     navigate(`/products?${new URLSearchParams(params).toString()}`)
   }
 
@@ -84,16 +94,16 @@ const SidebarCate = ({ categories, error, isLoading, queryConfig }: SidebarCateP
       <div className='sidebar select-none w-full bg-white text-[14px] rounded-sm shadow-sm h-fit'>
         <div className='flex justify-between items-center border-b border-gray-200 px-4 py-3 bg-gradient-to-r from-[#d3b673] to-[#c4a962]'>
           <div className='font-semibold text-white flex items-center gap-2'>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M4 6h16M4 12h16M4 18h16' />
             </svg>
             DANH MỤC SẢN PHẨM
           </div>
           {/* Nút reload */}
-          <button 
+          <button
             onClick={handleReload}
-            className="text-white hover:bg-white/20 p-1.5 rounded transition-all"
-            title="Làm mới"
+            className='text-white hover:bg-white/20 p-1.5 rounded transition-all'
+            title='Làm mới'
           >
             <FaRedo size={14} />
           </button>
@@ -103,19 +113,21 @@ const SidebarCate = ({ categories, error, isLoading, queryConfig }: SidebarCateP
             <div
               onClick={() => handleCategoryClick('')}
               className={`cursor-pointer rounded-lg transition-all duration-200 px-4 py-3 flex justify-between items-center group ${
-                selectedCategory == '' 
-                  ? 'bg-gradient-to-r from-[#d3b673]/10 to-[#c4a962]/10 border-l-4 border-[#d3b673]' 
+                selectedCategory == ''
+                  ? 'bg-gradient-to-r from-[#d3b673]/10 to-[#c4a962]/10 border-l-4 border-[#d3b673]'
                   : 'hover:bg-gray-50'
               }`}
             >
-              <div className={`cat-name capitalize font-medium ${selectedCategory == '' ? 'text-[#d3b673]' : 'text-gray-700'}`}>
+              <div
+                className={`cat-name capitalize font-medium ${selectedCategory == '' ? 'text-[#d3b673]' : 'text-gray-700'}`}
+              >
                 🏠 Tất cả sản phẩm
               </div>
-              <div className={`cat-amount text-xs font-semibold px-2 py-1 rounded-full ${
-                selectedCategory === '' 
-                  ? 'bg-[#d3b673] text-white' 
-                  : 'bg-gray-200 text-gray-600'
-              }`}>
+              <div
+                className={`cat-amount text-xs font-semibold px-2 py-1 rounded-full ${
+                  selectedCategory === '' ? 'bg-[#d3b673] text-white' : 'bg-gray-200 text-gray-600'
+                }`}
+              >
                 {/* Luôn hiển thị tổng số sản phẩm ban đầu (cố định) */}
                 {totalProductsCount || products?.totalDocs || 0}
               </div>
@@ -125,27 +137,26 @@ const SidebarCate = ({ categories, error, isLoading, queryConfig }: SidebarCateP
             Array.isArray(categories) &&
             categories?.length > 0 &&
             categories?.map((category: ICategory) => (
-              <div
-                key={category._id}
-                className='block'
-              >
+              <div key={category._id} className='block'>
                 <div
                   onClick={() => handleCategoryClick(category._id)}
                   className={`cursor-pointer rounded-lg transition-all duration-200 px-4 py-3 flex justify-between items-center group mb-1 ${
-                    selectedCategory === category._id 
-                      ? 'bg-gradient-to-r from-[#d3b673]/10 to-[#c4a962]/10 border-l-4 border-[#d3b673]' 
+                    selectedCategory === category._id
+                      ? 'bg-gradient-to-r from-[#d3b673]/10 to-[#c4a962]/10 border-l-4 border-[#d3b673]'
                       : 'hover:bg-gray-50 border-l-4 border-transparent'
                   }`}
                 >
-                  <div className={`cat-name capitalize font-medium ${selectedCategory === category._id ? 'text-[#d3b673]' : 'text-gray-700'}`}>
+                  <div
+                    className={`cat-name capitalize font-medium ${selectedCategory === category._id ? 'text-[#d3b673]' : 'text-gray-700'}`}
+                  >
                     📦 {category.name}
                   </div>
-                  <div className={`cat-amount text-xs font-semibold px-2 py-1 rounded-full ${
-                    selectedCategory === category._id 
-                      ? 'bg-[#d3b673] text-white' 
-                      : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {category.products?.filter(p => p.is_active && !p.is_deleted).length || 0}
+                  <div
+                    className={`cat-amount text-xs font-semibold px-2 py-1 rounded-full ${
+                      selectedCategory === category._id ? 'bg-[#d3b673] text-white' : 'bg-gray-200 text-gray-600'
+                    }`}
+                  >
+                    {category.products?.filter((p) => p.is_active && !p.is_deleted).length || 0}
                   </div>
                 </div>
               </div>
@@ -227,7 +238,7 @@ const SidebarCate = ({ categories, error, isLoading, queryConfig }: SidebarCateP
                           </Typography>
                         </Fragment>
                       }
-                      onClick={() => dispatch(getIdCate({ idCate: category._id, nameCate: category.name }))} 
+                      onClick={() => dispatch(getIdCate({ idCate: category._id, nameCate: category.name }))}
                     />
                   </ListItem>
                   <Divider sx={{ marginLeft: '16px' }} />

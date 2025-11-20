@@ -22,9 +22,8 @@ const NewProducts = () => {
           <h4 className='text-[#d3b673] text-[22px] mb-[5px] font-bold '>Sản Phẩm Chay - Sạch</h4>
         </div>
         <div className='main-title'>
-
           <h2 className='text-3xl md:text-4xl text-center text-black px-[50px] uppercase font-bold mb-2'>
-            MỚI NHẤT <i className="fa-solid fa-fire" style={{ color: '#ff2600' }}></i>
+            MỚI NHẤT <i className='fa-solid fa-fire' style={{ color: '#ff2600' }}></i>
           </h2>
         </div>
         <div className='bg_title'></div>

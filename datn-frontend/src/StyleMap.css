@@ -30,7 +30,9 @@
 .mapboxgl-ctrl-geocoder--input:focus {
   background-color: #fefefe;
   border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1), 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 0 0 3px rgba(16, 185, 129, 0.1),
+    0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Yasuo custom search input - Redesigned for better UX */
@@ -41,7 +43,9 @@
 .yasuo-search:focus {
   outline: none;
   border-color: #10b981; /* Green accent color */
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1), 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 0 0 3px rgba(16, 185, 129, 0.1),
+    0 2px 12px rgba(0, 0, 0, 0.08);
   background-color: #fefefe;
 }
 
@@ -51,7 +55,9 @@
 }
 
 /* Add search icon using CSS pseudo-element */
-.yasuo-search::before { display: none; }
+.yasuo-search::before {
+  display: none;
+}
 
 /* Hover state */
 .yasuo-search:hover {

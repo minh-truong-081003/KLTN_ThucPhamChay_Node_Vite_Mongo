@@ -176,36 +176,38 @@ const Autocomplete = ({ setValue, address }: Props) => {
           }
         }
 
-          // Normalize wrapper/input style in case the geocoder control sets inline widths
-          const normalizeGeocoderStyles = () => {
-            const container = document.getElementById('geocoder')
-            const wrapper = container?.querySelector('.mapboxgl-ctrl-geocoder, .goongjs-ctrl-geocoder, .goongjs-ctrl-geocoder__control') as HTMLElement | null
-            const target = (wrapper as HTMLElement) || container
-            if (target) {
-              try {
-                target.style.removeProperty('width')
-                target.style.width = '100%'
-                target.style.maxWidth = 'none'
-                target.style.minWidth = '0'
-                target.style.boxSizing = 'border-box'
-              } catch (e) {
-                // ignore
-              }
-            }
-            const inputAfterNorm = document.querySelector<HTMLInputElement>(
-              '.mapboxgl-ctrl-geocoder--input, .goongjs-ctrl-geocoder--input, .goongjs-ctrl-geocoder__input'
-            )
-            if (inputAfterNorm) {
-              try {
-                inputAfterNorm.style.removeProperty('width')
-                inputAfterNorm.style.width = '100%'
-                inputAfterNorm.style.boxSizing = 'border-box'
-                if (!inputAfterNorm.style.padding) inputAfterNorm.style.padding = '10px 12px'
-              } catch (e) {
-                // ignore
-              }
+        // Normalize wrapper/input style in case the geocoder control sets inline widths
+        const normalizeGeocoderStyles = () => {
+          const container = document.getElementById('geocoder')
+          const wrapper = container?.querySelector(
+            '.mapboxgl-ctrl-geocoder, .goongjs-ctrl-geocoder, .goongjs-ctrl-geocoder__control'
+          ) as HTMLElement | null
+          const target = (wrapper as HTMLElement) || container
+          if (target) {
+            try {
+              target.style.removeProperty('width')
+              target.style.width = '100%'
+              target.style.maxWidth = 'none'
+              target.style.minWidth = '0'
+              target.style.boxSizing = 'border-box'
+            } catch (e) {
+              // ignore
             }
           }
+          const inputAfterNorm = document.querySelector<HTMLInputElement>(
+            '.mapboxgl-ctrl-geocoder--input, .goongjs-ctrl-geocoder--input, .goongjs-ctrl-geocoder__input'
+          )
+          if (inputAfterNorm) {
+            try {
+              inputAfterNorm.style.removeProperty('width')
+              inputAfterNorm.style.width = '100%'
+              inputAfterNorm.style.boxSizing = 'border-box'
+              if (!inputAfterNorm.style.padding) inputAfterNorm.style.padding = '10px 12px'
+            } catch (e) {
+              // ignore
+            }
+          }
+        }
 
         // Ensure input attributes are applied after the control is added
         try {

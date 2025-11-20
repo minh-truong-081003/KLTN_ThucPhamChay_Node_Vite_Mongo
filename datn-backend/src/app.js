@@ -173,7 +173,7 @@ app.use(errHandler);
 connectDb();
 
 /* listen */
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 //Chat
 let server;
