@@ -29,15 +29,6 @@ export const orderController = {
       const items = body.items;
       /* tính tổng tiền của đơn hàng người dùng vừa đặt */
       let total = Number(body.total) - Number(body.priceShipping);
-      // items.forEach((item) => {
-      //   total += item.quantity * item.price;
-      //   /* nếu mà sản phẩm có topping */
-      //   if (item.toppings.length > 0 && item.toppings) {
-      //     item.toppings.forEach((topping) => {
-      //       total += topping.price;
-      //     });
-      //   }
-      // });
       let totalAll = body.total;
       const priceShipping = Number(body.priceShipping) || 0;
       // check _id or phone user
@@ -165,7 +156,7 @@ export const orderController = {
 
         {
           path: 'items.product',
-          select: '-toppings -sizes -is_deleted -createdAt -updatedAt',
+          select: ' -sizes -is_deleted -createdAt -updatedAt',
           populate: {
             path: 'category',
             select: '-products -is_deleted -createdAt -updatedAt',
@@ -522,12 +513,6 @@ export const orderController = {
       let total = 0;
       items.forEach((item) => {
         total += item.quantity * item.price;
-        /* nếu mà sản phẩm có topping */
-        if (item.toppings.length > 0 && item.toppings) {
-          item.toppings.forEach((topping) => {
-            total += topping.price;
-          });
-        }
       });
       let totalAll = 0;
       const priceShipping = Number(body.priceShipping) || 0;

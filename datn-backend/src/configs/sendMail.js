@@ -12,7 +12,7 @@ export const sendEmail = async (data) => {
     },
   })
   const info = await transporter.sendMail({
-    from: '"Hey 🙋🏻‍♂️" <milktea@gmail.com>', // sender address
+    from: '"Hey 🙋🏻‍♂️" <vifood.contact@gmail.com>', // sender address
     to: data.to, // list of receivers
     subject: data.subject, // Subject line
     text: data.text, // plain text body

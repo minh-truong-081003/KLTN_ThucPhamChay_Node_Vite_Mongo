@@ -5,8 +5,8 @@ export const sendEmailOrder = async (data) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'longhdph28352@fpt.edu.vn',
-      pass: 'qnwggskitxtjpaax',
+      user: process.env.EMAIL_USER || 'vifood.contact@gmail.com',
+      pass: process.env.EMAIL_APP_PASSWORD || 'qnwggskitxtjpaax',
     },
     tls: {
       rejectUnauthorized: false,
@@ -14,7 +14,7 @@ export const sendEmailOrder = async (data) => {
   });
 
   const info = await transporter.sendMail({
-    from: '"Hey 🙋🏻‍♂️" <milktea@gmail.com>',
+    from: '"Hey 🙋🏻‍♂️" <vifood.contact@gmail.com>',
     subject: data.subject,
     text: data.text,
     html: data.html
@@ -43,7 +43,7 @@ export const sendEmailOrder = async (data) => {
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4">
               <div class="receipt-left">
-                <h3>HÓA ĐƠN ĐẶT HÀNG TRÀ SỮA CONNECT</h3>
+                <h3>HÓA ĐƠN ĐẶT HÀNG VIFOOD</h3>
               </div>
             </div>
           </div>

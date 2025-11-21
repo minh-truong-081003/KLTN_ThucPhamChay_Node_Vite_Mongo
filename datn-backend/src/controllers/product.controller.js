@@ -1,7 +1,6 @@
 import Category from '../models/category.model.js';
 import Product from '../models/product.model.js';
 import Size from '../models/size.model.js';
-import Topping from '../models/topping.model.js';
 import Review from '../models/review.model.js';
 import Order from '../models/order.model.js';
 import productValidate from '../validates/product.validate.js';
@@ -55,15 +54,6 @@ export const ProductController = {
       //   { multi: true }
       // );
       /* update category */
-      /* update id product topping array */
-      const { toppings } = Data;
-      if (toppings.length > 0) {
-        for (let i = 0; i < toppings.length; i++) {
-          await Topping.findByIdAndUpdate(toppings[i], {
-            $addToSet: { products: product._id },
-          });
-        }
-      }
       
       // Trigger bot retrain khi có sản phẩm mới
       debouncedRetrain('New product created: ' + product.name);
@@ -113,7 +103,6 @@ export const ProductController = {
         description: body.description,
         category: body.category,
         sizes: dataSizeArray,
-        toppings: body.toppings,
         images: body.images,
         sale: body.sale,
         is_active: body.is_active,
@@ -126,15 +115,7 @@ export const ProductController = {
       await Category.findByIdAndUpdate(body.category, {
         $addToSet: { products: product._id },
       });
-      /* update topping */
-      // const { toppings } = body;
-      // if (toppings.length > 0) {
-      //   for (let i = 0; i < toppings.length; i++) {
-      //     await Topping.findByIdAndUpdate(toppings[i], {
-      //       $addToSet: { products: product._id },
-      //     });
-      //   }
-      // }
+      
       /* update size */
       // const { sizes } = productData;
       // if (sizes.length > 0) {
@@ -176,7 +157,6 @@ export const ProductController = {
         populate: [
           { path: 'category', select: 'name' },
           { path: 'sizes', select: 'name price is_default' },
-          { path: 'toppings', select: 'name price' },
         ],
       };
 
@@ -215,7 +195,6 @@ export const ProductController = {
           .populate([
             { path: 'category', select: 'name' },
             { path: 'sizes', select: 'name price is_default' },
-            { path: 'toppings', select: 'name price' },
           ])
           .sort(sortOption);
         
@@ -244,7 +223,6 @@ export const ProductController = {
               const productPrice = product.sale || 0;
               const hasMatch = productPrice >= minPrice && productPrice <= maxPrice;
               
-              console.log(`  ${hasMatch ? '✅' : '❌'} ${product.name}: ${productPrice}đ`);
               
               return hasMatch;
             });
@@ -318,7 +296,6 @@ export const ProductController = {
       const product = await Product.findById(req.params.id).populate([
         { path: 'category', select: 'name' },
         { path: 'sizes', select: 'name price is_default' },
-        { path: 'toppings', select: '-products' },
       ]);
       if (!product) {
         return res.status(404).json({ message: 'fail', err: 'Not found Product' });
@@ -356,7 +333,6 @@ export const ProductController = {
       const updatedProduct = await Product.findById(req.params.id).populate([
         { path: 'category', select: 'name' },
         { path: 'sizes', select: 'name price is_default' },
-        { path: 'toppings', select: '-products' },
       ]);
       
       return res.status(200).json({ message: 'success', data: updatedProduct });
@@ -424,24 +400,6 @@ export const ProductController = {
         return res.status(404).json({ message: 'fail', err: 'Update failed' });
       }
 
-      /* cập nhật lại topping */
-      // const toppings = product.toppings;
-      // if (toppings.length > 0) {
-      //   for (let i = 0; i < toppings.length; i++) {
-      //     await Topping.findByIdAndUpdate(toppings[i], {
-      //       $pull: { products: product._id },
-      //     });
-      //   }
-      // }
-      // const updateTopping = req.body.toppings;
-      // if (updateTopping.length > 0) {
-      //   for (let i = 0; i < updateTopping.length; i++) {
-      //     await Topping.findByIdAndUpdate(updateTopping[i], {
-      //       $addToSet: { products: product._id },
-      //     });
-      //   }
-      // }
-
       if (!product) {
         return res.status(404).json({ message: 'fail', err: 'Not found Product to update' });
       }
@@ -486,20 +444,12 @@ export const ProductController = {
   //         }
   //       }
   //     }
-  //     /* gỡ topping trước đó mà product đã gắn */
-  //     const toppingList = productExit.toppings;
-  //     if (toppingList.length > 0) {
-  //       for (let topping of toppingList) {
-  //         await Topping.findByIdAndUpdate(topping, {
-  //           $pull: { products: productExit._id },
-  //         });
-  //       }
-  //     }
+  //    
   //     /* gỡ category ra khỏi product */
   //     await Category.findByIdAndUpdate(productExit.category, {
   //       $pull: { products: productExit._id },
   //     });
-  //     const { size, sizeDefault, toppings } = body;
+  //     const { size, sizeDefault } = body;
   //     /* tạo size */
   //     const sizeListNew = [];
   //     if (sizes.length > 0) {
@@ -521,11 +471,8 @@ export const ProductController = {
   //       return res.status(404).json({ message: 'fail', err: 'Update Product failed' });
   //     }
   //     /* update id product to category */
-  //     for (let topping of body.toppings) {
-  //       await Topping.findByIdAndUpdate(topping, {
-  //         $addToSet: { products: productUpdate._id },
-  //       });
-  //     }
+  //        $addToSet: { products: productUpdate._id },
+
   //     /* update category */
   //     await Category.findByIdAndUpdate(body.category, {
   //       $addToSet: { products: productUpdate._id },
@@ -547,15 +494,7 @@ export const ProductController = {
       if (!updateCategory) {
         return res.status(404).json({ message: 'fail', err: 'Delete Product failed' });
       }
-      /* delete topping */
-      const toppings = product.toppings;
-      if (toppings.length > 0) {
-        for (let i = 0; i < toppings.length, i++; ) {
-          await Topping.findByIdAndUpdate(toppings[i], {
-            $pull: { products: product._id },
-          });
-        }
-      }
+
       /* xóa size */
       const sizes = product.sizes;
       if (sizes.length > 0) {
@@ -593,15 +532,6 @@ export const ProductController = {
 
       await Size.updateMany({ _id: { $in: product.sizes } }, { $pull: { productId: product._id } });
 
-      /* kèm topping cũng sẽ bị xóa đi */
-      const toppings = product.toppings;
-      if (toppings.length > 0) {
-        for (let i = 0; i < toppings.length, i++; ) {
-          await Topping.findByIdAndUpdate(toppings[i], {
-            $pull: { products: product._id },
-          });
-        }
-      }
       if (!product) {
         return res.status(404).json({ message: 'fail', err: 'Delete Product failed' });
       }
@@ -635,15 +565,7 @@ export const ProductController = {
         { $addToSet: { productId: product._id } }
       );
 
-      /* khi khôi phục lại sản phẩm thì cũng sẽ có các topping đi kèm import vào */
-      const toppings = product.toppings;
-      if (toppings.length > 0) {
-        for (let i = 0; i < toppings.length, i++; ) {
-          await Topping.findByIdAndUpdate(toppings[i], {
-            $addToSet: { products: product._id },
-          });
-        }
-      }
+      
       if (!product) {
         return res.status(404).json({ message: 'fail', err: 'Restore Product failed' });
       }
@@ -690,7 +612,6 @@ export const ProductController = {
         .populate([
           { path: 'category', select: 'name' },
           { path: 'sizes', select: 'name price is_default' },
-          { path: 'toppings', select: 'name price' },
         ])
         .lean();
 
@@ -781,7 +702,6 @@ export const ProductController = {
         populate: [
           { path: 'category', select: 'name' },
           { path: 'sizes', select: 'name price' },
-          { path: 'toppings', select: 'name price' },
         ],
       };
       if (query) {
@@ -817,7 +737,6 @@ export const ProductController = {
         populate: [
           { path: 'category', select: 'name' },
           { path: 'sizes', select: 'name price' },
-          { path: 'toppings', select: 'name price' },
         ],
       };
       if (query) {

@@ -1,6 +1,6 @@
 import { AiFillEdit, AiOutlineUndo } from 'react-icons/ai'
 import { Button as ButtonAntd, Input, InputRef, Popconfirm, Space, Tag, Tooltip, message } from 'antd'
-import { IProduct, IRoleUser, ISizeRefProduct, IToppingRefProduct } from '~/types'
+import { IProduct, IRoleUser, ISizeRefProduct } from '~/types'
 import { RootState, useAppDispatch } from '~/store/store'
 import { setOpenDrawer, setProductDetail, setProductId } from '~/store/slices'
 import {
@@ -248,47 +248,6 @@ export const useRender = (
     //     </>
     //   )
     // },
-    // {
-    //   title: 'Giá thấp nhất',
-    //   dataIndex: 'sizes',
-    //   key: 'minPrice',
-    //   width: 140,
-    //   sorter: (a: any, b: any) => getMinPrice(a.sizes) - getMinPrice(b.sizes),
-    //   render: (sizes: ISizeRefProduct[]) => (
-    //     <span className='font-semibold text-green-600'>{formatCurrency(getMinPrice(sizes))}</span>
-    //   ),
-    //   filters: [
-    //     { text: 'Dưới 50.000đ', value: '0-50000' },
-    //     { text: '50.000đ - 100.000đ', value: '50000-100000' },
-    //     { text: '100.000đ - 200.000đ', value: '100000-200000' },
-    //     { text: 'Trên 200.000đ', value: '200000-999999999' }
-    //   ],
-    //   filterMode: 'menu',
-    //   onFilter: (value: any, record: any) => {
-    //     const minPrice = getMinPrice(record.sizes)
-    //     const [min, max] = value.split('-').map(Number)
-    //     return minPrice >= min && minPrice <= max
-    //   }
-    // },
-    // {
-    //   title: 'Topping',
-    //   dataIndex: 'toppings',
-    //   key: 'toppings',
-    //   width: 190,
-    //   render: (toppings: IToppingRefProduct[]) => (
-    //     <>
-    //       <div className='flex flex-col gap-1'>
-    //         {toppings?.slice(0, 2).map((topping: IToppingRefProduct) => (
-    //           <div key={topping._id} className='relative grid grid-cols-2'>
-    //             <p className='border-r-graydark w-full pr-3 uppercase border-r border-opacity-50'>{topping.name}</p>
-    //             <p className='w-full pl-3'>{formatCurrency(topping.price)}</p>
-    //           </div>
-    //         ))}
-    //       </div>
-    //       {toppings?.length > 2 && <p className='text-gray-400'>+{toppings.length - 2} topping khác</p>}
-    //     </>
-    //   )
-    // },
     {
       title: 'Giá',
       dataIndex: 'sale',
@@ -387,7 +346,6 @@ export const useRender = (
         .filter((size) => !size.is_default)
         .map((size) => ({ _id: size._id, name: size.name, price: size.price })),
       sizeDefault: product.sizes.filter((size) => size.is_default).map((size) => size._id),
-      toppings: product.toppings.map((topping) => topping._id)
     }
     changeStatusProduct({ id: product._id, product: newProduct })
       .unwrap()

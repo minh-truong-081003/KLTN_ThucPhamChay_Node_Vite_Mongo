@@ -34,7 +34,7 @@ const ShippingPolicyPage = () => {
                 <h3 className='font-bold text-lg mb-2'>Khu vực nội thành TP.HCM</h3>
                 <ul className='space-y-2 text-gray-700'>
                   <li>• Thời gian: 2-4 giờ (giao hàng nhanh)</li>
-                  <li>• Phí ship: 20.000đ</li>
+                  <li>• Phí ship: 15.000đ</li>
                   <li>• Miễn phí: Đơn từ 300.000đ</li>
                 </ul>
               </div>

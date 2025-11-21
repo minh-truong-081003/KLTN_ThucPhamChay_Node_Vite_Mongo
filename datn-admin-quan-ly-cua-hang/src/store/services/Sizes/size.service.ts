@@ -9,7 +9,7 @@ export const sizeApi = createApi({
   tagTypes: ['Sizes'],
 
   endpoints: (builder) => ({
-    /* Lấy ra tất cả topping */
+    /* Lấy ra tất cả size */
     getAllSizes: builder.query<IDocSize, number | string>({
       query: (page) => `/sizes?_page=${page}`,
       providesTags: (result) =>

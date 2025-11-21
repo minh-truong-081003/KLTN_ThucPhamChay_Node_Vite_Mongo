@@ -9,7 +9,6 @@ import Highlighter from 'react-highlight-words'
 import { BsFillPencilFill, BsFillTrashFill } from 'react-icons/bs'
 import { Button } from '~/components'
 import Loading from '~/components/Loading/Loading'
-import { cancelDelete } from '~/features/Toppings'
 import { NotFound } from '~/pages'
 import { useDeleteUserMutation, useGetAllUserByRoleQuery } from '~/store/services/Users'
 import { setOpenDrawer } from '~/store/slices'
@@ -192,7 +191,6 @@ export const ListCustomers = () => {
               <Popconfirm
                 title='Bạn có muốn xóa khách hàng này?'
                 okButtonProps={{ style: { backgroundColor: '#3C50E0', color: '#fff' } }}
-                onCancel={cancelDelete}
                 onConfirm={() => handleDelete(customer._id!)}
               >
                 <ButtonAnt

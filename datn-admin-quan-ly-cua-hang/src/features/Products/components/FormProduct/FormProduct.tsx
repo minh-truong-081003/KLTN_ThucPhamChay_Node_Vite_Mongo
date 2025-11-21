@@ -1,5 +1,5 @@
 import { Button, Col, Drawer, Form, Input, InputNumber, Row, Select, Space, message } from 'antd'
-import { ICategory, IImage, IProduct, ISize, ITopping } from '~/types'
+import { ICategory, IImage, IProduct, ISize,  } from '~/types'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { RootState, useAppDispatch } from '~/store/store'
 import { setOpenDrawer, setProductId } from '~/store/slices'
@@ -8,7 +8,6 @@ import {
   useEditProductMutation,
   useGetAllCategoryQuery,
   useGetAllSizeDefaultQuery,
-  useGetAllToppingsQuery
 } from '~/store/services'
 import { useEffect, useState } from 'react'
 
@@ -31,7 +30,6 @@ const FormProduct = () => {
   })
   const [categories, setCategories] = useState<ICategory[]>([])
   const [sizeDefault, setSizeDefault] = useState<ISize[]>([])
-  const [toppings, setToppings] = useState<ITopping[]>([])
   const [isUpload, setIsUpload] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState(false)
   const [images, setImages] = useState<IImage[]>([])
@@ -39,19 +37,17 @@ const FormProduct = () => {
 
   const { productId } = useAppSelector((state) => state.products)
   const { data: dataCategories } = useGetAllCategoryQuery({ ...infoPage })
-  const { data: dataToppings } = useGetAllToppingsQuery({ ...infoPage })
   const { data: dataSizeDefault } = useGetAllSizeDefaultQuery()
   const [createProduct, { isLoading: isCreateLoading }] = useCreateProductMutation()
   const { productsList } = useAppSelector((state: RootState) => state.products)
   const [editProduct, { isLoading: isUpdating }] = useEditProductMutation()
 
   useEffect(() => {
-    if (dataCategories && dataToppings && dataSizeDefault) {
+    if (dataCategories  && dataSizeDefault) {
       setCategories(dataCategories?.docs)
-      setToppings(dataToppings?.data)
       setSizeDefault(dataSizeDefault?.data)
     }
-  }, [dataCategories, dataToppings, dataSizeDefault])
+  }, [dataCategories, dataSizeDefault])
 
   const handleOnChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const urls = await handleUploadImage(e, setIsLoading)
@@ -109,7 +105,6 @@ const FormProduct = () => {
       form.setFieldsValue({
         name: productEdit.name,
         category: productEdit.category._id,
-        toppings: productEdit.toppings.map((topping) => topping._id),
         is_active: productEdit.is_active,
         size: productEdit.sizes.filter((sizeItem) => !sizeItem.is_default),
         sizeDefault: productEdit.sizes.filter((sizeItem) => sizeItem.is_default).map((sizeItem) => sizeItem._id),
@@ -195,21 +190,6 @@ const FormProduct = () => {
           </Col>
         </Row>
         <Row gutter={16}>
-          {/* <Col span={12}>
-            <Form.Item
-              name='toppings'
-              label='Lựa chọn topping'
-              rules={[{ required: true, message: 'Topping là bắt buộc' }]}
-            >
-              <Select size='large' mode='multiple' allowClear placeholder='Lựa chọn topping'>
-                {toppings.map((topping) => (
-                  <Select.Option value={topping._id} key={topping._id}>
-                    <span className='capitalize'>{topping.name}</span>
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </Col> */}
           <Col span={24}>
             <Form.Item
               name='is_active'

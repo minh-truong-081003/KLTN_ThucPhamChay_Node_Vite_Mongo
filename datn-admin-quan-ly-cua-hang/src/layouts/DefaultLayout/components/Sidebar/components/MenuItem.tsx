@@ -43,7 +43,6 @@ export const items: MenuProps['items'] = [
   getItem('Quản lý', 'manager', <AiOutlineControl />, [
     getItem(<NavLink to={`/manager/products`}>Sản phẩm</NavLink>, 'products', <ShoppingOutlined />),
     getItem(<NavLink to={`/manager/categories`}>Danh mục</NavLink>, 'categories', <BiSolidCategoryAlt />),
-    // getItem(<NavLink to={`/manager/toppings`}>Topping</NavLink>, 'toppings', <HiCollection />),
     // getItem(<NavLink to={`/manager/sizes`}>Sizes</NavLink>, 'sizes', <AiOutlineFontSize />),
     getItem(<NavLink to={`/manager/vouchers`}>Vouchers</NavLink>, 'vouchers', <IoTicket />),
     getItem(<NavLink to={`/manager/category-blog`}>Danh mục bài viết</NavLink>, 'category-blog', <BiCategoryAlt />),
@@ -74,7 +73,6 @@ export const itemsStaff: MenuProps['items'] = [
   getItem('Quản lý', 'manager', <AiOutlineControl />, [
     getItem(<NavLink to={`/manager/products`}>Sản phẩm</NavLink>, 'products', <ShoppingOutlined />),
     getItem(<NavLink to={`/manager/categories`}>Danh mục</NavLink>, 'categories', <BiSolidCategoryAlt />),
-    // getItem(<NavLink to={`/manager/toppings`}>Topping</NavLink>, 'toppings', <HiCollection />),
     // getItem(<NavLink to={`/manager/sizes`}>Sizes</NavLink>, 'sizes', <AiOutlineFontSize />),
     getItem(<NavLink to={`/manager/vouchers`}>Vouchers</NavLink>, 'vouchers', <IoTicket />),
     getItem(<NavLink to={`/manager/category-blog`}>Danh mục bài viết</NavLink>, 'category-blog', <BiCategoryAlt />),

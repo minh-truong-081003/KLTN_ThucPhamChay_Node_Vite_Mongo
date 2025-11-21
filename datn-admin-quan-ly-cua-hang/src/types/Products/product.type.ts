@@ -1,7 +1,6 @@
 import { ICategoryRefProduct } from '../Category'
 import { IImage } from '../Image'
 import { ISizeRefProduct } from '../Size'
-import { IToppingRefProduct } from '..'
 
 export interface ISale {
   value: number
@@ -16,7 +15,6 @@ export interface IProduct {
   description: string
   category: ICategoryRefProduct
   sizes: ISizeRefProduct[]
-  toppings: IToppingRefProduct[]
   is_active: boolean
   is_deleted: boolean
   updatedAt: string

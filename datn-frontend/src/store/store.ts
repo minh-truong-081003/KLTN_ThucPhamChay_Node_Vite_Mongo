@@ -14,7 +14,6 @@ import CategoryApi from '../api/category'
 import NewBlogsApi from '../api/NewBlogs'
 import { OrderAPI } from './slices/order'
 import SizeApi from './slices/size.slice'
-import { ToppingAPI } from '../api/topping'
 import { addressApi } from './services'
 import cartReducer from './slices/cart.slice'
 import { categoriesReducer } from './slices/categories'
@@ -52,7 +51,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 const middleware = [
   ApiUser.middleware,
   ApiProducts.middleware,
-  ToppingAPI.middleware,
   ApiVoucher.middleware,
   // RoleApi.middleware,
   CategoryApi.middleware,
@@ -76,7 +74,6 @@ export const store = configureStore({
     persistedReducer,
     [ApiUser.reducerPath]: ApiUser.reducer,
     [ApiProducts.reducerPath]: ApiProducts.reducer,
-    [ToppingAPI.reducerPath]: ToppingAPI.reducer,
     [ApiVoucher.reducerPath]: ApiVoucher.reducer,
     // [RoleApi.reducerPath]: RoleApi.reducer,
     [CategoryApi.reducerPath]: CategoryApi.reducer,

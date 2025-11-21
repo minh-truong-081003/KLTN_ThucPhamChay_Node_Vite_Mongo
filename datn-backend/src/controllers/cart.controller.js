@@ -30,10 +30,6 @@ export const cartController = {
       // Try to find a cart document for this user that matches the provided name (group by product name)
       const cart = await Cart.findOne({ user: _id, name: req.body.name }).populate([
         {
-          path: 'items.toppings',
-          select: 'name price _id',
-        },
-        {
           path: 'items.size',
           select: 'name price _id',
         },
@@ -53,7 +49,7 @@ export const cartController = {
           if (existingItem) {
             // merge quantities and totals
             existingItem.quantity += newItem.quantity;
-            // prefer adding newItem.total to preserve toppings/size calculations
+            // prefer adding newItem.total to preserve size calculations
             existingItem.total = (existingItem.total || 0) + (newItem.total || newItem.price * newItem.quantity || 0);
           } else {
             cart.items.push(newItem);
@@ -93,11 +89,7 @@ export const cartController = {
           //   select: '-is_deleted -is_active -createdAt -updatedAt',
           //   select: '_id',
           // },
-          {
-            path: 'items.toppings',
-            // select: '-isActive -isDeleted -updatedAt -products'
-            select: 'name price _id',
-          },
+          
           {
             path: 'items.size',
             // select: '-is_deleted -is_active -createdAt'
@@ -130,11 +122,7 @@ export const cartController = {
           // select: '-is_deleted -is_active -createdAt -updatedAt',
           // select: '_id',
           // },
-          {
-            path: 'items.toppings',
-            // select: '-isActive -isDeleted -updatedAt -products'
-            select: 'name price _id',
-          },
+          
           {
             path: 'items.size',
             // select: '-is_deleted -is_active -createdAt'

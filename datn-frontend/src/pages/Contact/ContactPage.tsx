@@ -31,11 +31,11 @@ const ContactPage = () => {
 
   // Địa chỉ cửa hàng (có thể thay đổi theo thực tế)
   const storeLocation = {
-    lat: 10.8708, // Tọa độ TP Hồ Chí Minh, thay đổi theo địa chỉ thực tế
-    lng: 106.8037,
+    lat: 10.8527907, // Tọa độ TP Hồ Chí Minh, thay đổi theo địa chỉ thực tế
+    lng: 106.7725584,
     address: 'Trường Sư phạm Kỹ thuật TP HCM, Khu phố 6, Linh Trung, Thủ Đức, TP Hồ Chí Minh',
-    phone: '0123 456 789',
-    email: 'contact@vifood.vn',
+    phone: '1900.111.111',
+    email: 'vifood.contact@gmail.com',
     hours: '8:00 - 18:00 (Thứ 2 - Chủ nhật)'
   }
 

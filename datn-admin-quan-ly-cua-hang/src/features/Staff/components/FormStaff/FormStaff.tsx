@@ -1,6 +1,6 @@
 import { Drawer, Form, Image, Input, Select } from 'antd'
 import { useAppDispatch } from '~/store/store'
-import { setOpenDrawer, setToppingId } from '~/store/slices'
+import { setOpenDrawer } from '~/store/slices'
 // import { useEffect, useState } from 'react'
 
 import { Button } from '~/components'
@@ -124,7 +124,6 @@ export const FormStaff = ({ open }: FormStaffProps) => {
       destroyOnHidden
       onClose={() => {
         onClose()
-        dispatch(setToppingId(null))
       }}
       getContainer={false}
       open={open}

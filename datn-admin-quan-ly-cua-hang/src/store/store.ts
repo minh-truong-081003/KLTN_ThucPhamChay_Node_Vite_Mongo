@@ -11,7 +11,6 @@ import {
   reviewApi,
   sizeApi,
   sliderApi,
-  toppingApi,
   userApi
 } from './services'
 import chatService from '../features/Chat/chat.service'
@@ -24,7 +23,6 @@ import {
   modalReducer,
   sizeReducers,
   themeReducer,
-  toppingReducers,
   userReducer,
   voucherReducer
 } from './slices'
@@ -50,7 +48,6 @@ const rootReducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const middlewares = [
-  toppingApi.middleware,
   userApi.middleware,
   categoryApi.middleware,
   sizeApi.middleware,
@@ -69,7 +66,6 @@ const middlewares = [
 export const store = configureStore({
   reducer: {
     /* redux toolkit query */
-    [toppingApi.reducerPath]: toppingApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [sizeApi.reducerPath]: sizeApi.reducer,
@@ -89,7 +85,6 @@ export const store = configureStore({
     drawer: drawerReducers,
     modal: modalReducer,
     theme: themeReducer,
-    toppings: toppingReducers,
     categories: categoryReducer,
     sizes: sizeReducers,
     products: productReducers,

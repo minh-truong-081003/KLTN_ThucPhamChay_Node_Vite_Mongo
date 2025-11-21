@@ -18,8 +18,8 @@ export const sendContactEmail = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER || 'longhdph28352@fpt.edu.vn',
-        pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS || 'qnwggskitxtjpaax',
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_APP_PASSWORD || process.env.EMAIL_PASS,
       },
       tls: {
         rejectUnauthorized: false,
@@ -32,8 +32,8 @@ export const sendContactEmail = async (req, res) => {
 
     // Nội dung email
     const mailOptions = {
-      from: `"${name}" <${process.env.EMAIL_USER || 'longhdph28352@fpt.edu.vn'}>`,
-      to: 'contact@vifood.vn', // Email nhận liên hệ
+      from: `"${name}" <${process.env.EMAIL_USER}>`,
+      to: 'vifood.contact@gmail.com', // Email nhận liên hệ
       subject: `Liên hệ từ website: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -62,7 +62,7 @@ export const sendContactEmail = async (req, res) => {
 
     // Gửi email xác nhận cho khách hàng
     const confirmMailOptions = {
-      from: `"VIFOOD" <${process.env.EMAIL_USER || 'longhdph28352@fpt.edu.vn'}>`,
+      from: `"VIFOOD" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: 'Cảm ơn bạn đã liên hệ với VIFOOD',
       html: `
@@ -78,7 +78,7 @@ export const sendContactEmail = async (req, res) => {
           <p style="color: #666; font-size: 12px;">
             VIFOOD - Siêu thị thực phẩm chay sạch<br>
             Email: contact@vifood.vn<br>
-            Hotline: 0123 456 789
+            Hotline: 1900.1111
           </p>
         </div>
       `,

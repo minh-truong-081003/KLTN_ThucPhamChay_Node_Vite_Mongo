@@ -44,7 +44,7 @@ const PaymentMethodsPage = () => {
                 </li>
                 <li className='flex items-start'>
                   <span className='text-[#d3b673] mr-2'>✓</span>
-                  <span>Phí COD: 15.000đ (miễn phí cho đơn từ 500.000đ)</span>
+                  <span>Phí COD: 15.000đ (miễn phí cho đơn từ 300.000đ)</span>
                 </li>
               </ul>
             </div>
@@ -95,8 +95,8 @@ const PaymentMethodsPage = () => {
               <div className='flex gap-4 mb-6'>
                 <img src='https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png' alt='MoMo' className='h-12' />
                 <img
-                  src='https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay.png'
-                  alt='ZaloPay'
+                  src='https://vnpay.vn/s1/statics.vnpay.vn/2023/9/06ncktiwd6dc1694418196384.png'
+                  alt='VnPay'
                   className='h-12'
                 />
               </div>
@@ -107,7 +107,7 @@ const PaymentMethodsPage = () => {
                 </li>
                 <li className='flex items-start'>
                   <span className='text-[#d3b673] mr-2'>✓</span>
-                  <span>Hỗ trợ MoMo, ZaloPay</span>
+                  <span>Hỗ trợ MoMo, VnPay</span>
                 </li>
                 <li className='flex items-start'>
                   <span className='text-[#d3b673] mr-2'>✓</span>

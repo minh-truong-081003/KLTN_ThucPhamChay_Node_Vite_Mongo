@@ -23,7 +23,6 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
   /* set state trạng thái */
   const [price, setPrice] = useState<number>(0)
   const [quantity, setQuantity] = useState<number>(1)
-  const [_totalToppingPrice, _setTotalToppingPrice] = useState<number>(0)
   const [addCartDbFn] = useCreateCartDBMutation()
   const { user } = useAppSelector((state) => state.persistedReducer.auth)
   const { refetch: refetchCart } = useGetAllCartDBQuery(undefined, {
@@ -37,7 +36,6 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
     price: number
     _id?: string
   }>()
-  const [checkedToppings, setCheckedToppings] = useState<{ name: string; price: number; _id: string }[]>([])
   const [showReviews, setShowReviews] = useState(false)
 
   // Lấy tất cả reviews để tính rating chính xác
@@ -66,25 +64,6 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
   }
 
   const { averageRating, totalReviews } = calculateRating()
-  /* xử lý sự kiện check box phân topping */
-  const _handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const toppingPrice = Number(event.target.value)
-    const toppingName = event.target.name
-    const _idTopping = event.target.getAttribute('data-items') as string
-
-    const data = { name: toppingName, price: toppingPrice, _id: _idTopping }
-    if (event.target.checked) {
-      _setTotalToppingPrice((prev) => prev + toppingPrice)
-      setPrice((prev) => prev + toppingPrice)
-      setCheckedToppings((prev) => [...prev, data])
-    } else {
-      _setTotalToppingPrice((prev) => prev - toppingPrice)
-      setPrice((prev) => prev - toppingPrice)
-      setCheckedToppings((prev) => {
-        return prev.filter((topping) => topping.name !== toppingName)
-      })
-    }
-  }
   // const handleGetInfoPrd = (data: any) => {
 
   // }
@@ -95,8 +74,6 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
       _setSizes([...product.sizes])
     }
     setQuantity(1)
-    _setTotalToppingPrice(0)
-    setCheckedToppings([])
     // setNameRadioInput(product.sizes[0].name);
 
     //reset checkbox when popup close
@@ -109,7 +86,6 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
     const data = {
       name: product.name,
       size: nameRadioInput,
-      toppings: checkedToppings,
       quantity,
       image: product.images[0]?.url ?? '',
       price: product.sale as number,
@@ -125,10 +101,8 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
         items: [
           {
             ...rest,
-
             image: rest.image,
             size: data.size?._id as string,
-            toppings: data.toppings.map((item) => item?._id as string)
           }
         ]
       })
@@ -140,12 +114,12 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
 
   return (
     <div
-      className={`transition-opacity ease-in-out duration-[400ms] z-[11] ${
+      className={`transition-opacity ease-in-out duration-[400ms] z-[9995] ${
         showPopup ? 'opacity-1 pointer-events-auto' : 'opacity-0 pointer-events-none'
       }`}
     >
-      <div className='popup w-[90vw] h-[100vw] md:w-[650px] md:h-[500px] fixed top-[20%] left-[5vw] md:top-[calc(50%-500px)] lg:top-[calc(50%-250px)] md:left-[calc(50%-325px)] shadow-[0px_2px_10px_0px_rgba(0,0,0,0.06)] rounded-[3px] pt-[10px] pb-[10px] flex justify-center z-[5] bg-[#fbfbfb]'>
-        <div onClick={togglePopup} className='close-btn absolute top-2 right-2 cursor-pointer z-[6]'>
+      <div className='popup w-[90vw] h-[100vw] md:w-[650px] md:h-[500px] fixed top-[20%] left-[5vw] md:top-[calc(50%-500px)] lg:top-[calc(50%-250px)] md:left-[calc(50%-325px)] shadow-[0px_2px_10px_0px_rgba(0,0,0,0.06)] rounded-[3px] pt-[10px] pb-[10px] flex justify-center z-[9991] bg-[#fbfbfb]'>
+        <div onClick={togglePopup} className='close-btn absolute top-2 right-2 cursor-pointer z-[9992]'>
           <FaTimes className='text-2xl font-[900] transition-all hover:scale-[1.2]' />
         </div>
 
@@ -222,7 +196,7 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
                         const value = parseInt(e.target.value) || 1
                         setQuantity(value < 1 ? 1 : value)
                       }}
-                      className='amount w-[60px] text-center px-[10px] text-sm border-0 focus:outline-none mx-1'
+                      className={`amount w-[60px] text-center px-[10px] text-sm border-0 focus:outline-none mx-1 ${styles.amount}`}
                     />
                     <div
                       onClick={() => setQuantity((prev) => prev + 1)}
@@ -273,7 +247,7 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
                       return (
                         <label
                           onChange={() => {
-                            setPrice(item.price + totalToppingPrice)
+                            setPrice(item.price)
                             setNameRadioInput(item)
                           }}
                           key={uuidv4()}
@@ -293,39 +267,6 @@ const PopupDetailProduct = ({ showPopup, togglePopup, product }: PopupDetailProd
                     })} */}
                 </div>
               </div>
-
-              {/* <div className='custom-topping'>
-                <div className='title flex items-center justify-between px-5 mb-2'>
-                  <div className='left text-base font-semibold'>Chọn topping</div>
-                  <div className='right'>
-                    <FaAngleDown />
-                  </div>
-                </div>
-                <div className='custom-content flex px-5 bg-white flex-wrap shadow-[0px_0px_12px_0_rgba(0,0,0,.05)] rounded'>
-                  {product &&
-                    product.toppings.map((item) => {
-                      return (
-                        <div key={item._id} className='topping-wrap flex items-center justify-between w-full'>
-                          <label className={`${styles.container_checkbox} group block w-full`}>
-                            <span className='text-sm capitalize'>{item.name}</span>
-                            <input
-                              onChange={(e) => handleCheckboxChange(e)}
-                              className='absolute w-0 h-0 opacity-0'
-                              type='checkbox'
-                              name={item.name}
-                              value={item.price}
-                              data-items={item._id}
-                              checked={checkedToppings.find((topping) => topping.name === item.name) ? true : false}
-                            />
-                            <span className={`${styles.checkmark_checkbox} group-hover:bg-[#ccc]`}></span>
-                          </label>
-
-                          <span className='topping-price text-sm'>{formatCurrency(item.price)}</span>
-                        </div>
-                      )
-                    })}
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

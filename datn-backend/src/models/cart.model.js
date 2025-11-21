@@ -30,12 +30,6 @@ const cartSchema = new mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Size',
         },
-        toppings: [
-          {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Topping',
-          },
-        ],
         total: {
           type: Number,
           required: true,
@@ -57,12 +51,6 @@ const cartSchema = new mongoose.Schema(
     //       type: Number,
     //       require: true,
     //     },
-    //     toppingOrder: [
-    //       {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: 'Topping',
-    //       },
-    //     ],
     //   },
     // ],
 

@@ -10,7 +10,6 @@ import {
   SizePage,
   SliderPage,
   StaffPage,
-  ToppingPage,
   VoucherPage
 } from '~/pages'
 
@@ -46,7 +45,6 @@ const routers = createBrowserRouter([
       {
         element: <GuardAccount JSX={DefaultLayout} />,
         children: [
-          { path: 'toppings', element: <ToppingPage /> },
           { path: 'products', element: <ProductPage /> },
           { path: 'sizes', element: <SizePage /> },
           { path: 'customers', element: <CustomerPage /> },

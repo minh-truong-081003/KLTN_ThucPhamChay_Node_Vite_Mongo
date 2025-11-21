@@ -64,7 +64,6 @@ const Signin = () => {
                     ...rest,
                     image: rest.image,
                     size: rest.size?._id,
-                    toppings: rest.toppings.map((topping) => topping?._id as string)
                   }
                 ]
               })

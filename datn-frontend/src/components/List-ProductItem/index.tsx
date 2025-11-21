@@ -60,7 +60,6 @@ const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) =>
     const data = {
       name: product.name,
       size: product.sizes && product.sizes.length > 0 ? product.sizes[0] : undefined,
-      toppings: [],
       quantity: 1,
       image: product.images[0]?.url ?? '',
       price: product.sale as number,
@@ -77,7 +76,6 @@ const ListProductItem = ({ product, fetchProductById }: ListProductItemProps) =>
           {
             ...rest,
             image: rest.image,
-            toppings: []
           }
         ]
       })

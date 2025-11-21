@@ -16,8 +16,8 @@ const List: ListStore[] = [
     highName: 'Trường Sư phạm Kỹ thuật TP HCM',
     name: 'Trường Sư phạm Kỹ thuật TP HCM, Khu phố 6, Linh Trung, Thủ Đức, TP Hồ Chí Minh',
     geoLocation: {
-      lat: 10.854528, // Vĩ độ mới
-      lng: 106.789888 // Kinh độ mới
+      lat: 10.8527907, // Vĩ độ mới
+      lng: 106.7725584 // Kinh độ mới
     }
   }
 ]

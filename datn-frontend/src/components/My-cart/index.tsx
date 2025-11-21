@@ -121,7 +121,6 @@ const MyCart = () => {
       image: product.images?.[0]?.url || '',
       price: product.sale || product.price || 0,
       quantity: 1,
-      toppings: [],
       total: product.sale || product.price || 0,
       product: product._id,
       sale: product.sale || 0
@@ -135,7 +134,6 @@ const MyCart = () => {
           {
             ...rest,
             image: rest.image,
-            toppings: []
           }
         ]
       }).then(() => {

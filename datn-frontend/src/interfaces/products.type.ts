@@ -1,7 +1,6 @@
 import { ICategory } from './category.type'
 import { IImage } from './image.type'
 import { ISize } from './size.type'
-import { ITopping } from './topping.type'
 
 export interface IProduct {
   _id: string
@@ -13,7 +12,6 @@ export interface IProduct {
   category: ICategory
   sizes: { _id: string; name: string; price: number }[]
   customsizes: { name: string; price: number }[]
-  toppings: ITopping[]
   is_deleted?: boolean
   is_active?: boolean
   averageRating?: number
@@ -43,7 +41,6 @@ export interface IAddProduct {
   sale: number
   category: ICategory
   sizes: ISize[]
-  toppings: ITopping[]
 }
 
 export interface IRecommendationsResponse {

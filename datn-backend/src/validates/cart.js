@@ -9,7 +9,6 @@ export const cartValidate = joi.object({
       product: joi.string().required(),
       quantity: joi.number().required(),
       price: joi.number().required(),
-      toppings: joi.array().items(joi.string()),
       size: joi.string(),
       total: joi.number().required()
     })

@@ -6,7 +6,6 @@ export * from './guardRoute'
 
 // const Dashboard = lazy(() => import('../pages/Dashboard/Dashboard'))
 // const ProductPage = lazy(() => import('../pages/ProductPage/ProductPage'))
-// const ToppingPage = lazy(() => import('../pages/ToppingPage/ToppingPage'))
 
 // const coreRoutes = [
 //   {
@@ -19,11 +18,6 @@ export * from './guardRoute'
 //     title: 'Products',
 //     component: ProductPage
 //   },
-//   {
-//     path: '/manager/toppings',
-//     title: 'Products',
-//     component: ToppingPage
-//   }
 // ]
 
 // const routes = [...coreRoutes]

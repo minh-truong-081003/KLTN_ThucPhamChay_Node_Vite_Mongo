@@ -45,12 +45,6 @@ const productSchema = new mongoose.Schema(
     //     price: Number,
     //   },
     // ],
-    toppings: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Topping',
-      },
-    ],
     is_deleted: {
       type: Boolean,
       default: false,

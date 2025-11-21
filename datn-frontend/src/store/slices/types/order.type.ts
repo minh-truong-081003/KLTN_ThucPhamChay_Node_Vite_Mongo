@@ -1,6 +1,5 @@
 import { CartItemState } from './cart.type'
 import { IProduct } from '../../../interfaces/products.type'
-import { ITopping } from '../../../interfaces/topping.type'
 
 interface inforOrderShipping {
   name: string
@@ -57,7 +56,6 @@ export interface dataDocsOrderRes {
       price: number
     }
     product: IProduct
-    toppings: Pick<ITopping, '_id' | 'name' | 'price'>[]
     quantity: number
     price: number
   }[]
@@ -125,13 +123,6 @@ export interface IOrder {
       image: string
       quantity: number
       price: number
-      toppings: [
-        {
-          name: string
-          price: number
-          _id: string
-        }
-      ]
       _id: string
     }
   ]

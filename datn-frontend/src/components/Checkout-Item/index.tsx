@@ -21,18 +21,9 @@ const CheckoutItem = ({ dataCartCheckout }: Props) => {
                 {dataCartCheckout?.name}({item.size?.name})
               </h4>
             </div>
-            <div className='cutoms pl-[5px] '>
-              <span className='text-[#7c7c7c] text-[13px] '>
-                {item.toppings.length > 0
-                  ? 'Thêm: ' + item.toppings.map((topping) => `${topping.name} (${formatCurrency(topping.price)}) ,`)
-                  : ''}
-              </span>
-            </div>
             <div className='quanlity pl-[5px] pt-[3px]'>
               <p className='text-[13px] text-[#8a733f] font-bold'>
-                {item.price} x {item.quantity} ={' '}
-                {/* {item.toppings.map((item) => (item ? `+ ${item.price}` : ''))}={' '} */}
-                {formatCurrency(item.total)}{' '}
+                {item.price} x {item.quantity} = {formatCurrency(item.total)}{' '}
               </p>
             </div>
           </div>

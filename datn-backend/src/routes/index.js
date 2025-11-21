@@ -11,7 +11,6 @@ import newBlogRouter from './newsBlogs.routes.js';
 import orderRoutes from './order.routes.js';
 import productRoutes from './product.routes.js';
 import sizeRoutes from './size.routes.js';
-import toppingRoutes from './topping.routes.js';
 import uploadBanner from './banner.routes.js';
 import uploadRouter from './uploadfiles.routes.js';
 import voucherRoutes from './voucher.routes.js';
@@ -29,7 +28,6 @@ const rootRoutes = [
   UserRoutes,
   AuthRouter,
   sizeRoutes,
-  toppingRoutes,
   productRoutes,
   uploadRouter,
   voucherRoutes,

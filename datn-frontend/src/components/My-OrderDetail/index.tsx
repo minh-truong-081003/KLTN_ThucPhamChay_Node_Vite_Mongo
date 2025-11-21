@@ -9,7 +9,6 @@ import { RiMoneyDollarCircleFill } from 'react-icons/ri'
 import { PlusOutlined } from '@ant-design/icons'
 import { formatCurrency } from '../../utils/formatCurrency'
 import './index.scss'
-import { ITopping } from '../../interfaces/topping.type'
 import formatDate from '../../utils/formatDate'
 import { useState, useEffect, useMemo } from 'react'
 import type { UploadFile } from 'antd/es/upload/interface'
@@ -109,13 +108,7 @@ const MyOrderDetail = () => {
     </div>
   )
 
-  const totalPrice = orderData?.order?.items.reduce(
-    (accumulator, item) =>
-      accumulator +
-      item.price * item?.quantity +
-      item?.toppings.reduce((acc: number, topping: ITopping) => acc + topping.price, 0),
-    0
-  )
+  const totalPrice = orderData?.order?.items.reduce((accumulator, item) => accumulator + item.price * item?.quantity)
 
   const items = [
     {
@@ -211,17 +204,6 @@ const MyOrderDetail = () => {
                     <div>
                       <h4 className='title mb-2 text-[#866312] text-sm'>{item?.product.name}</h4>
                       <div className='flex flex-col gap-y-1'>
-                        {item && item?.toppings.length > 0 && (
-                          <span className='text-sm text-[#866312]'>
-                            Toppings:{' '}
-                            {item?.toppings?.map((topping: ITopping) =>
-                              item.toppings[item.toppings.length - 1].name === topping.name
-                                ? `${topping.name}(${formatCurrency(topping.price)}).`
-                                : `${topping.name}(${formatCurrency(topping.price)}), `
-                            )}
-                          </span>
-                        )}
-
                         <span className='quantity text-[12px]'>x{item?.quantity}</span>
                       </div>
                     </div>
@@ -232,11 +214,6 @@ const MyOrderDetail = () => {
                         {formatCurrency(item?.price)} x {item?.quantity} ={' '}
                         {formatCurrency(item?.price * item?.quantity)}
                       </span>
-                      {item.toppings?.map((topping: ITopping) => (
-                        <span key={topping._id} className='text-[#866312] ml-2'>
-                          {formatCurrency(topping.price)}
-                        </span>
-                      ))}
                     </div>
                   </div>
                 </div>

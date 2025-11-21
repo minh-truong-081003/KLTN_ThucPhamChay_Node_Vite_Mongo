@@ -30,12 +30,6 @@ const orderSchema = new mongoose.Schema(
         image: { type: String },
         quantity: { type: Number },
         price: { type: Number },
-        toppings: [
-          {
-            name: { type: String },
-            price: { type: Number },
-          },
-        ],
         size: {
           name: { type: String },
           price: { type: Number },

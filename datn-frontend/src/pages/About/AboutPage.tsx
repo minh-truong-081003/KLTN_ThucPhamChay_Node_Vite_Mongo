@@ -10,19 +10,55 @@ const AboutPage = () => {
       <Loader />
       <HeaderHomePage />
 
-      {/* Hero Section với Slider-like effect */}
-      <section className='relative h-[400px] md:h-[500px] bg-gradient-to-r from-green-800 to-green-600 overflow-hidden mt-[80px]'>
-        <div className='absolute inset-0 bg-black opacity-30'></div>
-        <div className='absolute inset-0 flex items-center justify-center'>
-          <div className='text-center text-white z-10 px-4'>
-            <h1 className='text-4xl md:text-6xl font-bold mb-4 animate-fade-in'>VIFOOD - Siêu Thị Chay Sạch</h1>
-            <p className='text-xl md:text-2xl mb-6'>
-              Thương hiệu tiên phong sử dụng nguồn nông sản sạch chất lượng Việt Nam
+      {/* Hero Section với background thực phẩm chay */}
+      <section className='relative h-[400px] md:h-[500px] overflow-hidden mt-[80px]'>
+        {/* Background image với overlay */}
+        <div
+          className='absolute inset-0 bg-cover bg-center bg-no-repeat'
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&h=600&fit=crop&crop=center')`
+          }}
+        >
+          <div className='absolute inset-0 bg-gradient-to-r from-green-900/80 via-green-800/70 to-emerald-900/80'></div>
+          <div className='absolute inset-0 bg-black/30'></div>
+        </div>
+
+        {/* Floating elements */}
+        <div className='absolute inset-0 overflow-hidden'>
+          <div
+            className='absolute top-20 left-10 w-16 h-16 bg-white/10 rounded-full animate-bounce'
+            style={{ animationDelay: '0s' }}
+          ></div>
+          <div
+            className='absolute top-32 right-20 w-12 h-12 bg-[#d3b673]/20 rounded-full animate-bounce'
+            style={{ animationDelay: '1s' }}
+          ></div>
+          <div
+            className='absolute bottom-32 left-20 w-20 h-20 bg-green-400/20 rounded-full animate-bounce'
+            style={{ animationDelay: '2s' }}
+          ></div>
+        </div>
+
+        <div className='relative z-10 h-full flex items-center justify-center px-4'>
+          <div className='text-center text-white max-w-4xl mx-auto'>
+            <div className='flex items-center justify-center mb-6'>
+              <FaLeaf className='text-[#d3b673] text-4xl mr-3 animate-pulse' />
+              <h1 className='text-4xl md:text-6xl font-bold animate-fade-in'>VIFOOD - Siêu Thị Chay Sạch</h1>
+              <FaLeaf className='text-[#d3b673] text-4xl ml-3 animate-pulse' />
+            </div>
+            <p className='text-xl md:text-2xl mb-8 text-gray-100 animate-fade-in' style={{ animationDelay: '0.3s' }}>
+              Thương hiệu tiên phong sử dụng nguồn sản phẩm chay sạch
             </p>
-            <div className='w-32 h-1 bg-[#d3b673] mx-auto'></div>
+            <div
+              className='flex items-center justify-center space-x-4 animate-fade-in'
+              style={{ animationDelay: '0.6s' }}
+            >
+              <div className='w-32 h-1 bg-[#d3b673] mx-auto'></div>
+            </div>
           </div>
         </div>
-        {/* Decorative wave */}
+
+        {/* Wave decoration */}
         <div className='absolute bottom-0 left-0 right-0'>
           <svg viewBox='0 0 1200 120' preserveAspectRatio='none' className='w-full h-16 fill-white'>
             <path d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'></path>

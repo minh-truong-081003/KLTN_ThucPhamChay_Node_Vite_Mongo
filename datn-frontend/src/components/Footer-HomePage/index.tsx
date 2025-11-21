@@ -24,7 +24,7 @@ const FooterHomePage = () => {
 
           <div className='col-1 p-0 sm:pl-[30px] w-1/2 sm:w-[40%]'>
             <div className='title text-[#d3b673] mb-[30px] uppercase'>
-              <h2 className='text-lg font-bold'>VIFOOD - Siêu thị chay sạch nhất Việt Nam</h2>
+              <h2 className='text-lg font-bold'>VIFOOD - Siêu thị chay sạch tại Việt Nam</h2>
             </div>
             <div className='row flex sm:items-center mb-[10px]'>
               <FaMapMarker className='text-[#d3b673] text-4xl sm:text-sm mr-[10px]' />
@@ -138,7 +138,7 @@ const FooterHomePage = () => {
         </div>
         <div className='footer-bottom border-t-white sm:flex-row flex flex-col justify-between border border-transparent'>
           <div className='font-[700] text-center my-5 mx-1'>
-            Thương hiệu tiên phong sử dụng nguồn nông sản sạch và chất lượng Việt Nam
+            Thương hiệu tiên phong sử dụng nguồn sản phẩm chay sạch
           </div>
           <div className='mx-1 my-5 text-sm text-center'>Copyrights © 2024 by TD. All rights reserved.</div>
         </div>

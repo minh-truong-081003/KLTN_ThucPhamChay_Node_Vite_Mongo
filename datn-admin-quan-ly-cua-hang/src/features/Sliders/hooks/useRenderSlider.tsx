@@ -5,7 +5,6 @@ import { useDeleteImageSliderMutation, useDeleteSliderMutation, useUpdateStatusM
 
 import { BsFillTrashFill } from 'react-icons/bs'
 import { RootState } from '~/store/store'
-import { cancelDelete } from '~/features/Toppings'
 import { messageAlert } from '~/utils/messageAlert'
 import { pause } from '~/utils/pause'
 import { useAppSelector } from '~/store/hooks'
@@ -110,7 +109,6 @@ export const useRenderSlider = (sliders: ISLider[]) => {
                 title='Bạn có muốn xóa slide này?'
                 description='Bạn chắc chắn muốn xóa đi slide này?'
                 okButtonProps={{ style: { backgroundColor: '#3C50E0', color: '#fff' } }}
-                onCancel={cancelDelete}
                 onConfirm={() => onHandleDelete(slider._id)}
               >
                 <ButtonAnt

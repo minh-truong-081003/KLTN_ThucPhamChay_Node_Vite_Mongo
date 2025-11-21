@@ -54,7 +54,6 @@ export const ProductSchema = Yup.object({
   // price: Yup.number().min(0).typeError('Price is required').required(''),
   sale: Yup.number().default(0),
   category: Yup.string().trim().required('Category is required'),
-  toppings: Yup.array().typeError('Topping is required').min(1, 'Please select one Topping')
 })
 
 export type ProductForm = Yup.InferType<typeof ProductSchema>

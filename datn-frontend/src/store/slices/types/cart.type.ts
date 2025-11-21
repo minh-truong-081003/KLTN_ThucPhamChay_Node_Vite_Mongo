@@ -5,7 +5,6 @@ export interface CartItem {
   price: number
   quantity: number
   size?: { name: string; price: number; _id: string }
-  toppings: { name: string; price: number }[]
   total: number
   product: string
   sale?: number
@@ -16,7 +15,6 @@ export interface CartItemState {
   price: number
   quantity: number
   size?: { name: string; price: number; _id: string }
-  toppings: { name: string; price: number; _id?: string }[]
   total: number
   product: string
   _id?: string
@@ -46,7 +44,6 @@ export interface CartDbCreate {
     quantity: number
     product: string
     size?: string
-    toppings: string[]
     total: number
   }[]
 }

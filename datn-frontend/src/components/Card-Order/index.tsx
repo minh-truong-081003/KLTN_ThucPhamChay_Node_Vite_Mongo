@@ -6,6 +6,7 @@ import { CartItemState, CartLists } from '../../store/slices/types/cart.type'
 
 import { formatCurrency } from '../../utils/formatCurrency'
 import { useState, useEffect, useRef } from 'react'
+import Styles from '../PopupDetailProduct/PopupDetailProduct.module.scss'
 
 type CardOrderProps = {
   product: CartLists
@@ -40,7 +41,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
             name: product.name,
             quantity: item.quantity,
             size: item.size,
-            toppings: item.toppings,
             product: item.product,
             sale: item.sale || 0
           })
@@ -52,7 +52,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
             name: product.name,
             quantity: item.quantity,
             size: item.size,
-            toppings: item.toppings,
             product: item.product,
             sale: item.sale || 0
           })
@@ -65,14 +64,12 @@ const CardOrder = ({ product }: CardOrderProps) => {
         let quantity: number = item.quantity
         action === 'decreamentQuantity' && quantity--
         action === 'increamentQuantity' && quantity++
-        const topping = item.toppings
-        const priceTopping = topping && topping.length && topping.reduce((acc, item) => item.price + acc, 0)
         quantity = +item.quantity === 1 && action === 'decreamentQuantity' ? 0 : quantity
         return updateCartDbFn({
           quantity,
           _id: product._id,
           id: item._id,
-          total: quantity * item.price + quantity * priceTopping
+          total: quantity * item.price 
         })
       } else {
         // If missing IDs, update local cart
@@ -83,7 +80,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
               name: product.name,
               quantity: item.quantity,
               size: item.size,
-              toppings: item.toppings,
               product: item.product,
               sale: item.sale || 0
             })
@@ -95,7 +91,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
               name: product.name,
               quantity: item.quantity,
               size: item.size,
-              toppings: item.toppings,
               product: item.product,
               sale: item.sale || 0
             })
@@ -116,11 +111,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
             <div className='flex items-center gap-3'>
               <img src={item.image} alt={product.name} className='w-[60px] h-[60px] object-cover rounded' />
               <div className='flex-1'>
-                <div className='customize text-[#adaeae] text-xs truncate'>
-                  <span className='overflow-hidden truncate'>
-                    {item.toppings?.map((topping) => topping?.name).join(', ')}
-                  </span>
-                </div>
                 <div className='flex items-center justify-between mt-1'>
                   <div className='total text-[#8a733f] text-sm'>
                     {formatCurrency(item.price)} x {item.quantity}
@@ -174,7 +164,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
                                     name: product.name,
                                     quantity: item.quantity,
                                     size: item.size,
-                                    toppings: item.toppings,
                                     product: item.product,
                                     sale: item.sale || 0
                                   })
@@ -188,7 +177,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
                                     name: product.name,
                                     quantity: item.quantity,
                                     size: item.size,
-                                    toppings: item.toppings,
                                     product: item.product,
                                     sale: item.sale || 0
                                   })
@@ -197,14 +185,11 @@ const CardOrder = ({ product }: CardOrderProps) => {
                             }
                           } else if (product._id && item._id) {
                             // Update DB cart
-                            const topping = item.toppings
-                            const priceTopping =
-                              topping && topping.length && topping.reduce((acc, item) => item.price + acc, 0)
                             updateCartDbFn({
                               quantity: validQuantity,
                               _id: product._id,
                               id: item._id,
-                              total: validQuantity * item.price + validQuantity * priceTopping
+                              total: validQuantity * item.price
                             })
                           } else {
                             // Update local cart if missing IDs
@@ -217,7 +202,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
                                     name: product.name,
                                     quantity: item.quantity,
                                     size: item.size,
-                                    toppings: item.toppings,
                                     product: item.product,
                                     sale: item.sale || 0
                                   })
@@ -231,7 +215,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
                                     name: product.name,
                                     quantity: item.quantity,
                                     size: item.size,
-                                    toppings: item.toppings,
                                     product: item.product,
                                     sale: item.sale || 0
                                   })
@@ -263,7 +246,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
                                     name: product.name,
                                     quantity: item.quantity,
                                     size: item.size,
-                                    toppings: item.toppings,
                                     product: item.product,
                                     sale: item.sale || 0
                                   })
@@ -271,14 +253,11 @@ const CardOrder = ({ product }: CardOrderProps) => {
                               }
                             }
                           } else if (product._id && item._id) {
-                            const topping = item.toppings
-                            const priceTopping =
-                              topping && topping.length && topping.reduce((acc, item) => item.price + acc, 0)
                             updateCartDbFn({
                               quantity: 1,
                               _id: product._id,
                               id: item._id,
-                              total: 1 * item.price + 1 * priceTopping
+                              total: 1 * item.price
                             })
                           } else {
                             const diff = 1 - item.quantity
@@ -290,7 +269,6 @@ const CardOrder = ({ product }: CardOrderProps) => {
                                     name: product.name,
                                     quantity: item.quantity,
                                     size: item.size,
-                                    toppings: item.toppings,
                                     product: item.product,
                                     sale: item.sale || 0
                                   })
@@ -300,7 +278,7 @@ const CardOrder = ({ product }: CardOrderProps) => {
                           }
                         }
                       }}
-                      className='amount w-[65px] text-center text-sm border-0 focus:outline-none py-1'
+                      className={`amount w-[65px] text-center text-sm border-0 focus:outline-none py-1 ${Styles.amount}`}
                       disabled={updateCartDbRes.isLoading || deleteCartDBRes.isLoading}
                     />
                     <div

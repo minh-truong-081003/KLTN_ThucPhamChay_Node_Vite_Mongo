@@ -172,7 +172,6 @@ components:
         - price
         - category
         - size
-        - topping
       properties:
         _id:
           type: string
@@ -189,10 +188,6 @@ components:
         category:
           type: string
         size:
-          type: array
-          items:
-            type: string
-        topping:
           type: array
           items:
             type: string

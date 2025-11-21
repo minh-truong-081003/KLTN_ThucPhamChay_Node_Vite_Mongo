@@ -854,10 +854,10 @@ const pre_training = mongoose.model(
     question: String,
   })
 );
-// Endpoint to sanitize training data (remove banned keywords like 'trà sữa' and 'topping')
+// Endpoint to sanitize training data (remove banned keywords like 'trà sữa' )
 app.get('/sanitize-training', async (req, res) => {
   try {
-    const banned = ['trà sữa', 'topping'];
+    const banned = ['trà sữa'];
     const all = await pre_training.find({});
     let removed = 0;
     for (const doc of all) {
@@ -880,7 +880,7 @@ app.get('/train-clean', async (req, res) => {
     await new Promise((r) => setTimeout(r, 50));
     // sanitize first
     const s = await (async () => {
-      const banned = ['trà sữa', 'topping'];
+      const banned = ['trà sữa'];
       const all = await pre_training.find({});
       let removed = 0;
       for (const doc of all) {

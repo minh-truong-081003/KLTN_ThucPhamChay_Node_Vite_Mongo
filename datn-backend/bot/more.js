@@ -4,7 +4,7 @@ const axios = require('axios');
 // The manager object is initialized in index.js and then used here.
 const mongoose = require('mongoose');
 const dedupe = require('./dedupe');
-// This file previously contained hardcoded intents and answers related to "trà sữa" and "topping".
+// This file previously contained hardcoded intents and answers related to "trà sữa".
 // These have been removed to align the bot with "thực phẩm chay" only.
 
 // Import backend models

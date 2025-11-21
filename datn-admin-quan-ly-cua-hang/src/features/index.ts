@@ -1,6 +1,5 @@
 export { default as FeatureDashboard } from './Dashboard'
 export { default as FeatureProducts } from './Products'
-export { default as ToppingFeature } from './Toppings'
 export { default as CustomerFeature } from './Customer'
 export { default as StaffFearure } from './Staff'
 export { default as CategoryFeature } from './Categories'

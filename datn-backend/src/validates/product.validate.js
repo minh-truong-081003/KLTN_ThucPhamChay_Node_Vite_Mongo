@@ -12,7 +12,6 @@ const productValidate = joi.object({
     'any.required': 'Description is required',
   }),
   category: joi.string().required(),
-  toppings: joi.array().items(joi.string()).required(),
   is_deleted: joi.boolean().default(false),
   is_active: joi.boolean().default(true),
   images: joi

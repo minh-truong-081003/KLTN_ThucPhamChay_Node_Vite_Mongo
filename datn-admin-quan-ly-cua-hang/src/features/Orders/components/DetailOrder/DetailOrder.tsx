@@ -5,7 +5,6 @@ import { useConfirmOrderMutation, useDoneOrderMutation } from '~/store/services/
 import { Button } from '~/components'
 import { ClientSocket } from '~/socket'
 import { ColumnsType } from 'antd/es/table'
-import { ITopping } from '~/types'
 import Loading from '~/components/Loading/Loading'
 import { formatCurrency } from '~/utils'
 import { messageAlert } from '~/utils/messageAlert'
@@ -92,18 +91,7 @@ const DetailOrder = ({ open }: DetailOrderProps) => {
     //   key: 'size',
     //   render: (size) => <span className='font-semibold text-base'>{size.name}</span>
     // },
-    // {
-    //   title: 'Toppings',
-    //   dataIndex: 'toppings',
-    //   key: 'toppings',
-    //   render: (toppings) =>
-    //     toppings.map((topping: ITopping, index: number) => (
-    //       <span key={index} className='font-semibold text-base capitalize'>
-    //         {topping.name}
-    //         <br />
-    //       </span>
-    //     ))
-    // },
+    
     {
       title: 'Giá',
       dataIndex: 'price',

@@ -19,32 +19,12 @@ const CheckoutStripe = {
       };
      
       const encodeStripe = generatePaymentToken(dataOrder);
-      const line_items = items.map(({ image, name, quantity, product, price, size, toppings }) => {
-        const arrayPriceTopping =
-          toppings?.length > 0
-            ? toppings.map((topping) => {
-                return topping.price;
-              })
-            : [];
-        const totalPriceTopping =
-          arrayPriceTopping?.length > 0
-            ? arrayPriceTopping.reduce((a, b) => {
-                return a + b;
-              })
-            : 0;
-        const arrayNametopping =
-          toppings?.length > 0
-            ? toppings.map((topping) => {
-                return `${topping.name} (${formatCurrency(topping.price)})`;
-              })
-            : '';
-        const topping =
-          arrayNametopping.length > 0 ? '[ ' + arrayNametopping.join(' - ') + ' ]' : '';
+      const line_items = items.map(({ image, name, quantity, product, price, size }) => {
         return {
           price_data: {
             currency: 'vnd',
             product_data: {
-              name: `${name} (${size.name}) ${topping}`,
+              name: `${name} (${size.name})`,
               images: [image],
               metadata: {
                 productId: product,
@@ -52,10 +32,9 @@ const CheckoutStripe = {
                 sizeId: size._id,
                 sizeName: size.name,
                 sizePrice: size.price,
-                topping: JSON.stringify(toppings),
               },
             },
-            unit_amount: price + totalPriceTopping,
+            unit_amount: price ,
           },
           quantity: quantity,
           adjustable_quantity: {
@@ -77,11 +56,7 @@ const CheckoutStripe = {
           encode: encodeStripe,
         },
       });
-      // const coupon = await stripe.coupons.create({
-      //   currency: 'vnd',
-      //   amount_off: 20,
-      //   duration: 'once',
-      // });
+
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
@@ -98,11 +73,7 @@ const CheckoutStripe = {
             },
           },
         ],
-        // discounts: [
-        //   {
-        //     coupon: coupon.id,
-        //   },
-        // ],
+
         success_url: `${process.env.RETURN_URL}/products/checkout/payment-result?encode=${encodeStripe}`,
         cancel_url: `${process.env.RETURN_URL}/products/checkout`,
         expires_at: new Date(Date.now() + 30 * 60 * 1000),
@@ -164,7 +135,6 @@ const CheckoutStripe = {
               name: item.price.product.metadata.sizeName,
               price: item.price.product.metadata.sizePrice,
             },
-            toppings: JSON.parse(item.price.product.metadata.topping),
             quantity: item.quantity,
           };
         });
@@ -208,10 +178,6 @@ const CheckoutStripe = {
         return res.status(400, { message: 'Not found Order to refund' });
       }
      
-      // const refund = await stripe.refunds.create({
-      //   payment_intent: 'pi_Aabcxyz01aDfoo',
-      //   amount: 1000,
-      // });
     } catch (error) {
       return res.status(500, { message: 'Error server' });
     }

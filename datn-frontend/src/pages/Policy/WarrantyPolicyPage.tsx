@@ -214,8 +214,10 @@ const WarrantyPolicyPage = () => {
             <h2 className='text-2xl font-bold mb-4'>Cần Hỗ Trợ Đổi Trả?</h2>
             <p className='text-lg mb-6'>Liên hệ ngay với chúng tôi để được giải quyết nhanh chóng</p>
             <div className='flex flex-col md:flex-row gap-4 justify-center items-center'>
-              <div className='bg-white text-[#282828] px-8 py-3 rounded-lg font-bold'>Hotline: 1900.111.111</div>
-              <div className='bg-white text-[#282828] px-8 py-3 rounded-lg font-bold'>Email: support@vifood.vn</div>
+              <div className='bg-white text-[#282828] px-16 py-3 rounded-lg font-bold'>Hotline: 1900.111.111</div>
+              <div className='bg-white text-[#282828] px-6 py-3 rounded-lg font-bold'>
+                Email: vifood.contact@gmail.com
+              </div>
             </div>
           </div>
         </div>

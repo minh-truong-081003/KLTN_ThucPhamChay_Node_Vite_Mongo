@@ -38,7 +38,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
 
   const formatPrice = (price: number) => {
     if (price >= 1000000) return `${(price / 1000000).toFixed(1)}tr`
-    if (price >= 1000) return `${(price / 1000).toFixed(0)}k`
+    if (price >= 1000) return `${(price / 1000).toFixed(0)}.000`
     return `${price}`
   }
 
@@ -218,7 +218,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
                 : 'bg-white text-gray-600 border-gray-300 hover:border-[#d3b673]'
             }`}
           >
-            &lt;100k
+            &lt;100.000đ
           </button>
           <button
             onClick={() => handlePriceChange(100000, 500000, true)}
@@ -228,7 +228,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
                 : 'bg-white text-gray-600 border-gray-300 hover:border-[#d3b673]'
             }`}
           >
-            100-500k
+            100.000-500.000đ
           </button>
           <button
             onClick={() => handlePriceChange(500000, 1000000, true)}
@@ -238,7 +238,7 @@ const ProductFilter = ({ queryConfig }: ProductFilterProps) => {
                 : 'bg-white text-gray-600 border-gray-300 hover:border-[#d3b673]'
             }`}
           >
-            &gt;500k
+            &gt;500.000đ
           </button>
         </div>
 

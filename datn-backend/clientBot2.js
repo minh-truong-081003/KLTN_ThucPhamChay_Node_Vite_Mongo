@@ -130,7 +130,6 @@ app.get('/Service/bot_history', async (req, res) => {
     //lặp lại
     var ReOrder = {};
     //mua thêm
-    var toppings = '';
     let productL = '';
     var ProductsList = await Products.find();
     //Hiệu suất
@@ -157,9 +156,6 @@ app.get('/Service/bot_history', async (req, res) => {
               productL += !productL.includes(p.name) ? p.name + ',' : '';
             }
           });
-          vas.toppings.forEach((vau) => {
-            if (!toppings.includes(vau.name)) toppings += vau.name + ',';
-          });
         });
       }
     });
@@ -167,7 +163,7 @@ app.get('/Service/bot_history', async (req, res) => {
     // Similar
     var SmList = [];
     var MnList = [];
-    var Pstring = toppings + productL;
+    var Pstring =  productL;
     ProductsList.forEach((p) => {
       //setting
       // ok
@@ -185,7 +181,7 @@ app.get('/Service/bot_history', async (req, res) => {
       MnList.unshift({ id: p.id, name: p.name, priority: phantram + '%' });
       //
     });
-    //outline phân tích nhán 1
+    //outline phân tích nhánh 1
     AvDay = AvDay <= 0 ? '' : AvDay;
     var jsons = {
       user_id: JWT_id,
@@ -193,7 +189,6 @@ app.get('/Service/bot_history', async (req, res) => {
       'Tổng tiền tiêu': myAllM,
       'trung bình số tiền tiêu trong 1 lần': total,
       More: {
-        'Thường xuyên mua kèm': toppings,
         'sản phẩm mua': productL,
       },
       'Đề xuất sản phẩm liên quan ': SmList,

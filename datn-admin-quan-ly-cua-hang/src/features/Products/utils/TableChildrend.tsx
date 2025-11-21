@@ -1,5 +1,4 @@
 import { Table } from 'antd'
-import { IToppingRefProduct } from '~/types'
 import { formatCurrency } from '~/utils'
 
 export default function TableChildrend({ products }: any) {
@@ -38,7 +37,6 @@ export default function TableChildrend({ products }: any) {
     name: item.name,
     quantity: item.quantity,
     size: item.size,
-    topping: item.toppings,
     price: item.price,
     image: item.image
   }))
