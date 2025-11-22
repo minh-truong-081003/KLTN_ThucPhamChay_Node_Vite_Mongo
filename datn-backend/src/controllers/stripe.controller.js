@@ -24,17 +24,14 @@ const CheckoutStripe = {
           price_data: {
             currency: 'vnd',
             product_data: {
-              name: `${name} (${size.name})`,
+              name: name,
               images: [image],
               metadata: {
                 productId: product,
                 productName: name,
-                sizeId: size._id,
-                sizeName: size.name,
-                sizePrice: size.price,
               },
             },
-            unit_amount: price ,
+            unit_amount: Math.round(price) ,
           },
           quantity: quantity,
           adjustable_quantity: {
@@ -109,9 +106,9 @@ const CheckoutStripe = {
         path: '/',
         sameSite: 'strict',
       });
-      res.send({ url: session.url });
+      res.status(200).json({ url: session.url });
     } catch (error) {
-      return res.status(500, { message: 'Error server' });
+      return res.status(500).json({ message: 'Error server' });
     }
   },
 
@@ -130,11 +127,6 @@ const CheckoutStripe = {
             image: item.price.product.images[0],
             price: item.price.unit_amount,
             product: item.price.product.metadata.productId,
-            size: {
-              _id: item.price.product.metadata.sizeId,
-              name: item.price.product.metadata.sizeName,
-              price: item.price.product.metadata.sizePrice,
-            },
             quantity: item.quantity,
           };
         });

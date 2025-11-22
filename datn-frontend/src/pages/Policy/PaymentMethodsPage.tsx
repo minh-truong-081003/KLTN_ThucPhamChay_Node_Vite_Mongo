@@ -99,6 +99,11 @@ const PaymentMethodsPage = () => {
                   alt='VnPay'
                   className='h-12'
                 />
+                <img
+                  src='https://js.stripe.com/v3/fingerprinted/img/stripe-logo-128x32.png'
+                  alt='Stripe'
+                  className='h-12'
+                />
               </div>
               <ul className='space-y-3 text-gray-700'>
                 <li className='flex items-start'>
@@ -107,11 +112,11 @@ const PaymentMethodsPage = () => {
                 </li>
                 <li className='flex items-start'>
                   <span className='text-[#d3b673] mr-2'>✓</span>
-                  <span>Hỗ trợ MoMo, VnPay</span>
+                  <span>Hỗ trợ MoMo, VnPay, Stripe</span>
                 </li>
                 <li className='flex items-start'>
                   <span className='text-[#d3b673] mr-2'>✓</span>
-                  <span>Nhận ưu đãi từ ví điện tử</span>
+                  <span>Nhận ưu đãi từ ví điện tử và thẻ quốc tế</span>
                 </li>
               </ul>
             </div>

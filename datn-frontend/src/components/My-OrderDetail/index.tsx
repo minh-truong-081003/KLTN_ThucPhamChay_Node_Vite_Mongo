@@ -279,7 +279,13 @@ const MyOrderDetail = () => {
               <span className='text-[12px]'>Phương thức thanh toán</span>
             </div>
             <div className='w-[200px] border-l border-l-[#ccc] text-sm text-[#EE4D2D]'>
-              {orderData?.order?.paymentMethodId === 'cod' ? 'Thanh toán khi nhận hàng' : 'Thanh toán qua VNPay'}
+              {orderData?.order?.paymentMethodId === 'cod'
+                ? 'Thanh toán khi nhận hàng'
+                : orderData?.order?.paymentMethodId === 'vnpay'
+                ? 'Thanh toán qua VNPay'
+                : orderData?.order?.paymentMethodId === 'stripe'
+                ? 'Thanh toán qua Stripe'
+                : 'Phương thức thanh toán không xác định'}
             </div>
           </div>
 

@@ -1,10 +1,14 @@
 import styles from './Loader.module.scss'
 import { pause } from '../../utils/pause'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Loader = () => {
   const [isLoading, setIsLoading] = useState(true)
-  pause(2000).then(() => setIsLoading(false))
+
+  useEffect(() => {
+    pause(2000).then(() => setIsLoading(false))
+  }, [])
+
   return (
     <div
       className={`${styles.preloader} ${

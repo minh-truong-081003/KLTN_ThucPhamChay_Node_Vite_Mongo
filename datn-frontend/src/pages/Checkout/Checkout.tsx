@@ -24,6 +24,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { useCreateOrderMutation } from '../../store/slices/order'
 import { useForm } from 'react-hook-form'
 import { useVnpayPaymentMutation } from '../../api/paymentvnpay'
+import { useStripePaymentMutation } from '../../api/paymentstripe'
 import { v4 as uuidv4 } from 'uuid'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { MdOutlineMail } from 'react-icons/md'
@@ -57,6 +58,7 @@ const Checkout = () => {
 
   const [pickGapStore, setPickGapStore] = useState({} as ListStore)
   const [vnpayPayment, { isLoading: vnpay }] = useVnpayPaymentMutation()
+  const [stripePayment, { isLoading: stripe }] = useStripePaymentMutation()
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen)
@@ -228,6 +230,15 @@ const Checkout = () => {
             .catch((err) => {
               toast.error(err.data.message)
             })
+        } else if (data.paymentMethod == 'stripe') {
+          stripePayment(dataForm)
+            .unwrap()
+            .then(({ url }) => {
+              window.location.href = url
+            })
+            .catch((err) => {
+              toast.error(err.data.message)
+            })
         }
       }
 
@@ -343,6 +354,16 @@ const Checkout = () => {
                 />
                 <span className={`${styles.checkmark_radio} group-hover:bg-[#ccc]`}></span>
               </label>
+              <label className={` ${styles.container_radio} cod-payment block group`}>
+                <span className='text-sm'>Thanh toán qua Stripe</span>
+                <input
+                  className='absolute opacity-0'
+                  type='radio'
+                  value='stripe'
+                  {...register('paymentMethod')}
+                />
+                <span className={`${styles.checkmark_radio} group-hover:bg-[#ccc]`}></span>
+              </label>
               <label className={` ${styles.container_radio} cod-payment group !hidden`}></label>
 
               {errors.paymentMethod && <span className='text-red-500 text-[13px]'>{errors.paymentMethod.message}</span>}
@@ -418,7 +439,7 @@ const Checkout = () => {
               ></textarea>
             </div>
             <div className=''>
-              <Button type='checkout' style={cod || vnpay ? 'bg-gray-500' : ''} size='large' shape='circle'>
+              <Button type='checkout' style={cod || vnpay || stripe ? 'bg-gray-500' : ''} size='large' shape='circle'>
                 <span className='block' onClick={handleFormInfoCheckout}>
                   Đặt hàng
                 </span>
